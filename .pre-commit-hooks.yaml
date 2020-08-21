@@ -1,0 +1,6 @@
+-   id: ensure-dunder-all
+    name: Ensure __all__
+    description: Ensure modules have defined '__all__'.
+    entry: ensure-dunder-all
+    language: python
+    types: [python]

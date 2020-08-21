@@ -1,0 +1,2 @@
+domdf_python_tools>=0.4.10
+flake8>=3.7
