@@ -90,7 +90,7 @@ flake8-dunder-all
 .. |language| image:: https://img.shields.io/github/languages/top/domdfcoding/flake8-dunder-all
 	:alt: GitHub top language
 
-.. |commits-since| image:: https://img.shields.io/github/commits-since/domdfcoding/flake8-dunder-all/v0.0.2
+.. |commits-since| image:: https://img.shields.io/github/commits-since/domdfcoding/flake8-dunder-all/v0.0.3
 	:target: https://github.com/domdfcoding/flake8-dunder-all/pulse
 	:alt: GitHub commits since tagged version
 
@@ -165,7 +165,7 @@ Sample `.pre-commit-config.yaml`:
 	   rev: 3.8.1
 	   hooks:
 	    - id: flake8
-	      additional_dependencies: [flake8-dunder-all==0.0.2]
+	      additional_dependencies: [flake8-dunder-all==0.0.3]
 
 
 Using the script as a pre-commit hook
@@ -180,7 +180,7 @@ Sample `.pre-commit-config.yaml`:
 .. code-block:: yaml
 
 	 - repo: https://github.com/domdfcoding/flake8-dunder-all
-	   rev: v0.0.2
+	   rev: v0.0.3
 	   hooks:
 	    - id: ensure-dunder-all
 
