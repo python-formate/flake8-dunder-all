@@ -31,7 +31,8 @@ A Flake8 plugin and pre-commit hook which checks to ensure modules have defined 
 
 # stdlib
 import ast
-from typing import Any, Generator, List, Tuple, Type
+import sys
+from typing import Any, Generator, List, Tuple, Type, Union
 
 # 3rd party
 from domdf_python_tools.paths import PathPlus
@@ -39,7 +40,7 @@ from domdf_python_tools.terminal_colours import Fore
 from domdf_python_tools.utils import stderr_writer
 
 # this package
-from flake8_dunder_all.utils import get_docstring_lineno
+from flake8_dunder_all.utils import get_docstring_lineno, mark_text_ranges
 
 __author__: str = "Dominic Davis-Foster"
 __copyright__: str = "2020 Dominic Davis-Foster"
@@ -55,16 +56,21 @@ DALL000 = "DALL000 Module lacks __all__."  # noqa: E501
 class Visitor(ast.NodeVisitor):
 	"""
 	AST :class:`~ast.NodeVisitor` to check a module has defined ``__all__``, and add one if it not.
+
+	:param use_endlineno: Flag to indicate whether the end_lineno functionality is available.
+		This functionality is available on Python 3.8 and above, or when the tree has been passed through
+		:func:`flake8_dunder_all.utils.mark_text_ranges``.
 	"""
 
-	def __init__(self) -> None:
+	found_all: bool  #: Flag to indicate a ``__all__`` variable has been found in the AST.
+	last_import: int  #: The lineno of the last top-level import
+	members: List[str]  #: List of functions and classed defined in the AST
+
+	def __init__(self, use_endlineno: bool = False) -> None:
 		self.found_all = False
-
-		# List of functions and classed defined in this module
 		self.members: List[str] = []
-
-		# Lineno of last top-level import
 		self.last_import = 0
+		self.use_endlineno = use_endlineno
 
 	def visit_Name(self, node: ast.Name):
 		"""
@@ -78,6 +84,16 @@ class Visitor(ast.NodeVisitor):
 		else:
 			self.generic_visit(node)
 
+	def handle_def(self, node: Union[ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef]):
+		"""
+		Handles ``def foo(): ...``, ``async def foo(): ...`` and ``class Foo: ...``.
+
+		:param node: The node being visited.
+		"""
+
+		if not node.name.startswith("_"):
+			self.members.append(node.name)
+
 	def visit_FunctionDef(self, node: ast.FunctionDef):
 		"""
 		Visit ``def foo(): ...``.
@@ -86,8 +102,7 @@ class Visitor(ast.NodeVisitor):
 		"""
 
 		# Don't generic visit
-		if not node.name.startswith("_"):
-			self.members.append(node.name)
+		self.handle_def(node)
 
 	def visit_AsyncFunctionDef(self, node: ast.AsyncFunctionDef):
 		"""
@@ -97,8 +112,7 @@ class Visitor(ast.NodeVisitor):
 		"""
 
 		# Don't generic visit
-		if not node.name.startswith("_"):
-			self.members.append(node.name)
+		self.handle_def(node)
 
 	def visit_ClassDef(self, node: ast.ClassDef):
 		"""
@@ -108,8 +122,21 @@ class Visitor(ast.NodeVisitor):
 		"""
 
 		# Don't generic visit
-		if not node.name.startswith("_"):
-			self.members.append(node.name)
+		self.handle_def(node)
+
+	def handle_import(self, node: Union[ast.Import, ast.ImportFrom]):
+		"""
+		Handles ``import foo`` and ``from foo import bar``.
+
+		:param node: The node being visited
+		"""
+
+		if self.use_endlineno:
+			if not node.col_offset and node.end_lineno > self.last_import:  # type: ignore
+				self.last_import = node.end_lineno  # type: ignore
+		else:
+			if not node.col_offset and node.lineno > self.last_import:
+				self.last_import = node.lineno
 
 	def visit_Import(self, node: ast.Import):
 		"""
@@ -119,8 +146,7 @@ class Visitor(ast.NodeVisitor):
 		"""
 
 		# Don't generic visit
-		if not node.col_offset and node.lineno > self.last_import:
-			self.last_import = node.lineno
+		self.handle_import(node)
 
 	def visit_ImportFrom(self, node: ast.ImportFrom):
 		"""
@@ -130,8 +156,7 @@ class Visitor(ast.NodeVisitor):
 		"""
 
 		# Don't generic visit
-		if not node.col_offset and node.lineno > self.last_import:
-			self.last_import = node.lineno
+		self.handle_import(node)
 
 
 class Plugin:
@@ -188,12 +213,15 @@ def check_and_add_all(filename: PathPlus, quote_type: str = '"') -> int:
 	filename = PathPlus(filename)
 
 	try:
-		tree = ast.parse(filename.read_text())
+		source = filename.read_text()
+		tree = ast.parse(source)
+		if sys.version_info < (3, 8):  # pragma: no cover (<py38)
+			mark_text_ranges(tree, source)
 	except SyntaxError:
 		stderr_writer(Fore.RED(f"'{filename}' does not appear to be a valid Python source file."))
 		return 4
 
-	visitor = Visitor()
+	visitor = Visitor(use_endlineno=True)
 	visitor.visit(tree)
 
 	if visitor.found_all:

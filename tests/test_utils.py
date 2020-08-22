@@ -2,8 +2,7 @@
 import ast
 
 # this package
-from flake8_dunder_all import get_docstring_lineno
-from flake8_dunder_all.__main__ import tidy_docstring
+from flake8_dunder_all.utils import get_docstring_lineno, tidy_docstring
 
 
 def test_get_docstring_lineno():

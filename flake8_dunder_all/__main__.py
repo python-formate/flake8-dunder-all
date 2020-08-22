@@ -51,7 +51,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 
 	"""
 	parser = argparse.ArgumentParser(
-			description=tidy_docstring(main.__doc__), formatter_class=argparse.RawTextHelpFormatter
+			description=tidy_docstring(main.__doc__),
+			formatter_class=argparse.RawTextHelpFormatter,
 			)
 	parser.add_argument('filenames', type=str, nargs='*', help="The filename(s) to lint.", metavar="FILENAME")
 	parser.add_argument(

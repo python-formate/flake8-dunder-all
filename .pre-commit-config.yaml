@@ -28,6 +28,12 @@ repos:
       args: [--allow-git]
     - id: check-docstring-first
 
+ - repo: https://github.com/domdfcoding/flake8-dunder-all
+   rev: v0.0.3
+   hooks:
+    - id: ensure-dunder-all
+      files: ^flake8_dunder_all/.*\.py$
+
  - repo: https://github.com/pre-commit/pygrep-hooks
    rev: v1.5.1
    hooks:

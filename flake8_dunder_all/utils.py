@@ -32,14 +32,21 @@ General utility functions.
 #  Copyright © 1995-2000 Corporation for National Research Initiatives. All rights reserved.
 #  Copyright © 1991-1995 Stichting Mathematisch Centrum. All rights reserved.
 #
+#  mark_text_ranges from Thonny
+#  https://github.com/thonny/thonny/blob/master/thonny/ast_utils.py
+#  Copyright (c) 2020 Aivar Annamaa
+#  MIT Licensed
 
 # stdlib
 import ast
 import re
-from textwrap import dedent, indent
+from textwrap import dedent
 from typing import Optional, Union
 
-__all__ = ["get_docstring_lineno", "tidy_docstring"]
+# 3rd party
+from asttokens.asttokens import ASTTokens
+
+__all__ = ["get_docstring_lineno", "tidy_docstring", "mark_text_ranges"]
 
 
 def get_docstring_lineno(node: Union[ast.FunctionDef, ast.ClassDef, ast.Module]) -> Optional[int]:
@@ -76,3 +83,24 @@ def tidy_docstring(docstring: Optional[str]) -> str:
 	docstring = re.sub("``([^`]*)``", r"'\1'", docstring)
 
 	return f"\n{docstring}"
+
+
+def mark_text_ranges(node: ast.AST, source: str):
+	"""
+	Node is an AST, source is corresponding source as string.
+	Function adds recursively attributes end_lineno and end_col_offset to each node
+	which has attributes lineno and col_offset.
+
+	:param node:
+	:param source: The corresponding source code for the node.
+	"""
+
+	ASTTokens(source, tree=node)
+
+	for child in ast.walk(node):
+		if hasattr(child, "last_token"):
+			child.end_lineno, child.end_col_offset = child.last_token.end  # type: ignore
+
+			if hasattr(child, "lineno"):
+				# Fixes problems with some nodes like binop
+				child.lineno, child.col_offset = child.first_token.start  # type: ignore

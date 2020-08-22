@@ -1,6 +1,7 @@
 # stdlib
 import ast
 import re
+import sys
 from typing import List
 
 # 3rd party
@@ -9,7 +10,7 @@ from domdf_python_tools.paths import PathPlus
 from domdf_python_tools.terminal_colours import Fore
 
 # this package
-from flake8_dunder_all import Visitor, check_and_add_all
+from flake8_dunder_all import Visitor, check_and_add_all, mark_text_ranges
 from tests.common import (
 		mangled_source,
 		results,
@@ -21,7 +22,8 @@ from tests.common import (
 		testing_source_f,
 		testing_source_g,
 		testing_source_h,
-		testing_source_i
+		testing_source_i,
+		testing_source_j
 		)
 
 
@@ -44,6 +46,7 @@ from tests.common import (
 						),
 				pytest.param(testing_source_h, set(), id="from import"),
 				pytest.param(testing_source_i, {'0:0: DALL000 Module lacks __all__.'}, id="lots of lines"),
+				pytest.param(testing_source_j, {'0:0: DALL000 Module lacks __all__.'}, id="multiline import"),
 				]
 		)
 def test_plugin(source, expects):
@@ -73,11 +76,49 @@ def test_plugin(source, expects):
 				pytest.param(testing_source_g, ["a_function"], False, 3, id="async function no __all__"),
 				pytest.param(testing_source_h, [], False, 1, id="from import"),
 				pytest.param(testing_source_i, ["a_function"], False, 3, id="lots of lines"),
+				pytest.param(testing_source_j, ["a_function"], False, 2, id="multiline import"),
 				]
 		)
 def test_visitor(source, members, found_all, last_import):
 	visitor = Visitor()
 	visitor.visit(ast.parse(source))
+
+	assert visitor.members == members
+	assert visitor.found_all is found_all
+	assert visitor.last_import is last_import
+
+
+@pytest.mark.parametrize(
+		"source, members, found_all, last_import",
+		[
+				pytest.param('import foo', [], False, 1, id="just an import"),
+				pytest.param('"""a docstring"""', [], False, 0, id="just a docstring"),
+				pytest.param(testing_source_a, [], False, 3, id="import and docstring"),
+				pytest.param(testing_source_b, ['a_function'], False, 3, id="function no __all__"),
+				pytest.param(testing_source_c, ['Foo'], False, 3, id="class no __all__"),
+				pytest.param(
+						testing_source_d, ['Foo', 'a_function'], False, 3, id="function and class no __all__"
+						),
+				pytest.param(
+						testing_source_e, ['Foo', 'a_function'], True, 3, id="function and class with __all__"
+						),
+				pytest.param(
+						testing_source_f, ['Foo', 'a_function'],
+						True,
+						3,
+						id="function and class with __all__ and extra variable"
+						),
+				pytest.param(testing_source_g, ["a_function"], False, 3, id="async function no __all__"),
+				pytest.param(testing_source_h, [], False, 1, id="from import"),
+				pytest.param(testing_source_i, ["a_function"], False, 3, id="lots of lines"),
+				pytest.param(testing_source_j, ["a_function"], False, 14, id="multiline import"),
+				]
+		)
+def test_visitor_endlineno(source, members, found_all, last_import):
+	visitor = Visitor(True)
+	tree = ast.parse(source)
+	mark_text_ranges(tree, source)
+	visitor.visit(tree)
 
 	assert visitor.members == members
 	assert visitor.found_all is found_all
@@ -105,7 +146,6 @@ def test_visitor(source, members, found_all, last_import):
 				]
 		)
 def test_check_and_add_all(tmpdir, source, members: List[str], ret):
-
 	tmpfile = PathPlus(tmpdir) / "source.py"
 	tmpfile.write_text(source)
 
@@ -116,6 +156,7 @@ def test_check_and_add_all(tmpdir, source, members: List[str], ret):
 		assert f"__all__ = [{members_string}]" in tmpfile.read_text()
 
 
+@pytest.mark.skipif(condition=not (sys.version_info < (3, 8)), reason="Not required after python 3.8")
 @pytest.mark.parametrize(
 		"source, members, ret",
 		[
@@ -131,7 +172,6 @@ def test_check_and_add_all(tmpdir, source, members: List[str], ret):
 				]
 		)
 def test_check_and_add_all_single_quotes(tmpdir, source, members: List[str], ret):
-
 	tmpfile = PathPlus(tmpdir) / "source.py"
 	tmpfile.write_text(source)
 
@@ -146,7 +186,6 @@ def test_check_and_add_all_single_quotes(tmpdir, source, members: List[str], ret
 		pytest.param(mangled_source, [], id="mangled"),
 		])
 def test_check_and_add_all_mangled(tmpdir, capsys, source, members):
-
 	tmpfile = PathPlus(tmpdir) / "source.py"
 	tmpfile.write_text(source)
 	assert check_and_add_all(tmpfile) == 4

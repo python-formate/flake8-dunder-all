@@ -81,6 +81,25 @@ import foo
 async def a_function(): ...
 '''
 
+testing_source_j = '''
+from tests.common import (
+		mangled_source,
+		results,
+		testing_source_a,
+		testing_source_b,
+		testing_source_c,
+		testing_source_d,
+		testing_source_e,
+		testing_source_f,
+		testing_source_g,
+		testing_source_h,
+		testing_source_i
+		)
+
+
+async def a_function(): ...
+'''
+
 mangled_source = '''
 """a docstring
 import foo
