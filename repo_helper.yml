@@ -35,5 +35,5 @@ classifiers:
 
 
 console_scripts:
-  - "ensure_dunder_all=flake_dunder_all.__main__:main"
-  - "ensure-dunder-all=flake_dunder_all.__main__:main"
+  - "ensure_dunder_all=flake8_dunder_all.__main__:main"
+  - "ensure-dunder-all=flake8_dunder_all.__main__:main"
