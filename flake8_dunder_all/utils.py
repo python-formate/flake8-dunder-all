@@ -37,12 +37,12 @@ General utility functions.
 import ast
 import re
 from textwrap import dedent, indent
-from typing import Optional
+from typing import Optional, Union
 
 __all__ = ["get_docstring_lineno", "tidy_docstring"]
 
 
-def get_docstring_lineno(node: ast.AST) -> Optional[int]:
+def get_docstring_lineno(node: Union[ast.FunctionDef, ast.ClassDef, ast.Module]) -> Optional[int]:
 	"""
 	Returns the linenumber of the start of the docstring for ``node``.
 
@@ -52,12 +52,12 @@ def get_docstring_lineno(node: ast.AST) -> Optional[int]:
 	if not (node.body and isinstance(node.body[0], ast.Expr)):
 		return None
 
-	node = node.body[0].value
+	body = node.body[0].value
 
-	if isinstance(node, ast.Str):
-		return node.lineno
-	elif isinstance(node, ast.Constant) and isinstance(node.value, str):
-		return node.lineno  # pragma: no cover
+	if isinstance(body, ast.Str):
+		return body.lineno
+	elif isinstance(body, ast.Constant) and isinstance(body.value, str):
+		return body.lineno  # pragma: no cover
 	else:
 		return None
 
