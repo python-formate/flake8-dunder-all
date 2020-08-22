@@ -2,7 +2,7 @@
 #
 #  __main__.py
 """
-Command-line emtry point for flake8-dunder-all.
+Command-line entry point for flake8-dunder-all.
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
