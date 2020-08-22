@@ -22,7 +22,7 @@ python_versions:
   - "pypy3"
 
 # travis secure password for PyPI
-# travis_pypi_secure:
+travis_pypi_secure: "fP5pFqWlcDvPsgEwnp0gpamm2ZFf6VAWvX0ppgimcKGMIvKy3CJ4r3B4saAbi9dzTvM4yRZt0As5oky5XLPA3kQC2py5BtUxw9qiiX/XfmKQJtd+f4IGa65dKtRVyIp78PZdVy/m7g+p+NTKnJ0na0JgrDGQWCKhmbE5n834FQsUCaXrCcTHzv9RyVtNcwvhi2pPvKsLrr+/+YWLYtg6FhZXECOfCzrFmoeYG/p4fpwZpE8jBW5ISL42GAPa9BXIdQF5PpbxZAEbZc/x/nzgx7ttyzc+l/Y8O6EF66FenqfT/RWP1L2fjhxrH0itMSrDIdqJq/Csw/yNyb6xln6LvfJOoNe5BJ9B4yOaOw3zMnbObPwjJdcBzCMMD0E6N6HWUEZsHvbzT1e8Imix1GmLCemqazQSLSlKziin3aj2DM6vm8KnSYkigv7XS3b9lTPR8TfJrkz91zUOFhHIifiaN07ZcWtwhEp1VFXFnJS18VifsdaYJU4S5ZoNZXwy8mn+5xCaQcNuBOM84pP4smR1Dboglv9uHBl1eth7CnX6XNEPsEVT+MO0wQb6MoAf9n37Z3mUPMu3hD4WTeD/Of/t4tRAmzomosof/9RcvOBHXBu6Fh88I3A4UtKwpzQqcBC2nAm/wmqLmfWvVvd/OtEtYMpoglvDLqBzzFB4jmv8c2Q="
 
 classifiers:
   - 'Development Status :: 4 - Beta'
@@ -33,8 +33,6 @@ classifiers:
   - 'Topic :: Software Development :: Libraries :: Python Modules'
   - "Topic :: Utilities"
 
-#exclude_files:
-#  - setup_cfg
 
 console_scripts:
   - "ensure_dunder_all=flake_dunder_all.__main__:main"
