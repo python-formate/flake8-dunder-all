@@ -30,7 +30,7 @@ flake8-dunder-all
 
 .. |docs| image:: https://img.shields.io/readthedocs/flake8-dunder-all/latest?logo=read-the-docs
 	:target: https://flake8-dunder-all.readthedocs.io/en/latest/?badge=latest
-	:alt: Documentation Status
+	:alt: Documentation Build Status
 
 .. |docs_check| image:: https://github.com/domdfcoding/flake8-dunder-all/workflows/Docs%20Check/badge.svg
 	:target: https://github.com/domdfcoding/flake8-dunder-all/actions?query=workflow%3A%22Docs+Check%22
