@@ -36,6 +36,7 @@ General utility functions.
 #  https://github.com/thonny/thonny/blob/master/thonny/ast_utils.py
 #  Copyright (c) 2020 Aivar Annamaa
 #  MIT Licensed
+#
 
 # stdlib
 import ast
@@ -44,7 +45,7 @@ from textwrap import dedent
 from typing import Optional, Union
 
 # 3rd party
-from asttokens.asttokens import ASTTokens
+from asttokens.asttokens import ASTTokens  # type: ignore
 
 __all__ = ["get_docstring_lineno", "tidy_docstring", "mark_text_ranges"]
 
