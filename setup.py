@@ -12,13 +12,10 @@ sys.path.append('.')
 # this package
 from __pkginfo__ import *  # pylint: disable=wildcard-import
 
-
-
 setup(
 		description="A Flake8 plugin and pre-commit hook which checks to ensure modules have defined '__all__'.",
 		extras_require=extras_require,
 		install_requires=install_requires,
 		py_modules=[],
 		version=__version__,
-
 		)
