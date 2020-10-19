@@ -125,7 +125,8 @@ Installation
 Usage
 --------
 
-This library provides the Flake8 plugin ``flake8-dunder-all`` as well as the ``ensure-dunder-all``,script which adds ``__all__`` to files that require it.
+This library provides the Flake8 plugin ``flake8-dunder-all`` as well as the
+``ensure-dunder-all`` script which adds ``__all__`` to files that require it.
 
 
 Using the Flake8 plugin as a pre-commit hook
@@ -137,13 +138,7 @@ See `pre-commit <https://github.com/pre-commit/pre-commit>`_ for instructions
 
 Sample `.pre-commit-config.yaml`:
 
-.. code-block:: yaml
-
-	 - repo: https://gitlab.com/pycqa/flake8
-	   rev: 3.8.1
-	   hooks:
-	    - id: flake8
-	      additional_dependencies: [flake8-dunder-all==0.0.4]
+.. pre-commit:flake8:: 0.0.4
 
 
 Using the script as a pre-commit hook
@@ -155,12 +150,8 @@ See `pre-commit <https://github.com/pre-commit/pre-commit>`_ for instructions
 
 Sample `.pre-commit-config.yaml`:
 
-.. code-block:: yaml
-
-	 - repo: https://github.com/domdfcoding/flake8-dunder-all
-	   rev: v0.0.4
-	   hooks:
-	    - id: ensure-dunder-all
+.. pre-commit::
+	:rev: v0.0.4
 
 
 .. toctree::
@@ -175,6 +166,11 @@ Sample `.pre-commit-config.yaml`:
 	plugin
 	script
 	API Reference<docs>
+
+.. toctree::
+	:maxdepth: 3
+	:caption: Contributing
+
 	contributing
 	Source
 
