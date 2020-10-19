@@ -136,7 +136,7 @@ This will only check for missing ``__all__`` variables but won't add them.
 
 See `pre-commit <https://github.com/pre-commit/pre-commit>`_ for instructions
 
-Sample `.pre-commit-config.yaml`:
+Sample ``.pre-commit-config.yaml``:
 
 .. pre-commit:flake8:: 0.0.4
 
@@ -148,7 +148,7 @@ This will add ``__all__`` variables to files that require them and prevent the c
 
 See `pre-commit <https://github.com/pre-commit/pre-commit>`_ for instructions
 
-Sample `.pre-commit-config.yaml`:
+Sample ``.pre-commit-config.yaml``:
 
 .. pre-commit::
 	:rev: v0.0.4
