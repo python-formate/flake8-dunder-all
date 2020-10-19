@@ -93,7 +93,7 @@ flake8-dunder-all
 	:alt: GitHub top language
 
 .. |commits-since| github-shield::
-	:commits-since: v0.0.4
+	:commits-since: v0.1.0
 	:alt: GitHub commits since tagged version
 
 .. |commits-latest| github-shield::
@@ -138,7 +138,7 @@ See `pre-commit <https://github.com/pre-commit/pre-commit>`_ for instructions
 
 Sample ``.pre-commit-config.yaml``:
 
-.. pre-commit:flake8:: 0.0.4
+.. pre-commit:flake8:: 0.1.0
 
 
 Using the script as a pre-commit hook
@@ -151,7 +151,7 @@ See `pre-commit <https://github.com/pre-commit/pre-commit>`_ for instructions
 Sample ``.pre-commit-config.yaml``:
 
 .. pre-commit::
-	:rev: v0.0.4
+	:rev: v0.1.0
 
 
 .. toctree::

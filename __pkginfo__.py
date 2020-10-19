@@ -39,7 +39,7 @@ __copyright__ = """
 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 """
 
-__version__ = "0.0.4"
+__version__ = "0.1.0"
 modname = "flake8-dunder-all"
 pypi_name = "flake8-dunder-all"
 import_name = "flake8_dunder_all"
