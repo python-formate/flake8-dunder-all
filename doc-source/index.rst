@@ -17,7 +17,7 @@ flake8-dunder-all
 	* - Docs
 	  - |docs| |docs_check|
 	* - Tests
-	  - |travis| |actions_windows| |actions_macos| |coveralls| |codefactor|
+	  - |travis| |actions_windows| |actions_macos| |coveralls| |codefactor| |pre_commit_ci|
 	* - PyPI
 	  - |pypi-version| |supported-versions| |supported-implementations| |wheel|
 	* - Anaconda
@@ -105,6 +105,9 @@ flake8-dunder-all
 
 .. |pre_commit| pre-commit-shield::
 	:alt: pre-commit
+
+.. |pre_commit_ci| pre-commit-ci-shield::
+	:alt: pre-commit.ci status
 
 .. end shields
 
