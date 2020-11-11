@@ -6,11 +6,12 @@ from typing import List
 
 # 3rd party
 import pytest
+from consolekit.terminal_colours import Fore
 from domdf_python_tools.paths import PathPlus
-from domdf_python_tools.terminal_colours import Fore
 
 # this package
-from flake8_dunder_all import Visitor, check_and_add_all, mark_text_ranges
+from flake8_dunder_all import Visitor, check_and_add_all
+from flake8_dunder_all.utils import mark_text_ranges
 from tests.common import (
 		mangled_source,
 		results,
