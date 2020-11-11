@@ -35,8 +35,8 @@ import sys
 from typing import Any, Generator, List, Tuple, Type, Union
 
 # 3rd party
+from consolekit.terminal_colours import Fore
 from domdf_python_tools.paths import PathPlus
-from domdf_python_tools.terminal_colours import Fore
 from domdf_python_tools.utils import stderr_writer
 
 # this package
