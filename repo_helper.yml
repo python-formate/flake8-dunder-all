@@ -1,3 +1,4 @@
+---
 modname: flake8-dunder-all
 copyright_years: "2020"
 author: "Dominic Davis-Foster"
@@ -8,41 +9,37 @@ license: 'MIT'
 short_desc: "A Flake8 plugin and pre-commit hook which checks to ensure modules have defined '__all__'."
 
 conda_channels:
-  - domdfcoding
-  - conda-forge
+ - domdfcoding
+ - conda-forge
 
 python_deploy_version: 3.6
 
 # Versions to run tests for
 python_versions:
-  - '3.6'
-  - '3.7'
-  - "3.8"
-  - '3.9'
-  - "3.10-dev"
-  - "pypy3"
+ - '3.6'
+ - '3.7'
+ - "3.8"
+ - '3.9'
+ - "3.10-dev"
+ - "pypy3"
 
 # travis secure password for PyPI
 travis_pypi_secure: "fP5pFqWlcDvPsgEwnp0gpamm2ZFf6VAWvX0ppgimcKGMIvKy3CJ4r3B4saAbi9dzTvM4yRZt0As5oky5XLPA3kQC2py5BtUxw9qiiX/XfmKQJtd+f4IGa65dKtRVyIp78PZdVy/m7g+p+NTKnJ0na0JgrDGQWCKhmbE5n834FQsUCaXrCcTHzv9RyVtNcwvhi2pPvKsLrr+/+YWLYtg6FhZXECOfCzrFmoeYG/p4fpwZpE8jBW5ISL42GAPa9BXIdQF5PpbxZAEbZc/x/nzgx7ttyzc+l/Y8O6EF66FenqfT/RWP1L2fjhxrH0itMSrDIdqJq/Csw/yNyb6xln6LvfJOoNe5BJ9B4yOaOw3zMnbObPwjJdcBzCMMD0E6N6HWUEZsHvbzT1e8Imix1GmLCemqazQSLSlKziin3aj2DM6vm8KnSYkigv7XS3b9lTPR8TfJrkz91zUOFhHIifiaN07ZcWtwhEp1VFXFnJS18VifsdaYJU4S5ZoNZXwy8mn+5xCaQcNuBOM84pP4smR1Dboglv9uHBl1eth7CnX6XNEPsEVT+MO0wQb6MoAf9n37Z3mUPMu3hD4WTeD/Of/t4tRAmzomosof/9RcvOBHXBu6Fh88I3A4UtKwpzQqcBC2nAm/wmqLmfWvVvd/OtEtYMpoglvDLqBzzFB4jmv8c2Q="
 
 classifiers:
-  - 'Development Status :: 4 - Beta'
-#  - "Development Status :: 5 - Production/Stable"
-#  - "Development Status :: 6 - Mature"
-#  - "Development Status :: 7 - Inactive"
-  - 'Intended Audience :: Developers'
-  - 'Topic :: Software Development :: Libraries :: Python Modules'
-  - "Topic :: Utilities"
-
+ - 'Development Status :: 4 - Beta'
+ - 'Framework :: Flake8'
+ - 'Intended Audience :: Developers'
+ - "Topic :: Utilities"
 
 console_scripts:
-  - "ensure_dunder_all=flake8_dunder_all.__main__:main"
-  - "ensure-dunder-all=flake8_dunder_all.__main__:main"
+ - "ensure_dunder_all=flake8_dunder_all.__main__:main"
+ - "ensure-dunder-all=flake8_dunder_all.__main__:main"
 
 extra_sphinx_extensions:
-  - sphinx_toolbox.pre_commit
-  - sphinx_toolbox.flake8
+ - sphinx_toolbox.pre_commit
+ - sphinx_toolbox.flake8
 
 entry_points:
- flake8.extension:
-  - DUNDER_ALL=flake8_dunder_all:Plugin
+  flake8.extension:
+   - DUNDER_ALL=flake8_dunder_all:Plugin
