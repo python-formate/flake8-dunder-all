@@ -32,7 +32,7 @@ def test_tidy_docstring():
 	for i in range(100):
 		assert tidy_docstring(f"``{i}``") == f'\n{i}'
 
-	for word in "the quick brown fox jumps over the lazy dog".split(" "):
+	for word in "the quick brown fox jumps over the lazy dog".split(' '):
 		assert tidy_docstring(f"``{word}``") == f"\n'{word}'"
 
 		assert tidy_docstring("""	hello

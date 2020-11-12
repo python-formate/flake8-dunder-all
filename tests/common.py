@@ -69,7 +69,7 @@ import foo
 async def a_function(): ...
 '''
 
-testing_source_h = 'from foo import bar'
+testing_source_h = "from foo import bar"
 
 testing_source_i = '''
 """a docstring"""

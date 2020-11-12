@@ -26,15 +26,15 @@ from tests.test_flake8_dunder_all import (
 @pytest.mark.parametrize(
 		"source, members, ret",
 		[
-				pytest.param('import foo', [], 0, id="just an import"),
+				pytest.param("import foo", [], 0, id="just an import"),
 				pytest.param('"""a docstring"""', [], 0, id="just a docstring"),
 				pytest.param(testing_source_a, [], 0, id="import and docstring"),
-				pytest.param(testing_source_b, ['a_function'], 1, id="function no __all__"),
-				pytest.param(testing_source_c, ['Foo'], 1, id="class no __all__"),
-				pytest.param(testing_source_d, ['Foo', 'a_function'], 1, id="function and class no __all__"),
-				pytest.param(testing_source_e, ['Foo', 'a_function'], 0, id="function and class with __all__"),
+				pytest.param(testing_source_b, ["a_function"], 1, id="function no __all__"),
+				pytest.param(testing_source_c, ["Foo"], 1, id="class no __all__"),
+				pytest.param(testing_source_d, ["Foo", "a_function"], 1, id="function and class no __all__"),
+				pytest.param(testing_source_e, ["Foo", "a_function"], 0, id="function and class with __all__"),
 				pytest.param(
-						testing_source_f, ['Foo', 'a_function'],
+						testing_source_f, ["Foo", "a_function"],
 						0,
 						id="function and class with __all__ and extra variable"
 						),
@@ -57,12 +57,12 @@ def test_main(tmpdir, source, members: List[str], ret):
 @pytest.mark.parametrize(
 		"source, members, ret",
 		[
-				pytest.param('import foo', [], 0, id="just an import"),
+				pytest.param("import foo", [], 0, id="just an import"),
 				pytest.param('"""a docstring"""', [], 0, id="just a docstring"),
 				pytest.param(testing_source_a, [], 0, id="import and docstring"),
-				pytest.param(testing_source_b, ['a_function'], 1, id="function no __all__"),
-				pytest.param(testing_source_c, ['Foo'], 1, id="class no __all__"),
-				pytest.param(testing_source_d, ['Foo', 'a_function'], 1, id="function and class no __all__"),
+				pytest.param(testing_source_b, ["a_function"], 1, id="function no __all__"),
+				pytest.param(testing_source_c, ["Foo"], 1, id="class no __all__"),
+				pytest.param(testing_source_d, ["Foo", "a_function"], 1, id="function and class no __all__"),
 				pytest.param(testing_source_g, ["a_function"], 1, id="async function no __all__"),
 				pytest.param(testing_source_h, [], 0, id="from import"),
 				pytest.param(testing_source_i, [], 1, id="lots of lines"),

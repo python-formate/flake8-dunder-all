@@ -31,23 +31,23 @@ from tests.common import (
 @pytest.mark.parametrize(
 		"source, expects",
 		[
-				pytest.param('import foo', set(), id="just an import"),
+				pytest.param("import foo", set(), id="just an import"),
 				pytest.param('"""a docstring"""', set(), id="just a docstring"),
 				pytest.param(testing_source_a, set(), id="import and docstring"),
-				pytest.param(testing_source_b, {'0:0: DALL000 Module lacks __all__.'}, id="function no __all__"),
-				pytest.param(testing_source_c, {'0:0: DALL000 Module lacks __all__.'}, id="class no __all__"),
+				pytest.param(testing_source_b, {"0:0: DALL000 Module lacks __all__."}, id="function no __all__"),
+				pytest.param(testing_source_c, {"0:0: DALL000 Module lacks __all__."}, id="class no __all__"),
 				pytest.param(
-						testing_source_d, {'0:0: DALL000 Module lacks __all__.'},
+						testing_source_d, {"0:0: DALL000 Module lacks __all__."},
 						id="function and class no __all__"
 						),
 				pytest.param(testing_source_e, set(), id="function and class with __all__"),
 				pytest.param(testing_source_f, set(), id="function and class with __all__ and extra variable"),
 				pytest.param(
-						testing_source_g, {'0:0: DALL000 Module lacks __all__.'}, id="async function no __all__"
+						testing_source_g, {"0:0: DALL000 Module lacks __all__."}, id="async function no __all__"
 						),
 				pytest.param(testing_source_h, set(), id="from import"),
-				pytest.param(testing_source_i, {'0:0: DALL000 Module lacks __all__.'}, id="lots of lines"),
-				pytest.param(testing_source_j, {'0:0: DALL000 Module lacks __all__.'}, id="multiline import"),
+				pytest.param(testing_source_i, {"0:0: DALL000 Module lacks __all__."}, id="lots of lines"),
+				pytest.param(testing_source_j, {"0:0: DALL000 Module lacks __all__."}, id="multiline import"),
 				]
 		)
 def test_plugin(source, expects):
@@ -57,19 +57,19 @@ def test_plugin(source, expects):
 @pytest.mark.parametrize(
 		"source, members, found_all, last_import",
 		[
-				pytest.param('import foo', [], False, 1, id="just an import"),
+				pytest.param("import foo", [], False, 1, id="just an import"),
 				pytest.param('"""a docstring"""', [], False, 0, id="just a docstring"),
 				pytest.param(testing_source_a, [], False, 3, id="import and docstring"),
-				pytest.param(testing_source_b, ['a_function'], False, 3, id="function no __all__"),
-				pytest.param(testing_source_c, ['Foo'], False, 3, id="class no __all__"),
+				pytest.param(testing_source_b, ["a_function"], False, 3, id="function no __all__"),
+				pytest.param(testing_source_c, ["Foo"], False, 3, id="class no __all__"),
 				pytest.param(
-						testing_source_d, ['Foo', 'a_function'], False, 3, id="function and class no __all__"
+						testing_source_d, ["Foo", "a_function"], False, 3, id="function and class no __all__"
 						),
 				pytest.param(
-						testing_source_e, ['Foo', 'a_function'], True, 3, id="function and class with __all__"
+						testing_source_e, ["Foo", "a_function"], True, 3, id="function and class with __all__"
 						),
 				pytest.param(
-						testing_source_f, ['Foo', 'a_function'],
+						testing_source_f, ["Foo", "a_function"],
 						True,
 						3,
 						id="function and class with __all__ and extra variable"
@@ -92,19 +92,19 @@ def test_visitor(source, members, found_all, last_import):
 @pytest.mark.parametrize(
 		"source, members, found_all, last_import",
 		[
-				pytest.param('import foo', [], False, 1, id="just an import"),
+				pytest.param("import foo", [], False, 1, id="just an import"),
 				pytest.param('"""a docstring"""', [], False, 0, id="just a docstring"),
 				pytest.param(testing_source_a, [], False, 3, id="import and docstring"),
-				pytest.param(testing_source_b, ['a_function'], False, 3, id="function no __all__"),
-				pytest.param(testing_source_c, ['Foo'], False, 3, id="class no __all__"),
+				pytest.param(testing_source_b, ["a_function"], False, 3, id="function no __all__"),
+				pytest.param(testing_source_c, ["Foo"], False, 3, id="class no __all__"),
 				pytest.param(
-						testing_source_d, ['Foo', 'a_function'], False, 3, id="function and class no __all__"
+						testing_source_d, ["Foo", "a_function"], False, 3, id="function and class no __all__"
 						),
 				pytest.param(
-						testing_source_e, ['Foo', 'a_function'], True, 3, id="function and class with __all__"
+						testing_source_e, ["Foo", "a_function"], True, 3, id="function and class with __all__"
 						),
 				pytest.param(
-						testing_source_f, ['Foo', 'a_function'],
+						testing_source_f, ["Foo", "a_function"],
 						True,
 						3,
 						id="function and class with __all__ and extra variable"
@@ -129,15 +129,15 @@ def test_visitor_endlineno(source, members, found_all, last_import):
 @pytest.mark.parametrize(
 		"source, members, ret",
 		[
-				pytest.param('import foo', [], 0, id="just an import"),
+				pytest.param("import foo", [], 0, id="just an import"),
 				pytest.param('"""a docstring"""', [], 0, id="just a docstring"),
 				pytest.param(testing_source_a, [], 0, id="import and docstring"),
-				pytest.param(testing_source_b, ['a_function'], 1, id="function no __all__"),
-				pytest.param(testing_source_c, ['Foo'], 1, id="class no __all__"),
-				pytest.param(testing_source_d, ['Foo', 'a_function'], 1, id="function and class no __all__"),
-				pytest.param(testing_source_e, ['Foo', 'a_function'], 0, id="function and class with __all__"),
+				pytest.param(testing_source_b, ["a_function"], 1, id="function no __all__"),
+				pytest.param(testing_source_c, ["Foo"], 1, id="class no __all__"),
+				pytest.param(testing_source_d, ["Foo", "a_function"], 1, id="function and class no __all__"),
+				pytest.param(testing_source_e, ["Foo", "a_function"], 0, id="function and class with __all__"),
 				pytest.param(
-						testing_source_f, ['Foo', 'a_function'],
+						testing_source_f, ["Foo", "a_function"],
 						0,
 						id="function and class with __all__ and extra variable"
 						),
@@ -161,12 +161,12 @@ def test_check_and_add_all(tmpdir, source, members: List[str], ret):
 @pytest.mark.parametrize(
 		"source, members, ret",
 		[
-				pytest.param('import foo', [], 0, id="just an import"),
+				pytest.param("import foo", [], 0, id="just an import"),
 				pytest.param('"""a docstring"""', [], 0, id="just a docstring"),
 				pytest.param(testing_source_a, [], 0, id="import and docstring"),
-				pytest.param(testing_source_b, ['a_function'], 1, id="function no __all__"),
-				pytest.param(testing_source_c, ['Foo'], 1, id="class no __all__"),
-				pytest.param(testing_source_d, ['Foo', 'a_function'], 1, id="function and class no __all__"),
+				pytest.param(testing_source_b, ["a_function"], 1, id="function no __all__"),
+				pytest.param(testing_source_c, ["Foo"], 1, id="class no __all__"),
+				pytest.param(testing_source_d, ["Foo", "a_function"], 1, id="function and class no __all__"),
 				pytest.param(testing_source_g, ["a_function"], 1, id="async function no __all__"),
 				pytest.param(testing_source_h, [], 0, id="from import"),
 				pytest.param(testing_source_i, [], 1, id="lots of lines"),

@@ -54,9 +54,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 			description=tidy_docstring(main.__doc__),
 			formatter_class=argparse.RawTextHelpFormatter,
 			)
-	parser.add_argument('filenames', type=str, nargs='*', help="The filename(s) to lint.", metavar="FILENAME")
+	parser.add_argument("filenames", type=str, nargs='*', help="The filename(s) to lint.", metavar="FILENAME")
 	parser.add_argument(
-			'--quote-type', type=str, default='"', help="The type of quote to use. (default: %(default)s)"
+			"--quote-type", type=str, default='"', help="The type of quote to use. (default: %(default)s)"
 			)
 	args = parser.parse_args(argv)
 

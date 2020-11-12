@@ -91,7 +91,7 @@ class Visitor(ast.NodeVisitor):
 		:param node: The node being visited.
 		"""
 
-		if not node.name.startswith("_"):
+		if not node.name.startswith('_'):
 			self.members.append(node.name)
 
 	def visit_FunctionDef(self, node: ast.FunctionDef):
@@ -229,7 +229,7 @@ def check_and_add_all(filename: PathPlus, quote_type: str = '"') -> int:
 	else:
 		docstring_start = (get_docstring_lineno(tree) or 0) - 1
 		docstring = ast.get_docstring(tree, clean=False) or ''
-		docstring_end = len(docstring.split("\n")) + docstring_start
+		docstring_end = len(docstring.split('\n')) + docstring_start
 
 		insertion_position = max(docstring_end, visitor.last_import) + 1
 
@@ -238,16 +238,16 @@ def check_and_add_all(filename: PathPlus, quote_type: str = '"') -> int:
 
 		members = repr(visitor.members).replace(bad_quote, quote_type)
 
-		lines = filename.read_text().split("\n")
+		lines = filename.read_text().split('\n')
 
 		# Ensure there don't end up too many lines
 		if lines[insertion_position].strip():
-			lines.insert(insertion_position, "\n")
+			lines.insert(insertion_position, '\n')
 		else:
-			lines.insert(insertion_position, "")
+			lines.insert(insertion_position, '')
 
 		lines.insert(insertion_position, f"__all__ = {members}")
 
-		filename.write_clean("\n".join(lines))
+		filename.write_clean('\n'.join(lines))
 
 		return 1
