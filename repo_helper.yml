@@ -42,3 +42,7 @@ console_scripts:
 extra_sphinx_extensions:
   - sphinx_toolbox.pre_commit
   - sphinx_toolbox.flake8
+
+entry_points:
+ flake8.extension:
+  - DUNDER_ALL=flake8_dunder_all:Plugin
