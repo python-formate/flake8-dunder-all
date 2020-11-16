@@ -3,7 +3,7 @@ modname: flake8-dunder-all
 copyright_years: "2020"
 author: "Dominic Davis-Foster"
 email: "dominic@davis-foster.co.uk"
-version: "0.1.2"
+version: "0.1.3"
 username: "domdfcoding"
 license: 'MIT'
 short_desc: "A Flake8 plugin and pre-commit hook which checks to ensure modules have defined '__all__'."
