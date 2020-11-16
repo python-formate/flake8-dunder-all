@@ -32,7 +32,7 @@ A Flake8 plugin and pre-commit hook which checks to ensure modules have defined 
 # stdlib
 import ast
 import sys
-from typing import Any, Generator, List, Tuple, Type, Union
+from typing import Any, Generator, List, Set, Tuple, Type, Union
 
 # 3rd party
 from consolekit.terminal_colours import Fore
@@ -64,11 +64,12 @@ class Visitor(ast.NodeVisitor):
 
 	found_all: bool  #: Flag to indicate a ``__all__`` variable has been found in the AST.
 	last_import: int  #: The lineno of the last top-level import
-	members: List[str]  #: List of functions and classed defined in the AST
+	members: Set[str]  #: List of functions and classed defined in the AST
+	use_endlineno: bool
 
 	def __init__(self, use_endlineno: bool = False) -> None:
 		self.found_all = False
-		self.members: List[str] = []
+		self.members = set()
 		self.last_import = 0
 		self.use_endlineno = use_endlineno
 
@@ -91,8 +92,30 @@ class Visitor(ast.NodeVisitor):
 		:param node: The node being visited.
 		"""
 
-		if not node.name.startswith('_'):
-			self.members.append(node.name)
+		decorators = []
+
+		for deco in node.decorator_list:
+			if isinstance(deco, ast.Name):
+				decorators.append(deco.id)
+			elif isinstance(deco, ast.Attribute):
+				parts = [deco.attr]
+
+				# last_part = deco.value
+				#
+				# while True:
+				# 	if isinstance(last_part, ast.Attribute):
+				# 		parts.append(last_part.attr)
+				# 		last_part = last_part.value
+				# 	elif isinstance(last_part, ast.Name):
+				# 		parts.append(last_part.id)
+				# 		break
+				# 	else:
+				# 		break
+
+				decorators.append('.'.join(reversed(parts)))
+
+		if not node.name.startswith('_') and "overload" not in decorators:
+			self.members.add(node.name)
 
 	def visit_FunctionDef(self, node: ast.FunctionDef):
 		"""
@@ -236,7 +259,7 @@ def check_and_add_all(filename: PathPlus, quote_type: str = '"') -> int:
 		if not visitor.members:
 			return 0
 
-		members = repr(visitor.members).replace(bad_quote, quote_type)
+		members = repr(sorted(visitor.members)).replace(bad_quote, quote_type)
 
 		lines = filename.read_text().split('\n')
 

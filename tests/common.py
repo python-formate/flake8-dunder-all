@@ -100,6 +100,20 @@ from tests.common import (
 async def a_function(): ...
 """
 
+testing_source_k = '''
+"""a docstring"""
+
+@overload
+def a_function(): ...
+'''
+
+testing_source_l = '''
+"""a docstring"""
+
+@typing.overload
+def a_function(): ...
+'''
+
 mangled_source = '''
 """a docstring
 import foo

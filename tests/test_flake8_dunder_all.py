@@ -24,7 +24,9 @@ from tests.common import (
 		testing_source_g,
 		testing_source_h,
 		testing_source_i,
-		testing_source_j
+		testing_source_j,
+		testing_source_k,
+		testing_source_l
 		)
 
 
@@ -84,7 +86,7 @@ def test_visitor(source, members, found_all, last_import):
 	visitor = Visitor()
 	visitor.visit(ast.parse(source))
 
-	assert visitor.members == members
+	assert sorted(visitor.members) == members
 	assert visitor.found_all is found_all
 	assert visitor.last_import is last_import
 
@@ -121,7 +123,7 @@ def test_visitor_endlineno(source, members, found_all, last_import):
 	mark_text_ranges(tree, source)
 	visitor.visit(tree)
 
-	assert visitor.members == members
+	assert sorted(visitor.members) == members
 	assert visitor.found_all is found_all
 	assert visitor.last_import is last_import
 
@@ -144,6 +146,8 @@ def test_visitor_endlineno(source, members, found_all, last_import):
 				pytest.param(testing_source_g, ["a_function"], 1, id="async function no __all__"),
 				pytest.param(testing_source_h, [], 0, id="from import"),
 				pytest.param(testing_source_i, [], 1, id="lots of lines"),
+				pytest.param(testing_source_k, [], 0, id="overload"),
+				pytest.param(testing_source_l, [], 0, id="typing.overload"),
 				]
 		)
 def test_check_and_add_all(tmpdir, source, members: List[str], ret):
