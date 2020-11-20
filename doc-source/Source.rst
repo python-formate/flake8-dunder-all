@@ -3,7 +3,7 @@ Downloading source code
 =========================
 
 The ``flake8-dunder-all`` source code is available on GitHub,
-and can be accessed from the following URL: https://github.com/domdfcoding/flake8-dunder-all"
+and can be accessed from the following URL: https://github.com/domdfcoding/flake8-dunder-all
 
 If you have ``git`` installed, you can clone the repository with the following command:
 
