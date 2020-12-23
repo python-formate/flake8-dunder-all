@@ -170,7 +170,7 @@ Use as a pre-commit hook
 
 See `pre-commit <https://github.com/pre-commit/pre-commit>`_ for instructions
 
-Sample `.pre-commit-config.yaml`:
+Sample ``.pre-commit-config.yaml``:
 
 .. code-block:: yaml
 
