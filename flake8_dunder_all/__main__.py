@@ -27,47 +27,59 @@ Command-line entry point for flake8-dunder-all.
 #
 
 # stdlib
-import argparse
 import sys
-from typing import Optional, Sequence
+from textwrap import indent
+from typing import Iterable
+
+# 3rd party
+import click
+from consolekit import click_command
+from consolekit.options import auto_default_option
 
 # this package
 from flake8_dunder_all import check_and_add_all
-from flake8_dunder_all.utils import tidy_docstring
 
 __all__ = ["main"]
 
 
-def main(argv: Optional[Sequence[str]] = None) -> int:
+class RawHelpCommand(click.Command):
 	"""
-	Given a list of Python source files, check each file defines ``__all__``.
+	Subclass of :class:`click.Command1 which leaves the help text unformatted.
+	"""
+
+	def format_help_text(self, ctx, formatter: click.formatting.HelpFormatter):
+		"""
+		Writes the help text to the formatter if it exists.
+		"""
+
+		formatter.write('\n')
+		formatter.write(indent(self.help.replace("* ", "  "), "  "))
+		formatter.write('\n')
+
+
+@click.argument("filenames", type=click.STRING, nargs=-1, metavar="FILENAME")
+@auto_default_option("--quote-type", type=click.STRING, help="The type of quote to use.", show_default=True)
+@click_command(cls=RawHelpCommand)
+def main(filenames: Iterable[str], quote_type: str = '"') -> int:
+	"""
+	Given a list of Python source files, check each file defines '__all__'.
 
 	Exit codes:
 
-		``0``: The file already contains a ``__all__`` variable or has no function or class definitions
-		``1``: A ``__all__`` variable. was added to the file.
-		``4``: A file could not be parsed due to a syntax error.
-		``5``: Bitwise OR of ``1`` and ``4``.
-
+	* 0: The file already contains a '__all__' declaration or has no function or class definitions
+	* 1: A '__all__' declaration. was added to the file.
+	* 4: A file could not be parsed due to a syntax error.
+	* 5: Bitwise OR of 1 and 4.
 	"""
-	parser = argparse.ArgumentParser(
-			description=tidy_docstring(main.__doc__),
-			formatter_class=argparse.RawTextHelpFormatter,
-			)
-	parser.add_argument("filenames", type=str, nargs='*', help="The filename(s) to lint.", metavar="FILENAME")
-	parser.add_argument(
-			"--quote-type", type=str, default='"', help="The type of quote to use. (default: %(default)s)"
-			)
-	args = parser.parse_args(argv)
 
 	retv = 0
 
-	for filename in args.filenames:
+	for filename in filenames:
 		filename = filename.strip()
-		print(f"Checking {filename}")
-		retv |= check_and_add_all(filename=filename, quote_type=args.quote_type)
+		click.echo(f"Checking {filename}")
+		retv |= check_and_add_all(filename=filename, quote_type=quote_type)
 
-	return retv
+	sys.exit(retv)
 
 
 if __name__ == "__main__":

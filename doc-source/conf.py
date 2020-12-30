@@ -48,6 +48,7 @@ extensions = [
 		"seed_intersphinx_mapping",
 		"sphinx_toolbox.pre_commit",
 		"sphinx_toolbox.flake8",
+		"sphinx_click",
 		]
 
 sphinxemoji_style = "twemoji"

@@ -4,8 +4,11 @@ from typing import List
 
 # 3rd party
 import pytest
+from click.testing import CliRunner, Result
 from consolekit.terminal_colours import Fore
 from domdf_python_tools.paths import PathPlus
+from domdf_python_tools.testing import check_file_regression
+from pytest_regressions.file_regression import FileRegressionFixture
 
 # this package
 from flake8_dunder_all.__main__ import main
@@ -47,7 +50,9 @@ def test_main(tmpdir, source, members: List[str], ret):
 	tmpfile = PathPlus(tmpdir) / "source.py"
 	tmpfile.write_text(source)
 
-	assert main([str(tmpfile)]) == ret
+	runner = CliRunner()
+	result: Result = runner.invoke(main, catch_exceptions=False, args=[str(tmpfile)])
+	assert result.exit_code == ret
 
 	if members:
 		members_string = ", ".join(f'"{m}"' for m in members)
@@ -72,13 +77,15 @@ def test_main_single_quotes(capsys, tmpdir, source, members: List[str], ret):
 	tmpfile = PathPlus(tmpdir) / "source.py"
 	tmpfile.write_text(source)
 
-	assert main([str(tmpfile), "--quote-type='"]) == ret
+	runner = CliRunner()
+	result: Result = runner.invoke(main, catch_exceptions=False, args=[str(tmpfile), "--quote-type='"])
+	assert result.exit_code == ret
 
 	if members:
 		members_string = ", ".join(f"'{m}'" for m in members)
 		assert f"__all__ = [{members_string}]" in tmpfile.read_text()
 
-	assert capsys.readouterr().out == f"Checking {tmpfile}\n"
+	assert result.stdout == f"Checking {tmpfile}\n"
 
 
 @pytest.mark.parametrize("source, members", [
@@ -87,9 +94,12 @@ def test_main_single_quotes(capsys, tmpdir, source, members: List[str], ret):
 def test_main_mangled(tmpdir, capsys, source, members):
 	tmpfile = PathPlus(tmpdir) / "source.py"
 	tmpfile.write_text(source)
-	assert main([str(tmpfile)]) == 4
 
-	stderr = capsys.readouterr().err
+	runner = CliRunner(mix_stderr=False)
+	result: Result = runner.invoke(main, catch_exceptions=False, args=[str(tmpfile)])
+	assert result.exit_code == 4
+
+	stderr = result.stderr
 	assert re.match(r".*'.*source.py' does not appear to be a valid Python source file\..*\n", stderr)
 	assert stderr.startswith(Fore.RED)
 	assert stderr.endswith(f"{Fore.RESET}\n")
@@ -99,6 +109,17 @@ def test_main_mangled(tmpdir, capsys, source, members):
 
 
 def test_main_no_filenames(capsys):
-	main([])
+	runner = CliRunner()
+	result: Result = runner.invoke(main, catch_exceptions=False)
 
-	assert capsys.readouterr().out == ''
+	assert result.stdout == ''
+
+
+def test_main_help(capsys, file_regression: FileRegressionFixture):
+	runner = CliRunner()
+
+	result: Result = runner.invoke(main, catch_exceptions=False, args=["-h"])
+	check_file_regression(result.stdout, file_regression)
+
+	result: Result = runner.invoke(main, catch_exceptions=False, args=["--help"])
+	check_file_regression(result.stdout, file_regression)

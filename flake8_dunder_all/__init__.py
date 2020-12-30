@@ -37,6 +37,7 @@ from typing import Any, Generator, List, Set, Tuple, Type, Union
 # 3rd party
 from consolekit.terminal_colours import Fore
 from domdf_python_tools.paths import PathPlus
+from domdf_python_tools.typing import PathLike
 from domdf_python_tools.utils import stderr_writer
 
 # this package
@@ -218,7 +219,7 @@ class Plugin:
 			yield 0, 0, DALL000, type(self)
 
 
-def check_and_add_all(filename: PathPlus, quote_type: str = '"') -> int:
+def check_and_add_all(filename: PathLike, quote_type: str = '"') -> int:
 	"""
 	Check the given filename for the presence of a ``__all__`` declaration, and add one if none is found.
 
