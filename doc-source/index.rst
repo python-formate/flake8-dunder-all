@@ -136,38 +136,8 @@ Installation
 
 .. end installation
 
-
-Usage
---------
-
-This library provides the Flake8 plugin ``flake8-dunder-all`` as well as the
-``ensure-dunder-all`` script which adds ``__all__`` to files that require it.
-
-
-Using the Flake8 plugin as a pre-commit hook
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This will only check for missing ``__all__`` variables but won't add them.
-
-See `pre-commit <https://github.com/pre-commit/pre-commit>`_ for instructions
-
-Sample ``.pre-commit-config.yaml``:
-
-.. pre-commit:flake8:: 0.1.3
-
-
-Using the script as a pre-commit hook
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This will add ``__all__`` variables to files that require them and prevent the commit if any changes were made.
-
-See `pre-commit <https://github.com/pre-commit/pre-commit>`_ for instructions
-
-Sample ``.pre-commit-config.yaml``:
-
-.. pre-commit::
-	:rev: v0.1.3
-
+Contents
+-------------
 
 .. toctree::
 	:hidden:
@@ -178,14 +148,8 @@ Sample ``.pre-commit-config.yaml``:
 	:maxdepth: 3
 	:caption: Documentation
 
-	plugin
-	script
-	API Reference<docs>
-
-.. toctree::
-	:maxdepth: 3
-	:caption: Contributing
-
+	usage
+	docs
 	contributing
 	Source
 

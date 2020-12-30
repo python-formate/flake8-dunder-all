@@ -62,7 +62,7 @@ class Visitor(ast.NodeVisitor):
 		:func:`flake8_dunder_all.utils.mark_text_ranges``.
 	"""
 
-	found_all: bool  #: Flag to indicate a ``__all__`` variable has been found in the AST.
+	found_all: bool  #: Flag to indicate a ``__all__`` declaration has been found in the AST.
 	last_import: int  #: The lineno of the last top-level import
 	members: Set[str]  #: List of functions and classed defined in the AST
 	use_endlineno: bool
@@ -220,12 +220,12 @@ class Plugin:
 
 def check_and_add_all(filename: PathPlus, quote_type: str = '"') -> int:
 	"""
-	Check the given filename for the presence of a ``__all__`` variable, and add one if none is found.
+	Check the given filename for the presence of a ``__all__`` declaration, and add one if none is found.
 
 	:param filename: The filename of the Python source file (``.py``) to check.
 	:param quote_type: The type of quote to use for strings.
 
-	:returns: ``0`` if the file already contains a ``__all__`` variable or has no function or class definitions;
+	:returns: ``0`` if the file already contains a ``__all__`` declaration or has no function or class definitions;
 		``1`` otherwise. ``4`` indicates an error parsing the file.
 	"""
 

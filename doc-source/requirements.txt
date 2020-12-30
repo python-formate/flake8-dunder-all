@@ -1,7 +1,7 @@
 autodocsumm>=0.2.0
 default-values>=0.4.2
-domdf-sphinx-theme>=0.3.0
 extras-require>=0.2.0
+furo>=2020.11.19b18
 pyyaml>=5.3.1
 repo-helper-sphinx-theme>=0.0.2
 seed-intersphinx-mapping>=0.3.1
