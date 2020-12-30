@@ -44,7 +44,7 @@ __all__ = ["main"]
 
 class RawHelpCommand(click.Command):
 	"""
-	Subclass of :class:`click.Command1 which leaves the help text unformatted.
+	Subclass of :class:`click.Command` which leaves the help text unformatted.
 	"""
 
 	def format_help_text(self, ctx, formatter: click.formatting.HelpFormatter):

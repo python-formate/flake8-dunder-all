@@ -40,10 +40,12 @@ extra_sphinx_extensions:
  - sphinx_toolbox.flake8
  - sphinx_click
 
-
 entry_points:
   flake8.extension:
    - DUNDER_ALL=flake8_dunder_all:Plugin
 
 sphinx_html_theme: furo
 standalone_contrib_guide: true
+
+keywords:
+ - flake8
