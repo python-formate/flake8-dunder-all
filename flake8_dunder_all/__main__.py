@@ -66,8 +66,8 @@ def main(filenames: Iterable[str], quote_type: str = '"') -> int:
 
 	Exit codes:
 
-	* 0: The file already contains a '__all__' declaration or has no function or class definitions
-	* 1: A '__all__' declaration. was added to the file.
+	* 0: The file already contains a '__all__' declaration or has no function or class definitions.
+	* 1: A '__all__' declaration was added to the file.
 	* 4: A file could not be parsed due to a syntax error.
 	* 5: Bitwise OR of 1 and 4.
 	"""

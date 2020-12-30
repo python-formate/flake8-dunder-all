@@ -185,7 +185,7 @@ class Visitor(ast.NodeVisitor):
 
 class Plugin:
 	"""
-	A Flake8 plugin which checks to ensure modules have defined '__all__'.
+	A Flake8 plugin which checks to ensure modules have defined ``__all__``.
 
 	:param tree: The abstract syntax tree (AST) to check.
 	"""
@@ -241,6 +241,7 @@ def check_and_add_all(filename: PathLike, quote_type: str = '"') -> int:
 		tree = ast.parse(source)
 		if sys.version_info < (3, 8):  # pragma: no cover (<py38)
 			mark_text_ranges(tree, source)
+
 	except SyntaxError:
 		stderr_writer(Fore.RED(f"'{filename}' does not appear to be a valid Python source file."))
 		return 4
