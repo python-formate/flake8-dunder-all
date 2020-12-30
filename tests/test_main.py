@@ -121,5 +121,5 @@ def test_main_help(capsys, file_regression: FileRegressionFixture):
 	result: Result = runner.invoke(main, catch_exceptions=False, args=["-h"])
 	check_file_regression(result.stdout, file_regression)
 
-	result: Result = runner.invoke(main, catch_exceptions=False, args=["--help"])
+	result = runner.invoke(main, catch_exceptions=False, args=["--help"])
 	check_file_regression(result.stdout, file_regression)

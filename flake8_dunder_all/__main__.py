@@ -53,7 +53,7 @@ class RawHelpCommand(click.Command):
 		"""
 
 		formatter.write('\n')
-		formatter.write(indent(self.help.replace("* ", "  "), "  "))
+		formatter.write(indent((self.help or '').replace("* ", "  "), "  "))
 		formatter.write('\n')
 
 
