@@ -1,5 +1,5 @@
 asttokens>=1.1
 click>=7.1.2
-consolekit>=0.7.0
-domdf-python-tools>=0.4.10
+consolekit>=0.8.1
+domdf-python-tools>=1.8.0
 flake8>=3.7
