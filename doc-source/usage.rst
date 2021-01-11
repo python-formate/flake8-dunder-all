@@ -35,7 +35,7 @@ See `pre-commit <https://github.com/pre-commit/pre-commit>`_ for instructions
 
 Sample ``.pre-commit-config.yaml``:
 
-.. pre-commit:flake8:: 0.1.3
+.. pre-commit:flake8:: 0.1.5
 
 
 Using the script as a pre-commit hook
@@ -43,9 +43,9 @@ Using the script as a pre-commit hook
 
 This will add ``__all__`` to files that require them and prevent the commit if any changes were made.
 
-See `pre-commit <https://github.com/pre-commit/pre-commit>`_ for instructions
+See `pre-commit <https://github.com/pre-commit/pre-commit>`_ for instructions.
 
 Sample ``.pre-commit-config.yaml``:
 
 .. pre-commit::
-	:rev: v0.1.3
+	:rev: v0.1.5
