@@ -1,3 +1,4 @@
+# Configuration for 'repo_helper' (https://github.com/domdfcoding/repo_helper)
 ---
 modname: flake8-dunder-all
 copyright_years: "2020-2021"
@@ -18,12 +19,11 @@ python_deploy_version: 3.6
 python_versions:
  - '3.6'
  - '3.7'
- - "3.8"
+ - '3.8'
  - '3.9'
- - "3.10-dev"
- - "pypy3"
-
-# travis secure password for PyPI
+ - 3.10-dev
+ - pypy3
+ - rustpython
 
 classifiers:
  - 'Development Status :: 4 - Beta'
