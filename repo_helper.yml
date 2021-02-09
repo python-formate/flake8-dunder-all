@@ -10,7 +10,6 @@ license: 'MIT'
 short_desc: "A Flake8 plugin and pre-commit hook which checks to ensure modules have defined '__all__'."
 
 conda_channels:
- - domdfcoding
  - conda-forge
 
 python_deploy_version: 3.6
@@ -23,7 +22,6 @@ python_versions:
  - '3.9'
  - 3.10-dev
  - pypy3
- - rustpython
 
 classifiers:
  - 'Development Status :: 4 - Beta'
