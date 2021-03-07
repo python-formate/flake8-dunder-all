@@ -32,7 +32,7 @@ A Flake8 plugin and pre-commit hook which checks to ensure modules have defined 
 # stdlib
 import ast
 import sys
-from typing import Any, Generator, List, Set, Tuple, Type, Union
+from typing import Any, Generator, Set, Tuple, Type, Union
 
 # 3rd party
 from consolekit.terminal_colours import Fore
@@ -51,7 +51,7 @@ __email__: str = "dominic@davis-foster.co.uk"
 
 __all__ = ["Visitor", "Plugin", "check_and_add_all", "DALL000"]
 
-DALL000 = "DALL000 Module lacks __all__."  # noqa: E501
+DALL000 = "DALL000 Module lacks __all__."
 
 
 class Visitor(ast.NodeVisitor):
