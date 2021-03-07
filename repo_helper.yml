@@ -13,6 +13,9 @@ conda_channels:
  - conda-forge
 
 python_deploy_version: 3.6
+use_whey: True
+sphinx_html_theme: furo
+standalone_contrib_guide: true
 
 # Versions to run tests for
 python_versions:
@@ -41,9 +44,6 @@ extra_sphinx_extensions:
 entry_points:
   flake8.extension:
    - DUNDER_ALL=flake8_dunder_all:Plugin
-
-sphinx_html_theme: furo
-standalone_contrib_guide: true
 
 keywords:
  - flake8
