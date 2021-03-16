@@ -46,7 +46,7 @@ from flake8_dunder_all.utils import get_docstring_lineno, mark_text_ranges
 __author__: str = "Dominic Davis-Foster"
 __copyright__: str = "2020 Dominic Davis-Foster"
 __license__: str = "MIT"
-__version__: str = "0.1.5"
+__version__: str = "0.1.6"
 __email__: str = "dominic@davis-foster.co.uk"
 
 __all__ = ["Visitor", "Plugin", "check_and_add_all", "DALL000"]

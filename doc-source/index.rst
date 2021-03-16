@@ -105,7 +105,7 @@ flake8-dunder-all
 		:alt: GitHub top language
 
 	.. |commits-since| github-shield::
-		:commits-since: v0.1.5
+		:commits-since: v0.1.6
 		:alt: GitHub commits since tagged version
 
 	.. |commits-latest| github-shield::
