@@ -1,6 +1,0 @@
-include __pkginfo__.py
-include LICENSE
-include requirements.txt
-prune **/__pycache__
-recursive-include flake8_dunder_all *.pyi
-include flake8_dunder_all/py.typed
