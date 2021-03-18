@@ -154,14 +154,13 @@ To install with ``conda``:
 
 .. end installation
 
-flake8 codes
+Flake8 codes
 --------------
 
 ============== ====================================
 Code           Description
 ============== ====================================
-STRFTIME001    Linux-specific strftime code used
-STRFTIME002    Windows-specific strftime code used
+DALL000        Module lacks __all__.
 ============== ====================================
 
 
@@ -178,4 +177,11 @@ Sample ``.pre-commit-config.yaml``:
 	   rev: 3.8.1
 	   hooks:
 	    - id: flake8
-	      additional_dependencies: [flake8-strftime==0.1.6]
+	      additional_dependencies: [flake8-dunder-all==0.1.6]
+
+``ensure-dunder-all`` script
+
+There is also a script which will automatically add __all__ for files which don't have it.
+
+See `the documentation <https://flake8-dunder-all.readthedocs.io/en/latest/usage.html#ensure-dunder-all-script>`_
+for details.
