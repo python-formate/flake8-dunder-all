@@ -5,7 +5,7 @@ exclude: ^$
 
 repos:
  - repo: https://github.com/pre-commit/pre-commit-hooks
-   rev: v3.4.0
+   rev: v4.1.0
    hooks:
     - id: check-added-large-files
     - id: check-ast
@@ -25,7 +25,7 @@ repos:
     - id: end-of-file-fixer
 
  - repo: https://github.com/domdfcoding/pre-commit-hooks
-   rev: v0.2.1
+   rev: v0.3.0
    hooks:
     - id: requirements-txt-sorter
       args:
@@ -41,12 +41,12 @@ repos:
       files: ^flake8_dunder_all/.*\.py$
 
  - repo: https://github.com/domdfcoding/flake2lint
-   rev: v0.4.0
+   rev: v0.4.1
    hooks:
     - id: flake2lint
 
  - repo: https://github.com/pre-commit/pygrep-hooks
-   rev: v1.8.0
+   rev: v1.9.0
    hooks:
     - id: python-no-eval
     - id: rst-backticks
@@ -54,7 +54,7 @@ repos:
     - id: rst-inline-touching-normal
 
  - repo: https://github.com/asottile/pyupgrade
-   rev: v2.12.0
+   rev: v2.31.0
    hooks:
     - id: pyupgrade
       args:
@@ -62,13 +62,13 @@ repos:
        - --keep-runtime-typing
 
  - repo: https://github.com/Lucas-C/pre-commit-hooks
-   rev: v1.1.9
+   rev: v1.1.10
    hooks:
     - id: remove-crlf
     - id: forbid-crlf
 
  - repo: https://github.com/repo-helper/formate
-   rev: v0.4.3
+   rev: v0.4.9
    hooks:
     - id: formate
       exclude: ^(doc-source/conf|__pkginfo__|make_conda_recipe|setup)\.(_)?py$
