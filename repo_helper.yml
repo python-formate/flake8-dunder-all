@@ -41,6 +41,9 @@ extra_sphinx_extensions:
  - sphinx_toolbox.pre_commit
  - sphinx_toolbox.flake8
  - sphinx_click
+ - html_section
+ - sphinx_toolbox_experimental.needspace
+ - sphinx_toolbox_experimental.autosummary_widths
 
 entry_points:
   flake8.extension:
@@ -48,3 +51,6 @@ entry_points:
 
 keywords:
  - flake8
+
+sphinx_conf_epilogue:
+ - autosummary_widths_builders = ["latex"]

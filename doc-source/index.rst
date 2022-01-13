@@ -4,7 +4,8 @@ flake8-dunder-all
 
 .. start short_desc
 
-**A Flake8 plugin and pre-commit hook which checks to ensure modules have defined '__all__'.**
+.. documentation-summary::
+	:meta:
 
 .. end short_desc
 
@@ -27,7 +28,7 @@ flake8-dunder-all
 		* - Activity
 		  - |commits-latest| |commits-since| |maintained| |pypi-downloads|
 		* - QA
-		  - |codefactor| |actions_flake8| |actions_mypy| |pre_commit_ci|
+		  - |codefactor| |actions_flake8| |actions_mypy|
 		* - Other
 		  - |license| |language| |requires|
 
@@ -59,7 +60,8 @@ flake8-dunder-all
 		:workflow: mypy
 		:alt: mypy status
 
-	.. |requires| requires-io-shield::
+	.. |requires| image:: https://dependency-dash.herokuapp.com/github/domdfcoding/flake8-dunder-all/badge.svg
+		:target: https://dependency-dash.herokuapp.com/github/domdfcoding/flake8-dunder-all/
 		:alt: Requirements Status
 
 	.. |coveralls| coveralls-shield::
@@ -120,9 +122,6 @@ flake8-dunder-all
 		:downloads: month
 		:alt: PyPI - Downloads
 
-	.. |pre_commit_ci| pre-commit-ci-shield::
-		:alt: pre-commit.ci status
-
 .. end shields
 
 Installation
@@ -138,8 +137,12 @@ Installation
 
 .. end installation
 
+
 Contents
 -------------
+
+.. html-section::
+
 
 .. toctree::
 	:hidden:
@@ -148,12 +151,18 @@ Contents
 
 .. toctree::
 	:maxdepth: 3
-	:caption: Documentation
 
 	usage
 	docs
 	contributing
 	Source
+	license
+
+.. sidebar-links::
+	:caption: Links
+	:github:
+	:pypi: flake8-dunder-all
+
 
 .. start links
 
@@ -161,6 +170,6 @@ Contents
 
 	View the :ref:`Function Index <genindex>` or browse the `Source Code <_modules/index.html>`__.
 
-	`Browse the GitHub Repository <https://github.com/domdfcoding/flake8-dunder-all>`__
+	:github:repo:`Browse the GitHub Repository <domdfcoding/flake8-dunder-all>`
 
 .. end links

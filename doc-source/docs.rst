@@ -2,6 +2,8 @@
 API Reference
 =================
 
+.. autosummary-widths:: 4/10
+
 :mod:`flake8_dunder_all`
 -----------------------------------
 

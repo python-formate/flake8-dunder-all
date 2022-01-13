@@ -40,5 +40,100 @@ platforms = [ "Windows", "macOS", "Linux",]
 license-key = "MIT"
 package = "flake8_dunder_all"
 
+[tool.sphinx-pyproject]
+github_username = "domdfcoding"
+github_repository = "flake8-dunder-all"
+author = "Dominic Davis-Foster"
+project = "flake8-dunder-all"
+copyright = "2020-2022 Dominic Davis-Foster"
+language = "en"
+package_root = "flake8_dunder_all"
+extensions = [
+    "sphinx_toolbox",
+    "sphinx_toolbox.more_autodoc",
+    "sphinx_toolbox.more_autosummary",
+    "sphinx_toolbox.documentation_summary",
+    "sphinx_toolbox.tweaks.param_dash",
+    "sphinx_toolbox.tweaks.latex_layout",
+    "sphinx_toolbox.tweaks.latex_toc",
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.mathjax",
+    "sphinxcontrib.extras_require",
+    "sphinx.ext.todo",
+    "sphinxemoji.sphinxemoji",
+    "notfound.extension",
+    "sphinx_copybutton",
+    "sphinxcontrib.default_values",
+    "sphinxcontrib.toctree_plus",
+    "sphinx_debuginfo",
+    "sphinx_licenseinfo",
+    "seed_intersphinx_mapping",
+    "sphinx_toolbox.pre_commit",
+    "sphinx_toolbox.flake8",
+    "sphinx_click",
+    "html_section",
+    "sphinx_toolbox_experimental.needspace",
+    "sphinx_toolbox_experimental.autosummary_widths",
+]
+sphinxemoji_style = "twemoji"
+gitstamp_fmt = "%d %b %Y"
+templates_path = [ "_templates",]
+html_static_path = [ "_static",]
+source_suffix = ".rst"
+master_doc = "index"
+suppress_warnings = [ "image.nonlocal_uri",]
+pygments_style = "default"
+html_theme = "furo"
+html_theme_path = [ "../..",]
+html_show_sourcelink = true
+toctree_plus_types = [
+    "class",
+    "confval",
+    "data",
+    "directive",
+    "enum",
+    "exception",
+    "flag",
+    "function",
+    "namedtuple",
+    "protocol",
+    "role",
+    "typeddict",
+]
+add_module_names = false
+hide_none_rtype = true
+all_typevars = true
+overloads_location = "bottom"
+html_codeblock_linenos_style = "table"
+autodoc_exclude_members = [
+    "__dict__",
+    "__class__",
+    "__dir__",
+    "__weakref__",
+    "__module__",
+    "__annotations__",
+    "__orig_bases__",
+    "__parameters__",
+    "__subclasshook__",
+    "__init_subclass__",
+    "__attrs_attrs__",
+    "__init__",
+    "__new__",
+    "__getnewargs__",
+    "__abstractmethods__",
+    "__hash__",
+]
+
+[tool.mypy]
+python_version = "3.6"
+namespace_packages = true
+check_untyped_defs = true
+warn_unused_ignores = true
+no_implicit_optional = true
+show_error_codes = true
+
+[tool.snippet-fmt]
+directives = [ "code-block",]
+
 [project.entry-points."flake8.extension"]
 DALL = "flake8_dunder_all:Plugin"
