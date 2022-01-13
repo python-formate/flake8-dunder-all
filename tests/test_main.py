@@ -7,8 +7,7 @@ import pytest
 from click.testing import CliRunner, Result
 from consolekit.terminal_colours import Fore
 from domdf_python_tools.paths import PathPlus
-from domdf_python_tools.testing import check_file_regression
-from pytest_regressions.file_regression import FileRegressionFixture
+from coincidence.regressions import AdvancedFileRegressionFixture
 
 # this package
 from flake8_dunder_all.__main__ import main
@@ -115,11 +114,11 @@ def test_main_no_filenames(capsys):
 	assert result.stdout == ''
 
 
-def test_main_help(capsys, file_regression: FileRegressionFixture):
+def test_main_help(capsys, advanced_file_regression: AdvancedFileRegressionFixture):
 	runner = CliRunner()
 
 	result: Result = runner.invoke(main, catch_exceptions=False, args=["-h"])
-	check_file_regression(result.stdout, file_regression)
+	advanced_file_regression.check(result.stdout)
 
 	result = runner.invoke(main, catch_exceptions=False, args=["--help"])
-	check_file_regression(result.stdout, file_regression)
+	advanced_file_regression.check(result.stdout)
