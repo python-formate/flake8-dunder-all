@@ -16,6 +16,7 @@ python_deploy_version: 3.6
 use_whey: True
 sphinx_html_theme: furo
 standalone_contrib_guide: true
+min_coverage: 99
 
 # Versions to run tests for
 python_versions:
