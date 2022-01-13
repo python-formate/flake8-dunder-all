@@ -60,8 +60,8 @@ flake8-dunder-all
 		:workflow: mypy
 		:alt: mypy status
 
-	.. |requires| image:: https://dependency-dash.herokuapp.com/github/domdfcoding/flake8-dunder-all/badge.svg
-		:target: https://dependency-dash.herokuapp.com/github/domdfcoding/flake8-dunder-all/
+	.. |requires| image:: https://dependency-dash.herokuapp.com/github/python-formate/flake8-dunder-all/badge.svg
+		:target: https://dependency-dash.herokuapp.com/github/python-formate/flake8-dunder-all/
 		:alt: Requirements Status
 
 	.. |coveralls| coveralls-shield::
@@ -154,7 +154,6 @@ Contents
 
 	usage
 	docs
-	contributing
 	Source
 	license
 
@@ -163,6 +162,8 @@ Contents
 	:github:
 	:pypi: flake8-dunder-all
 
+	Contributing Guide<https://contributing-to-formate.readthedocs.io>
+
 
 .. start links
 
@@ -170,6 +171,6 @@ Contents
 
 	View the :ref:`Function Index <genindex>` or browse the `Source Code <_modules/index.html>`__.
 
-	:github:repo:`Browse the GitHub Repository <domdfcoding/flake8-dunder-all>`
+	:github:repo:`Browse the GitHub Repository <python-formate/flake8-dunder-all>`
 
 .. end links

@@ -5,9 +5,11 @@ copyright_years: "2020-2022"
 author: "Dominic Davis-Foster"
 email: "dominic@davis-foster.co.uk"
 version: "0.1.7"
-username: "domdfcoding"
+username: "python-formate"
+assignee: "domdfcoding"
 license: 'MIT'
 short_desc: "A Flake8 plugin and pre-commit hook which checks to ensure modules have defined '__all__'."
+primary_conda_channel: "domdfcoding"
 
 conda_channels:
  - conda-forge
@@ -17,6 +19,7 @@ use_whey: True
 sphinx_html_theme: furo
 standalone_contrib_guide: true
 min_coverage: 99
+preserve_custom_theme: true
 
 # Versions to run tests for
 python_versions:
@@ -56,3 +59,6 @@ keywords:
 
 sphinx_conf_epilogue:
  - autosummary_widths_builders = ["latex"]
+
+exclude_files:
+ - contributing
