@@ -26,7 +26,7 @@ flake8-dunder-all
 	* - Activity
 	  - |commits-latest| |commits-since| |maintained| |pypi-downloads|
 	* - QA
-	  - |codefactor| |actions_flake8| |actions_mypy| |pre_commit_ci|
+	  - |codefactor| |actions_flake8| |actions_mypy|
 	* - Other
 	  - |license| |language| |requires|
 
@@ -58,8 +58,8 @@ flake8-dunder-all
 	:target: https://github.com/domdfcoding/flake8-dunder-all/actions?query=workflow%3A%22mypy%22
 	:alt: mypy status
 
-.. |requires| image:: https://requires.io/github/domdfcoding/flake8-dunder-all/requirements.svg?branch=master
-	:target: https://requires.io/github/domdfcoding/flake8-dunder-all/requirements/?branch=master
+.. |requires| image:: https://dependency-dash.herokuapp.com/github/domdfcoding/flake8-dunder-all/badge.svg
+	:target: https://dependency-dash.herokuapp.com/github/domdfcoding/flake8-dunder-all/
 	:alt: Requirements Status
 
 .. |coveralls| image:: https://img.shields.io/coveralls/github/domdfcoding/flake8-dunder-all/master?logo=coveralls
@@ -115,10 +115,6 @@ flake8-dunder-all
 .. |pypi-downloads| image:: https://img.shields.io/pypi/dm/flake8-dunder-all
 	:target: https://pypi.org/project/flake8-dunder-all/
 	:alt: PyPI - Downloads
-
-.. |pre_commit_ci| image:: https://results.pre-commit.ci/badge/github/domdfcoding/flake8-dunder-all/master.svg
-	:target: https://results.pre-commit.ci/latest/github/domdfcoding/flake8-dunder-all/master
-	:alt: pre-commit.ci status
 
 .. end shields
 

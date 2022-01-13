@@ -9,9 +9,11 @@ description = "A Flake8 plugin and pre-commit hook which checks to ensure module
 readme = "README.rst"
 keywords = [ "flake8",]
 dynamic = [ "requires-python", "classifiers", "dependencies",]
+
 [[project.authors]]
-email = "dominic@davis-foster.co.uk"
 name = "Dominic Davis-Foster"
+email = "dominic@davis-foster.co.uk"
+
 
 [project.license]
 file = "LICENSE"
@@ -135,5 +137,30 @@ show_error_codes = true
 [tool.snippet-fmt]
 directives = [ "code-block",]
 
+[tool.mkrecipe]
+conda-channels = [ "conda-forge", "domdfcoding",]
+extras = "all"
+
 [project.entry-points."flake8.extension"]
 DALL = "flake8_dunder_all:Plugin"
+
+[tool.dependency-dash."requirements.txt"]
+order = 10
+
+[tool.dependency-dash."tests/requirements.txt"]
+order = 20
+include = false
+
+[tool.dependency-dash."doc-source/requirements.txt"]
+order = 30
+include = false
+
+[tool.snippet-fmt.languages.python]
+reformat = true
+
+[tool.snippet-fmt.languages.TOML]
+reformat = true
+
+[tool.snippet-fmt.languages.ini]
+
+[tool.snippet-fmt.languages.json]
