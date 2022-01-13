@@ -2,7 +2,7 @@
 import ast
 import re
 import sys
-from typing import List
+from typing import List, Set
 
 # 3rd party
 import pytest
@@ -52,7 +52,7 @@ from tests.common import (
 				pytest.param(testing_source_j, {"0:0: DALL000 Module lacks __all__."}, id="multiline import"),
 				]
 		)
-def test_plugin(source, expects):
+def test_plugin(source: str, expects: Set[str]):
 	assert results(source) == expects
 
 
@@ -82,7 +82,7 @@ def test_plugin(source, expects):
 				pytest.param(testing_source_j, ["a_function"], False, 2, id="multiline import"),
 				]
 		)
-def test_visitor(source, members, found_all, last_import):
+def test_visitor(source: str, members: List[str], found_all: bool, last_import: int):
 	visitor = Visitor()
 	visitor.visit(ast.parse(source))
 
@@ -117,7 +117,7 @@ def test_visitor(source, members, found_all, last_import):
 				pytest.param(testing_source_j, ["a_function"], False, 14, id="multiline import"),
 				]
 		)
-def test_visitor_endlineno(source, members, found_all, last_import):
+def test_visitor_endlineno(source: str, members: List[str], found_all: bool, last_import: int):
 	visitor = Visitor(True)
 	tree = ast.parse(source)
 	mark_text_ranges(tree, source)
@@ -150,8 +150,8 @@ def test_visitor_endlineno(source, members, found_all, last_import):
 				pytest.param(testing_source_l, [], 0, id="typing.overload"),
 				]
 		)
-def test_check_and_add_all(tmpdir, source, members: List[str], ret):
-	tmpfile = PathPlus(tmpdir) / "source.py"
+def test_check_and_add_all(tmp_pathplus: PathPlus, source: str, members: List[str], ret: int):
+	tmpfile = tmp_pathplus / "source.py"
 	tmpfile.write_text(source)
 
 	assert check_and_add_all(tmpfile) == ret
@@ -176,8 +176,8 @@ def test_check_and_add_all(tmpdir, source, members: List[str], ret):
 				pytest.param(testing_source_i, [], 1, id="lots of lines"),
 				]
 		)
-def test_check_and_add_all_single_quotes(tmpdir, source, members: List[str], ret):
-	tmpfile = PathPlus(tmpdir) / "source.py"
+def test_check_and_add_all_single_quotes(tmp_pathplus: PathPlus, source: str, members: List[str], ret: int):
+	tmpfile = tmp_pathplus / "source.py"
 	tmpfile.write_text(source)
 
 	assert check_and_add_all(tmpfile, quote_type="'") == ret
@@ -190,8 +190,8 @@ def test_check_and_add_all_single_quotes(tmpdir, source, members: List[str], ret
 @pytest.mark.parametrize("source, members", [
 		pytest.param(mangled_source, [], id="mangled"),
 		])
-def test_check_and_add_all_mangled(tmpdir, capsys, source, members):
-	tmpfile = PathPlus(tmpdir) / "source.py"
+def test_check_and_add_all_mangled(tmp_pathplus: PathPlus, capsys, source: str, members: List[str]):
+	tmpfile = tmp_pathplus / "source.py"
 	tmpfile.write_text(source)
 	assert check_and_add_all(tmpfile) == 4
 

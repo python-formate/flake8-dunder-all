@@ -5,9 +5,9 @@ from typing import List
 # 3rd party
 import pytest
 from click.testing import CliRunner, Result
+from coincidence.regressions import AdvancedFileRegressionFixture
 from consolekit.terminal_colours import Fore
 from domdf_python_tools.paths import PathPlus
-from coincidence.regressions import AdvancedFileRegressionFixture
 
 # this package
 from flake8_dunder_all.__main__ import main
@@ -45,8 +45,8 @@ from tests.test_flake8_dunder_all import (
 				pytest.param(testing_source_i, [], 1, id="lots of lines"),
 				]
 		)
-def test_main(tmpdir, source, members: List[str], ret):
-	tmpfile = PathPlus(tmpdir) / "source.py"
+def test_main(tmp_pathplus: PathPlus, source: str, members: List[str], ret: int):
+	tmpfile = tmp_pathplus / "source.py"
 	tmpfile.write_text(source)
 
 	runner = CliRunner()
@@ -72,8 +72,8 @@ def test_main(tmpdir, source, members: List[str], ret):
 				pytest.param(testing_source_i, [], 1, id="lots of lines"),
 				]
 		)
-def test_main_single_quotes(capsys, tmpdir, source, members: List[str], ret):
-	tmpfile = PathPlus(tmpdir) / "source.py"
+def test_main_single_quotes(capsys, tmp_pathplus: PathPlus, source: str, members: List[str], ret: int):
+	tmpfile = tmp_pathplus / "source.py"
 	tmpfile.write_text(source)
 
 	runner = CliRunner()
@@ -90,8 +90,8 @@ def test_main_single_quotes(capsys, tmpdir, source, members: List[str], ret):
 @pytest.mark.parametrize("source, members", [
 		pytest.param(mangled_source, [], id="mangled"),
 		])
-def test_main_mangled(tmpdir, capsys, source, members):
-	tmpfile = PathPlus(tmpdir) / "source.py"
+def test_main_mangled(tmp_pathplus: PathPlus, capsys, source: str, members: List[str]):
+	tmpfile = tmp_pathplus / "source.py"
 	tmpfile.write_text(source)
 
 	runner = CliRunner(mix_stderr=False)

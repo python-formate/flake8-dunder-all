@@ -5,7 +5,7 @@ import ast
 from flake8_dunder_all import Plugin
 
 
-def results(s):
+def results(s: str):
 	return {"{}:{}: {}".format(*r) for r in Plugin(ast.parse(s)).run()}
 
 
