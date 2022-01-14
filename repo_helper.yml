@@ -17,7 +17,6 @@ conda_channels:
 python_deploy_version: 3.6
 use_whey: True
 sphinx_html_theme: furo
-standalone_contrib_guide: true
 min_coverage: 99
 preserve_custom_theme: true
 
@@ -46,7 +45,6 @@ extra_sphinx_extensions:
  - sphinx_toolbox.pre_commit
  - sphinx_toolbox.flake8
  - sphinx_click
- - html_section
  - sphinx_toolbox_experimental.needspace
  - sphinx_toolbox_experimental.autosummary_widths
 

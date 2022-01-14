@@ -74,7 +74,6 @@ extensions = [
     "sphinx_toolbox.pre_commit",
     "sphinx_toolbox.flake8",
     "sphinx_click",
-    "html_section",
     "sphinx_toolbox_experimental.needspace",
     "sphinx_toolbox_experimental.autosummary_widths",
 ]
