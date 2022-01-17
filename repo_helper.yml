@@ -30,6 +30,7 @@ python_versions:
  - 3.11-dev
  - pypy36
  - pypy37
+ - pypy38
 
 classifiers:
  - 'Development Status :: 4 - Beta'
