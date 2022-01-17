@@ -216,7 +216,7 @@ class Plugin:
 		elif not visitor.members:
 			return
 		else:
-			yield 0, 0, DALL000, type(self)
+			yield 1, 0, DALL000, type(self)
 
 
 def check_and_add_all(filename: PathLike, quote_type: str = '"') -> int:
