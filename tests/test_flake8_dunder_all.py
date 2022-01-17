@@ -36,20 +36,20 @@ from tests.common import (
 				pytest.param("import foo", set(), id="just an import"),
 				pytest.param('"""a docstring"""', set(), id="just a docstring"),
 				pytest.param(testing_source_a, set(), id="import and docstring"),
-				pytest.param(testing_source_b, {"0:0: DALL000 Module lacks __all__."}, id="function no __all__"),
-				pytest.param(testing_source_c, {"0:0: DALL000 Module lacks __all__."}, id="class no __all__"),
+				pytest.param(testing_source_b, {"1:0: DALL000 Module lacks __all__."}, id="function no __all__"),
+				pytest.param(testing_source_c, {"1:0: DALL000 Module lacks __all__."}, id="class no __all__"),
 				pytest.param(
-						testing_source_d, {"0:0: DALL000 Module lacks __all__."},
+						testing_source_d, {"1:0: DALL000 Module lacks __all__."},
 						id="function and class no __all__"
 						),
 				pytest.param(testing_source_e, set(), id="function and class with __all__"),
 				pytest.param(testing_source_f, set(), id="function and class with __all__ and extra variable"),
 				pytest.param(
-						testing_source_g, {"0:0: DALL000 Module lacks __all__."}, id="async function no __all__"
+						testing_source_g, {"1:0: DALL000 Module lacks __all__."}, id="async function no __all__"
 						),
 				pytest.param(testing_source_h, set(), id="from import"),
-				pytest.param(testing_source_i, {"0:0: DALL000 Module lacks __all__."}, id="lots of lines"),
-				pytest.param(testing_source_j, {"0:0: DALL000 Module lacks __all__."}, id="multiline import"),
+				pytest.param(testing_source_i, {"1:0: DALL000 Module lacks __all__."}, id="lots of lines"),
+				pytest.param(testing_source_j, {"1:0: DALL000 Module lacks __all__."}, id="multiline import"),
 				]
 		)
 def test_plugin(source: str, expects: Set[str]):
