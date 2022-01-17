@@ -249,11 +249,12 @@ def check_and_add_all(filename: PathLike, quote_type: str = '"') -> int:
 		source = filename.read_text()
 		for line in source.splitlines():
 			noqas = find_noqa(line)
-			if noqas is not None and "DALL000" in noqas.group(1).upper().split(','):
-				return 0
+			if noqas is not None:
+				if "DALL000" in noqas.group(1).rstrip().upper().split(','):
+					return 0
 
 		tree = ast.parse(source)
-		if sys.version_info < (3, 8):  # pragma: no cover (<py38)
+		if sys.version_info < (3, 8):  # pragma: no cover (py38+)
 			mark_text_ranges(tree, source)
 
 	except SyntaxError:
