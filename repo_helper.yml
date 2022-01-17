@@ -17,7 +17,7 @@ conda_channels:
 python_deploy_version: 3.6
 use_whey: True
 sphinx_html_theme: furo
-min_coverage: 99
+min_coverage: 100
 preserve_custom_theme: true
 
 # Versions to run tests for
