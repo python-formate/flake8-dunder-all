@@ -5,7 +5,7 @@
 A Flake8 plugin and pre-commit hook which checks to ensure modules have defined ``__all__``.
 """
 #
-#  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
+#  Copyright (c) 2020-2022 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
 #  Based on flake8_2020
 #  Copyright (c) 2019 Anthony Sottile
@@ -39,6 +39,7 @@ from consolekit.terminal_colours import Fore
 from domdf_python_tools.paths import PathPlus
 from domdf_python_tools.typing import PathLike
 from domdf_python_tools.utils import stderr_writer
+from flake8.style_guide import find_noqa  # type: ignore
 
 # this package
 from flake8_dunder_all.utils import get_docstring_lineno, mark_text_ranges
@@ -226,8 +227,16 @@ def check_and_add_all(filename: PathLike, quote_type: str = '"') -> int:
 	:param filename: The filename of the Python source file (``.py``) to check.
 	:param quote_type: The type of quote to use for strings.
 
-	:returns: ``0`` if the file already contains a ``__all__`` declaration or has no function or class definitions;
-		``1`` otherwise. ``4`` indicates an error parsing the file.
+	:returns:
+
+	* ``0`` if the file already contains a ``__all__`` declaration,
+	  has no function or class definitions, or has a ``  # noqa: DALL000  ` comment.
+	* ``1`` If ``__all__`` is absent.
+	* ``4`` if an error was encountered when parsing the file.
+
+	.. versionchanged:: 0.2.0
+
+		Now returns ``0`` and doesn't add ``__all__`` if the file contains a ``  # noqa: DALL000  ` comment.
 	"""
 
 	quotes = {"'", '"'}
@@ -238,6 +247,11 @@ def check_and_add_all(filename: PathLike, quote_type: str = '"') -> int:
 
 	try:
 		source = filename.read_text()
+		for line in source.splitlines():
+			noqas = find_noqa(line)
+			if noqas is not None and "DALL000" in noqas.group(1).upper().split(','):
+				return 0
+
 		tree = ast.parse(source)
 		if sys.version_info < (3, 8):  # pragma: no cover (<py38)
 			mark_text_ranges(tree, source)
