@@ -12,6 +12,21 @@ Flake8 codes
 .. flake8-codes:: flake8_dunder_all
 
 	DALL000
+	DALL001
+	DALL002
+
+
+For the ``DALL001`` option there exists a configuration option (``dunder-all-alphabetical``)
+which controls the alphabetical grouping expected of ``__all__``.
+The options are:
+
+* ``ignore`` -- ``__all__`` should be sorted alphabetically ignoring case, e.g. ``['bar', 'Baz', 'foo']``
+* ``lower`` -- group lowercase names first, then uppercase names, e.g. ``['bar', 'foo', 'Baz']``
+* ``upper`` -- group uppercase names first, then uppercase names, e.g. ``['Baz', 'Foo', 'bar']``
+
+If the ``dunder-all-alphabetical`` option is omitted the ``DALL001`` check is disabled.
+
+.. versionchanged:: 0.5.0  Added the ``DALL001`` and ``DALL002`` checks.
 
 .. note::
 
