@@ -236,7 +236,7 @@ def check_and_add_all(filename: PathLike, quote_type: str = '"') -> int:
 
 	.. versionchanged:: 0.2.0
 
-		Now returns ``0`` and doesn't add ``__all__`` if the file contains a ``  # noqa: DALL000  ` comment.
+		Now returns ``0`` and doesn't add ``__all__`` if the file contains a ``# noqa: DALL000`` comment.
 	"""
 
 	quotes = {"'", '"'}
