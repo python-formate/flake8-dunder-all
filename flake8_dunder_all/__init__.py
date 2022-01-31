@@ -33,7 +33,7 @@ A Flake8 plugin and pre-commit hook which checks to ensure modules have defined 
 import ast
 import sys
 from enum import Enum
-from typing import Any, Generator, Optional, Sequence, Set, Tuple, Type, Union, cast
+from typing import Any, Generator, List, Optional, Sequence, Set, Tuple, Type, Union, cast
 
 # 3rd party
 import natsort
@@ -327,7 +327,7 @@ def check_and_add_all(filename: PathLike, quote_type: str = '"') -> int:
 
 	.. versionchanged:: 0.2.0
 
-		Now returns ``0`` and doesn't add ``__all__`` if the file contains a ``# noqa: DALL000`` comment.
+		Now returns ``0`` and doesn't add ``__all__`` if the file contains a ``noqa: DALL000`` comment.
 	"""
 
 	quotes = {"'", '"'}
@@ -341,7 +341,8 @@ def check_and_add_all(filename: PathLike, quote_type: str = '"') -> int:
 		for line in source.splitlines():
 			noqas = find_noqa(line)
 			if noqas is not None:
-				if "DALL000" in noqas.group(1).rstrip().upper().split(','):
+				noqa_list: List[str] = noqas.group(1).rstrip().upper().split(',')
+				if "DALL000" in noqa_list:
 					return 0
 
 		tree = ast.parse(source)
