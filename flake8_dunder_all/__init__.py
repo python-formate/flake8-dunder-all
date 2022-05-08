@@ -39,7 +39,7 @@ from consolekit.terminal_colours import Fore
 from domdf_python_tools.paths import PathPlus
 from domdf_python_tools.typing import PathLike
 from domdf_python_tools.utils import stderr_writer
-from flake8.style_guide import find_noqa  # type: ignore
+from flake8.style_guide import find_noqa  # type: ignore[import]
 
 # this package
 from flake8_dunder_all.utils import get_docstring_lineno, mark_text_ranges
@@ -157,8 +157,8 @@ class Visitor(ast.NodeVisitor):
 		"""
 
 		if self.use_endlineno:
-			if not node.col_offset and node.end_lineno > self.last_import:  # type: ignore
-				self.last_import = node.end_lineno  # type: ignore
+			if not node.col_offset and node.end_lineno > self.last_import:  # type: ignore[union-attr]
+				self.last_import = node.end_lineno  # type: ignore[union-attr]
 		else:
 			if not node.col_offset and node.lineno > self.last_import:
 				self.last_import = node.lineno
