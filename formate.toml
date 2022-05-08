@@ -32,7 +32,7 @@ use_parentheses = true
 remove_redundant_aliases = true
 default_section = "THIRDPARTY"
 known_third_party = [
-    "asttokens",
+    "astatine",
     "click",
     "coincidence",
     "consolekit",

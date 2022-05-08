@@ -1,4 +1,4 @@
-asttokens>=1.1
+astatine>=0.3.1
 click>=7.1.2
 consolekit>=0.8.1
 domdf-python-tools>=2.6.0

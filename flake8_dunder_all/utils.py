@@ -45,7 +45,7 @@ from textwrap import dedent
 from typing import Optional, Union
 
 # 3rd party
-from asttokens.asttokens import ASTTokens  # type: ignore
+from astatine import mark_text_ranges
 
 __all__ = ["get_docstring_lineno", "tidy_docstring", "mark_text_ranges"]
 
@@ -84,24 +84,3 @@ def tidy_docstring(docstring: Optional[str]) -> str:
 	docstring = re.sub("``([^`]*)``", r"'\1'", docstring)
 
 	return f"\n{docstring}"
-
-
-def mark_text_ranges(node: ast.AST, source: str):
-	"""
-	Node is an AST, source is corresponding source as string.
-	Function adds recursively attributes end_lineno and end_col_offset to each node
-	which has attributes lineno and col_offset.
-
-	:param node:
-	:param source: The corresponding source code for the node.
-	"""
-
-	ASTTokens(source, tree=node)
-
-	for child in ast.walk(node):
-		if hasattr(child, "last_token"):
-			child.end_lineno, child.end_col_offset = child.last_token.end  # type: ignore
-
-			if hasattr(child, "lineno"):
-				# Fixes problems with some nodes like binop
-				child.lineno, child.col_offset = child.first_token.start  # type: ignore
