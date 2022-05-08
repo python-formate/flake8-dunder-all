@@ -18,7 +18,6 @@ python_deploy_version: 3.6
 use_whey: True
 sphinx_html_theme: furo
 min_coverage: 100
-preserve_custom_theme: true
 
 # Versions to run tests for
 python_versions:
@@ -46,8 +45,8 @@ extra_sphinx_extensions:
  - sphinx_toolbox.pre_commit
  - sphinx_toolbox.flake8
  - sphinx_click
- - sphinx_toolbox_experimental.needspace
- - sphinx_toolbox_experimental.autosummary_widths
+ - sphinx_toolbox.more_autosummary.column_widths
+ - sphinx-favicon
 
 entry_points:
   flake8.extension:
@@ -57,7 +56,8 @@ keywords:
  - flake8
 
 sphinx_conf_epilogue:
- - autosummary_widths_builders = ["latex"]
+ - needspace_amount = r"5\baselineskip"
+ - 'favicons = [{"rel": "icon", "href": "https://python-formate.github.io/assets/formate.ico",  "sizes": "48x48", "type": "image/vnd.microsoft.icon"}]'
 
 exclude_files:
  - contributing

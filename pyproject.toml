@@ -74,8 +74,8 @@ extensions = [
     "sphinx_toolbox.pre_commit",
     "sphinx_toolbox.flake8",
     "sphinx_click",
-    "sphinx_toolbox_experimental.needspace",
-    "sphinx_toolbox_experimental.autosummary_widths",
+    "sphinx_toolbox.more_autosummary.column_widths",
+    "sphinx-favicon",
 ]
 sphinxemoji_style = "twemoji"
 gitstamp_fmt = "%d %b %Y"

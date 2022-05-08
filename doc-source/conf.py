@@ -77,4 +77,10 @@ def setup(app):
 	app.connect("config-inited", lambda app, config: better_header_layout(config))
 
 
-autosummary_widths_builders = ["latex"]
+needspace_amount = r"5\baselineskip"
+favicons = [{
+		"rel": "icon",
+		"href": "https://python-formate.github.io/assets/formate.ico",
+		"sizes": "48x48",
+		"type": "image/vnd.microsoft.icon"
+		}]
