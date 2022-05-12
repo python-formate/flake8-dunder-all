@@ -250,9 +250,10 @@ def check_and_add_all(filename: PathLike, quote_type: str = '"') -> int:
 		for line in source.splitlines():
 			noqas = find_noqa(line)
 			if noqas is not None:
-				noqa_list: List[str] = noqas.group(1).rstrip().upper().split(',')
-				if "DALL000" in noqa_list:
-					return 0
+				if noqas["codes"]:
+					noqa_list: List[str] = noqas["codes"].rstrip().upper().split(',')
+					if "DALL000" in noqa_list:
+						return 0
 
 		tree = ast.parse(source)
 		if sys.version_info < (3, 8):  # pragma: no cover (py38+)

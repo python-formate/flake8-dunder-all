@@ -49,6 +49,7 @@ from tests.test_flake8_dunder_all import (
 						0,
 						id="async function no __all__ and noqa",
 						),
+				pytest.param(f"  # noqa  \n{testing_source_g}", ["a_function"], 1, id="async function no __all__"),
 				]
 		)
 def test_main(tmp_pathplus: PathPlus, source: str, members: List[str], ret: int):
