@@ -47,7 +47,7 @@ from typing import Optional, Union
 # 3rd party
 from astatine import mark_text_ranges
 
-__all__ = ["get_docstring_lineno", "tidy_docstring", "mark_text_ranges"]
+__all__ = ("get_docstring_lineno", "tidy_docstring", "mark_text_ranges")
 
 
 def get_docstring_lineno(node: Union[ast.FunctionDef, ast.ClassDef, ast.Module]) -> Optional[int]:

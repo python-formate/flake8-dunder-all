@@ -39,13 +39,13 @@ from consolekit.options import auto_default_option
 # this package
 from flake8_dunder_all import check_and_add_all
 
-__all__ = ["main"]
+__all__ = ("main", )
 
 
 @click.argument("filenames", type=click.STRING, nargs=-1, metavar="FILENAME")
 @auto_default_option("--quote-type", type=click.STRING, help="The type of quote to use.", show_default=True)
 @click_command(cls=MarkdownHelpCommand)
-def main(filenames: Iterable[str], quote_type: str = '"'):
+def main(filenames: Iterable[str], quote_type: str = '"') -> None:
 	"""
 	Given a list of Python source files, check each file defines ``__all__``.
 

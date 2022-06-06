@@ -1,11 +1,12 @@
 # stdlib
 import ast
+from typing import Set
 
 # this package
 from flake8_dunder_all import Plugin
 
 
-def results(s: str):
+def results(s: str) -> Set[str]:
 	return {"{}:{}: {}".format(*r) for r in Plugin(ast.parse(s)).run()}
 
 

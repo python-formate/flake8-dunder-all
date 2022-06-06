@@ -50,7 +50,7 @@ __license__: str = "MIT"
 __version__: str = "0.2.1"
 __email__: str = "dominic@davis-foster.co.uk"
 
-__all__ = ["Visitor", "Plugin", "check_and_add_all", "DALL000"]
+__all__ = ("Visitor", "Plugin", "check_and_add_all", "DALL000")
 
 DALL000 = "DALL000 Module lacks __all__."
 
@@ -75,7 +75,7 @@ class Visitor(ast.NodeVisitor):
 		self.last_import = 0
 		self.use_endlineno = use_endlineno
 
-	def visit_Name(self, node: ast.Name):
+	def visit_Name(self, node: ast.Name) -> None:
 		"""
 		Visit a variable.
 
@@ -87,7 +87,7 @@ class Visitor(ast.NodeVisitor):
 		else:
 			self.generic_visit(node)
 
-	def handle_def(self, node: Union[ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef]):
+	def handle_def(self, node: Union[ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef]) -> None:
 		"""
 		Handles ``def foo(): ...``, ``async def foo(): ...`` and ``class Foo: ...``.
 
@@ -96,10 +96,13 @@ class Visitor(ast.NodeVisitor):
 
 		decorators = []
 
+		NameNode, AttributeNode = ast.Name, ast.Attribute
+
 		for deco in node.decorator_list:
-			if isinstance(deco, ast.Name):
+			# pylint: disable =
+			if isinstance(deco, NameNode):
 				decorators.append(deco.id)
-			elif isinstance(deco, ast.Attribute):
+			elif isinstance(deco, AttributeNode):
 				parts = [deco.attr]
 
 				# last_part = deco.value
@@ -119,7 +122,7 @@ class Visitor(ast.NodeVisitor):
 		if not node.name.startswith('_') and "overload" not in decorators:
 			self.members.add(node.name)
 
-	def visit_FunctionDef(self, node: ast.FunctionDef):
+	def visit_FunctionDef(self, node: ast.FunctionDef) -> None:
 		"""
 		Visit ``def foo(): ...``.
 
@@ -129,7 +132,7 @@ class Visitor(ast.NodeVisitor):
 		# Don't generic visit
 		self.handle_def(node)
 
-	def visit_AsyncFunctionDef(self, node: ast.AsyncFunctionDef):
+	def visit_AsyncFunctionDef(self, node: ast.AsyncFunctionDef) -> None:
 		"""
 		Visit ``async def foo(): ...``.
 
@@ -139,7 +142,7 @@ class Visitor(ast.NodeVisitor):
 		# Don't generic visit
 		self.handle_def(node)
 
-	def visit_ClassDef(self, node: ast.ClassDef):
+	def visit_ClassDef(self, node: ast.ClassDef) -> None:
 		"""
 		Visit ``class Foo: ...``.
 
@@ -149,7 +152,7 @@ class Visitor(ast.NodeVisitor):
 		# Don't generic visit
 		self.handle_def(node)
 
-	def handle_import(self, node: Union[ast.Import, ast.ImportFrom]):
+	def handle_import(self, node: Union[ast.Import, ast.ImportFrom]) -> None:
 		"""
 		Handles ``import foo`` and ``from foo import bar``.
 
@@ -163,7 +166,7 @@ class Visitor(ast.NodeVisitor):
 			if not node.col_offset and node.lineno > self.last_import:
 				self.last_import = node.lineno
 
-	def visit_Import(self, node: ast.Import):
+	def visit_Import(self, node: ast.Import) -> None:
 		"""
 		Visit ``import foo``.
 
@@ -173,7 +176,7 @@ class Visitor(ast.NodeVisitor):
 		# Don't generic visit
 		self.handle_import(node)
 
-	def visit_ImportFrom(self, node: ast.ImportFrom):
+	def visit_ImportFrom(self, node: ast.ImportFrom) -> None:
 		"""
 		Visit ``from foo import bar``.
 
@@ -251,9 +254,11 @@ def check_and_add_all(filename: PathLike, quote_type: str = '"') -> int:
 			noqas = find_noqa(line)
 			if noqas is not None:
 				if noqas["codes"]:
+					# pylint: disable=loop-invariant-statement
 					noqa_list: List[str] = noqas["codes"].rstrip().upper().split(',')
 					if "DALL000" in noqa_list:
 						return 0
+					# pylint: enable=loop-invariant-statement
 
 		tree = ast.parse(source)
 		if sys.version_info < (3, 8):  # pragma: no cover (py38+)
