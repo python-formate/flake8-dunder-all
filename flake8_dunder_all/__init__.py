@@ -39,10 +39,9 @@ from consolekit.terminal_colours import Fore
 from domdf_python_tools.paths import PathPlus
 from domdf_python_tools.typing import PathLike
 from domdf_python_tools.utils import stderr_writer
-from flake8.style_guide import find_noqa  # type: ignore[import]
 
 # this package
-from flake8_dunder_all.utils import get_docstring_lineno, mark_text_ranges
+from flake8_dunder_all.utils import find_noqa, get_docstring_lineno, mark_text_ranges
 
 __author__: str = "Dominic Davis-Foster"
 __copyright__: str = "2020 Dominic Davis-Foster"

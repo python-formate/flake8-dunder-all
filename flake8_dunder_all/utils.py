@@ -40,14 +40,21 @@ General utility functions.
 
 # stdlib
 import ast
+import functools
 import re
 from textwrap import dedent
-from typing import Optional, Union
+from typing import Match, Optional, Union
 
 # 3rd party
 from astatine import mark_text_ranges
+from flake8 import defaults  # type: ignore[import]
 
 __all__ = ("get_docstring_lineno", "tidy_docstring", "mark_text_ranges")
+
+
+@functools.lru_cache(maxsize=512)
+def find_noqa(physical_line: str) -> Optional[Match[str]]:
+	return defaults.NOQA_INLINE_REGEXP.search(physical_line)
 
 
 def get_docstring_lineno(node: Union[ast.FunctionDef, ast.ClassDef, ast.Module]) -> Optional[int]:
