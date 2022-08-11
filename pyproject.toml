@@ -142,7 +142,7 @@ conda-channels = [ "conda-forge", "domdfcoding",]
 extras = "all"
 
 [project.entry-points."flake8.extension"]
-DALL = "flake8_dunder_all:Plugin"
+DAL = "flake8_dunder_all:Plugin"
 
 [tool.dependency-dash."requirements.txt"]
 order = 10
