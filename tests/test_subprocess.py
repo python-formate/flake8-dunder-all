@@ -11,12 +11,9 @@ def test_subprocess(tmp_pathplus: PathPlus, monkeypatch):
 	monkeypatch.delenv("COV_CORE_SOURCE")
 	monkeypatch.delenv("COV_CORE_CONFIG")
 	monkeypatch.delenv("COV_CORE_DATAFILE")
+	monkeypatch.setenv("PYTHONWARNINGS", "ignore")
 
-	(tmp_pathplus / "code.py").write_text("""
-
-def foo():
-	pass
-	""")
+	(tmp_pathplus / "code.py").write_text("\n\t\ndef foo():\n\tpass\n\t")
 
 	with in_directory(tmp_pathplus):
 		result = subprocess.run(
