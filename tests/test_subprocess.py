@@ -8,9 +8,9 @@ from domdf_python_tools.paths import PathPlus, in_directory
 
 
 def test_subprocess(tmp_pathplus: PathPlus, monkeypatch):
-	monkeypatch.delenv("COV_CORE_SOURCE")
-	monkeypatch.delenv("COV_CORE_CONFIG")
-	monkeypatch.delenv("COV_CORE_DATAFILE")
+	monkeypatch.delenv("COV_CORE_SOURCE", raising=False)
+	monkeypatch.delenv("COV_CORE_CONFIG", raising=False)
+	monkeypatch.delenv("COV_CORE_DATAFILE", raising=False)
 	monkeypatch.setenv("PYTHONWARNINGS", "ignore")
 
 	(tmp_pathplus / "code.py").write_text("\n\t\ndef foo():\n\tpass\n\t")
