@@ -13,6 +13,11 @@ Flake8 codes
 
 	DALL000
 
+.. note::
+
+	In version ``0.3.0`` the entry point changed from ``DALL`` to ``DAL``, due to changes in flake8 itself.
+	However, the codes remain ``DALLXXX`` and should continue to work as normal.
+
 
 ``ensure-dunder-all`` script
 --------------------------------

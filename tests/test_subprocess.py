@@ -89,7 +89,7 @@ def test_subprocess_noqa(tmp_pathplus: PathPlus, monkeypatch):
 	monkeypatch.delenv("COV_CORE_DATAFILE", raising=False)
 	monkeypatch.setenv("PYTHONWARNINGS", "ignore")
 
-	(tmp_pathplus / "code.py").write_text("# noqa: DALL000\n\n\t\ndef foo():\n\tpass\n\t")
+	(tmp_pathplus / "code.py").write_text("# noq" + "a: DALL000\n\n\t\ndef foo():\n\tpass\n\t")
 
 	with in_directory(tmp_pathplus):
 		result = subprocess.run(
