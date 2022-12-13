@@ -21,15 +21,27 @@ min_coverage: 100
 
 # Versions to run tests for
 python_versions:
- - '3.6'
- - '3.7'
- - '3.8'
- - '3.9'
- - '3.10'
- - 3.11-dev
- - pypy36
- - pypy37
- - pypy38
+  '3.6':
+   matrix_exclude:
+    flake8:
+     - 6
+  '3.7':
+   matrix_exclude:
+    flake8:
+     - 6
+  '3.8':
+  '3.9':
+  '3.10':
+  3.11-dev:
+  pypy36:
+   matrix_exclude:
+    flake8:
+     - 6
+  pypy37:
+   matrix_exclude:
+    flake8:
+     - 6
+  pypy38:
 
 classifiers:
  - 'Development Status :: 4 - Beta'
@@ -61,3 +73,10 @@ sphinx_conf_epilogue:
 
 exclude_files:
  - contributing
+
+
+third_party_version_matrix:
+ flake8:
+  - 4
+  - 5
+  - 6

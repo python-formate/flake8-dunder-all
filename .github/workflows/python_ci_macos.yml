@@ -28,14 +28,14 @@ jobs:
       fail-fast: False
       matrix:
         config:
-          - {python-version: "3.6", testenvs: "py36,build", experimental: False}
-          - {python-version: "3.7", testenvs: "py37,build", experimental: False}
-          - {python-version: "3.8", testenvs: "py38,build", experimental: False}
-          - {python-version: "3.9", testenvs: "py39,build", experimental: False}
-          - {python-version: "3.10", testenvs: "py310,build", experimental: False}
-          - {python-version: "3.11.0-beta.3", testenvs: "py311-dev,build", experimental: True}
-          - {python-version: "pypy-3.7", testenvs: "pypy37,build", experimental: True}
-          - {python-version: "pypy-3.8", testenvs: "pypy38,build", experimental: True}
+          - {python-version: "3.6", testenvs: "py36-flake8{4,5},build", experimental: False}
+          - {python-version: "3.7", testenvs: "py37-flake8{4,5},build", experimental: False}
+          - {python-version: "3.8", testenvs: "py38-flake8{4,5,6},build", experimental: False}
+          - {python-version: "3.9", testenvs: "py39-flake8{4,5,6},build", experimental: False}
+          - {python-version: "3.10", testenvs: "py310-flake8{4,5,6},build", experimental: False}
+          - {python-version: "3.11", testenvs: "py311-dev-flake8{4,5,6},build", experimental: True}
+          - {python-version: "pypy-3.7", testenvs: "pypy37-flake8{4,5},build", experimental: True}
+          - {python-version: "pypy-3.8", testenvs: "pypy38-flake8{4,5,6},build", experimental: True}
 
     steps:
       - name: Checkout 🛎️
