@@ -60,8 +60,8 @@ flake8-dunder-all
 		:workflow: mypy
 		:alt: mypy status
 
-	.. |requires| image:: https://dependency-dash.herokuapp.com/github/python-formate/flake8-dunder-all/badge.svg
-		:target: https://dependency-dash.herokuapp.com/github/python-formate/flake8-dunder-all/
+	.. |requires| image:: https://dependency-dash.repo-helper.uk/github/python-formate/flake8-dunder-all/badge.svg
+		:target: https://dependency-dash.repo-helper.uk/github/python-formate/flake8-dunder-all/
 		:alt: Requirements Status
 
 	.. |coveralls| coveralls-shield::
