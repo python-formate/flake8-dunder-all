@@ -222,12 +222,13 @@ class Plugin:
 			yield 1, 0, DALL000, type(self)
 
 
-def check_and_add_all(filename: PathLike, quote_type: str = '"') -> int:
+def check_and_add_all(filename: PathLike, quote_type: str = '"', use_tuple: bool = False) -> int:
 	"""
 	Check the given filename for the presence of a ``__all__`` declaration, and add one if none is found.
 
 	:param filename: The filename of the Python source file (``.py``) to check.
 	:param quote_type: The type of quote to use for strings.
+	:param use_tuple: Whether to use tuples instead of lists for ``__all__``.
 
 	:returns:
 
@@ -239,11 +240,9 @@ def check_and_add_all(filename: PathLike, quote_type: str = '"') -> int:
 	.. versionchanged:: 0.2.0
 
 		Now returns ``0`` and doesn't add ``__all__`` if the file contains a ``noqa: DALL000`` comment.
-	"""
 
-	quotes = {"'", '"'}
-	quotes.remove(quote_type)
-	bad_quote, *_ = tuple(quotes)
+	.. versionchanged:: 0.3.0  Added the ``use_tuple`` argument.
+	"""
 
 	filename = PathPlus(filename)
 
@@ -282,7 +281,7 @@ def check_and_add_all(filename: PathLike, quote_type: str = '"') -> int:
 		if not visitor.members:
 			return 0
 
-		members = repr(sorted(visitor.members)).replace(bad_quote, quote_type)
+		members = f"{quote_type}, {quote_type}".join(sorted(visitor.members))
 
 		lines = filename.read_text().split('\n')
 
@@ -292,7 +291,10 @@ def check_and_add_all(filename: PathLike, quote_type: str = '"') -> int:
 		else:
 			lines.insert(insertion_position, '')
 
-		lines.insert(insertion_position, f"__all__ = {members}")
+		if use_tuple:
+			lines.insert(insertion_position, f"__all__ = ({quote_type}{members}{quote_type}, )")
+		else:
+			lines.insert(insertion_position, f"__all__ = [{quote_type}{members}{quote_type}]")
 
 		filename.write_clean('\n'.join(lines))
 
