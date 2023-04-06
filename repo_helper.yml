@@ -58,7 +58,7 @@ extra_sphinx_extensions:
  - sphinx_toolbox.flake8
  - sphinx_click
  - sphinx_toolbox.more_autosummary.column_widths
- - sphinx-favicon
+ - sphinx_favicon
 
 entry_points:
   flake8.extension:
