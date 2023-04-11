@@ -9,5 +9,6 @@ Usage: main [OPTIONS] FILENAME
    * 5: Bitwise OR of 1 and 4.
 
 Options:
+  --use-tuple        Use tuples instead of lists for __all__.
   --quote-type TEXT  The type of quote to use.  [default: "]
   -h, --help         Show this message and exit.

@@ -63,6 +63,30 @@ class Foo: ...
 def a_function(): ...
 '''
 
+testing_source_e_tuple = '''
+"""a docstring"""
+import foo
+
+__all__ = ("Foo", "a_function", )
+
+class Foo: ...
+
+def a_function(): ...
+'''
+
+testing_source_f_tuple = '''
+"""a docstring"""
+import foo
+
+
+__version__: str = "1.2.3"
+__all__ = ("Foo", "a_function", )
+
+class Foo: ...
+
+def a_function(): ...
+'''
+
 testing_source_g = '''
 """a docstring"""
 import foo

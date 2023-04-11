@@ -34,7 +34,7 @@ from typing import Iterable
 import click
 from consolekit import click_command
 from consolekit.commands import MarkdownHelpCommand
-from consolekit.options import auto_default_option
+from consolekit.options import auto_default_option, flag_option
 
 # this package
 from flake8_dunder_all import check_and_add_all
@@ -44,8 +44,9 @@ __all__ = ("main", )
 
 @click.argument("filenames", type=click.STRING, nargs=-1, metavar="FILENAME")
 @auto_default_option("--quote-type", type=click.STRING, help="The type of quote to use.", show_default=True)
+@flag_option("--use-tuple", help="Use tuples instead of lists for __all__.", default=False)
 @click_command(cls=MarkdownHelpCommand)
-def main(filenames: Iterable[str], quote_type: str = '"') -> None:
+def main(filenames: Iterable[str], quote_type: str = '"', use_tuple: bool = False) -> None:
 	"""
 	Given a list of Python source files, check each file defines ``__all__``.
 
@@ -62,7 +63,7 @@ def main(filenames: Iterable[str], quote_type: str = '"') -> None:
 	for filename in filenames:
 		filename = filename.strip()
 		click.echo(f"Checking {filename}")
-		retv |= check_and_add_all(filename=filename, quote_type=quote_type)
+		retv |= check_and_add_all(filename=filename, quote_type=quote_type, use_tuple=use_tuple)
 
 	sys.exit(retv)
 
