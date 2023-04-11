@@ -40,7 +40,7 @@ See `pre-commit <https://github.com/pre-commit/pre-commit>`_ for instructions
 
 Sample ``.pre-commit-config.yaml``:
 
-.. pre-commit:flake8:: 0.2.2
+.. pre-commit:flake8:: 0.3.0b1
 
 
 Using the script as a pre-commit hook
@@ -53,4 +53,4 @@ See `pre-commit <https://github.com/pre-commit/pre-commit>`_ for instructions.
 Sample ``.pre-commit-config.yaml``:
 
 .. pre-commit::
-	:rev: v0.2.2
+	:rev: v0.3.0b1
