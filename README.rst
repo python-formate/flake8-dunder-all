@@ -101,7 +101,7 @@ flake8-dunder-all
 .. |language| image:: https://img.shields.io/github/languages/top/python-formate/flake8-dunder-all
 	:alt: GitHub top language
 
-.. |commits-since| image:: https://img.shields.io/github/commits-since/python-formate/flake8-dunder-all/v0.3.0b1
+.. |commits-since| image:: https://img.shields.io/github/commits-since/python-formate/flake8-dunder-all/v0.3.0
 	:target: https://github.com/python-formate/flake8-dunder-all/pulse
 	:alt: GitHub commits since tagged version
 
@@ -173,7 +173,7 @@ Sample ``.pre-commit-config.yaml``:
 	   rev: 3.8.1
 	   hooks:
 	    - id: flake8
-	      additional_dependencies: [flake8-dunder-all==0.3.0b1]
+	      additional_dependencies: [flake8-dunder-all==0.3.0]
 
 ``ensure-dunder-all`` script
 
