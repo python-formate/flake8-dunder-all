@@ -34,7 +34,13 @@ python_versions:
   '3.10':
   '3.11':
   '3.12':
+   matrix_exclude:
+    flake8:
+     - 4
   3.13-dev:
+   matrix_exclude:
+    flake8:
+     - 4
   pypy36:
    matrix_exclude:
     flake8:
