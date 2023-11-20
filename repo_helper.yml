@@ -32,7 +32,9 @@ python_versions:
   '3.8':
   '3.9':
   '3.10':
-  3.11-dev:
+  '3.11':
+  '3.12':
+  3.13-dev:
   pypy36:
    matrix_exclude:
     flake8:
@@ -42,6 +44,7 @@ python_versions:
     flake8:
      - 6
   pypy38:
+  pypy39:
 
 classifiers:
  - 'Development Status :: 4 - Beta'
