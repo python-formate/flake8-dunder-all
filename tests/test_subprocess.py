@@ -23,6 +23,7 @@ def test_subprocess(tmp_pathplus: PathPlus, monkeypatch):
 				)
 
 	assert result.returncode == 1
+	assert result.stderr == b''
 	assert result.stdout == b"""\
 code.py:1:1: DALL000 Module lacks __all__.
 code.py:2:1: W191 indentation contains tabs
@@ -32,7 +33,6 @@ code.py:5:1: W191 indentation contains tabs
 code.py:5:1: W293 blank line contains whitespace
 code.py:5:2: W292 no newline at end of file
 """
-	assert result.stderr == b''
 
 	with in_directory(tmp_pathplus):
 		result = subprocess.run(
@@ -42,8 +42,8 @@ code.py:5:2: W292 no newline at end of file
 				)
 
 	assert result.returncode == 1
-	assert result.stdout == b"code.py:1:1: DALL000 Module lacks __all__.\n"
 	assert result.stderr == b''
+	assert result.stdout == b"code.py:1:1: DALL000 Module lacks __all__.\n"
 
 	(tmp_pathplus / "tox.ini").write_text("""
 
@@ -59,8 +59,8 @@ select = DALL000
 				)
 
 	assert result.returncode == 1
-	assert result.stdout == b"code.py:1:1: DALL000 Module lacks __all__.\n"
 	assert result.stderr == b''
+	assert result.stdout == b"code.py:1:1: DALL000 Module lacks __all__.\n"
 
 	tox_ini = tmp_pathplus / "tox.ini"
 	tox_ini.write_text("""
@@ -79,8 +79,8 @@ per-file-ignores =
 				)
 
 	assert result.returncode == 0
-	assert result.stdout == b''
 	assert result.stderr == b''
+	assert result.stdout == b''
 
 
 def test_subprocess_noqa(tmp_pathplus: PathPlus, monkeypatch):
@@ -99,6 +99,7 @@ def test_subprocess_noqa(tmp_pathplus: PathPlus, monkeypatch):
 				)
 
 	assert result.returncode == 1
+	assert result.stderr == b''
 	assert result.stdout == b"""\
 code.py:3:1: W191 indentation contains tabs
 code.py:3:1: W293 blank line contains whitespace
@@ -107,7 +108,6 @@ code.py:6:1: W191 indentation contains tabs
 code.py:6:1: W293 blank line contains whitespace
 code.py:6:2: W292 no newline at end of file
 """
-	assert result.stderr == b''
 
 	with in_directory(tmp_pathplus):
 		result = subprocess.run(
@@ -117,8 +117,8 @@ code.py:6:2: W292 no newline at end of file
 				)
 
 	assert result.returncode == 0
-	assert result.stdout == b''
 	assert result.stderr == b''
+	assert result.stdout == b''
 
 	(tmp_pathplus / "tox.ini").write_text("""
 
@@ -134,8 +134,8 @@ select = DALL000
 				)
 
 	assert result.returncode == 0
-	assert result.stdout == b''
 	assert result.stderr == b''
+	assert result.stdout == b''
 
 	tox_ini = tmp_pathplus / "tox.ini"
 	tox_ini.write_text("""
@@ -154,5 +154,5 @@ per-file-ignores =
 				)
 
 	assert result.returncode == 0
-	assert result.stdout == b''
 	assert result.stderr == b''
+	assert result.stdout == b''
