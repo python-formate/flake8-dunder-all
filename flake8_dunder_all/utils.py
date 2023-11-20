@@ -42,6 +42,7 @@ General utility functions.
 import ast
 import functools
 import re
+import sys
 from textwrap import dedent
 from typing import Match, Optional, Union
 
@@ -69,7 +70,7 @@ def get_docstring_lineno(node: Union[ast.FunctionDef, ast.ClassDef, ast.Module])
 
 	body = node.body[0].value
 
-	if isinstance(body, ast.Str):
+	if sys.version_info < (3, 12) and isinstance(body, ast.Str):  # pragma: no cover (py312+)
 		return body.lineno
 	elif isinstance(body, ast.Constant) and isinstance(body.value, str):
 		return body.lineno  # pragma: no cover
