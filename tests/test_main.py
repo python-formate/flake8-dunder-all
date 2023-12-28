@@ -48,7 +48,7 @@ from tests.test_flake8_dunder_all import (
 				pytest.param(testing_source_h, [], 0, id="from import"),
 				pytest.param(testing_source_i, [], 1, id="lots of lines"),
 				pytest.param(
-						f"  # noqa: DALL000  \n{testing_source_g}",
+						f"  # noqa: DAL000  \n{testing_source_g}",
 						[],
 						0,
 						id="async function no __all__ and noqa",

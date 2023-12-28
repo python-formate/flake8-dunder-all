@@ -46,12 +46,12 @@ from flake8_dunder_all.utils import find_noqa, get_docstring_lineno, mark_text_r
 __author__: str = "Dominic Davis-Foster"
 __copyright__: str = "2020 Dominic Davis-Foster"
 __license__: str = "MIT"
-__version__: str = "0.3.1"
+__version__: str = "0.4.0"
 __email__: str = "dominic@davis-foster.co.uk"
 
-__all__ = ("Visitor", "Plugin", "check_and_add_all", "DALL000")
+__all__ = ("Visitor", "Plugin", "check_and_add_all", "DAL000")
 
-DALL000 = "DALL000 Module lacks __all__."
+DAL000 = "DAL000 Module lacks __all__."
 
 
 class Visitor(ast.NodeVisitor):
@@ -219,7 +219,7 @@ class Plugin:
 		elif not visitor.members:
 			return
 		else:
-			yield 1, 0, DALL000, type(self)
+			yield 1, 0, DAL000, type(self)
 
 
 def check_and_add_all(filename: PathLike, quote_type: str = '"', use_tuple: bool = False) -> int:
@@ -233,13 +233,13 @@ def check_and_add_all(filename: PathLike, quote_type: str = '"', use_tuple: bool
 	:returns:
 
 	* ``0`` if the file already contains a ``__all__`` declaration,
-	  has no function or class definitions, or has a ``  # noqa: DALL000  ` comment.
+	  has no function or class definitions, or has a ``  # noqa: DAL000  ` comment.
 	* ``1`` If ``__all__`` is absent.
 	* ``4`` if an error was encountered when parsing the file.
 
 	.. versionchanged:: 0.2.0
 
-		Now returns ``0`` and doesn't add ``__all__`` if the file contains a ``noqa: DALL000`` comment.
+		Now returns ``0`` and doesn't add ``__all__`` if the file contains a ``noqa: DAL000`` comment.
 
 	.. versionchanged:: 0.3.0  Added the ``use_tuple`` argument.
 	"""
@@ -254,7 +254,7 @@ def check_and_add_all(filename: PathLike, quote_type: str = '"', use_tuple: bool
 				if noqas["codes"]:
 					# pylint: disable=loop-invariant-statement
 					noqa_list: List[str] = noqas["codes"].rstrip().upper().split(',')
-					if "DALL000" in noqa_list:
+					if "DAL000" in noqa_list:
 						return 0
 					# pylint: enable=loop-invariant-statement
 
