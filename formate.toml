@@ -49,4 +49,4 @@ known_third_party = [
     "pytest_timeout",
     "requests",
 ]
-known_first_party = "flake8_dunder_all"
+known_first_party = [ "flake8_dunder_all",]
