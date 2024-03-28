@@ -1,0 +1,5 @@
+
+"""a docstring"""
+
+@typing.overload
+def a_function(): ...

@@ -1,0 +1,11 @@
+
+"""a docstring"""
+import foo
+
+
+__version__: str = "1.2.3"
+__all__ = ["Foo", "a_function"]
+
+class Foo: ...
+
+def a_function(): ...

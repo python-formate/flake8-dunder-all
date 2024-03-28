@@ -1,0 +1,10 @@
+
+"""a docstring"""
+import foo
+
+__all__ = ("Foo", "a_function", )
+
+
+class Foo: ...
+
+def a_function(): ...

@@ -6,6 +6,7 @@ from typing import List, Set
 
 # 3rd party
 import pytest
+from coincidence.regressions import AdvancedFileRegressionFixture
 from common import (
 		mangled_source,
 		results,
@@ -152,11 +153,18 @@ def test_visitor_endlineno(source: str, members: List[str], found_all: bool, las
 				pytest.param(testing_source_l, [], 0, id="typing.overload"),
 				]
 		)
-def test_check_and_add_all(tmp_pathplus: PathPlus, source: str, members: List[str], ret: int):
+def test_check_and_add_all(
+		tmp_pathplus: PathPlus,
+		source: str,
+		members: List[str],
+		ret: int,
+		advanced_file_regression: AdvancedFileRegressionFixture
+		):
 	tmpfile = tmp_pathplus / "source.py"
 	tmpfile.write_text(source)
 
 	assert check_and_add_all(tmpfile) == ret
+	advanced_file_regression.check_file(tmpfile)
 
 	if members:
 		members_string = ", ".join(f'"{m}"' for m in members)
@@ -190,11 +198,18 @@ def test_check_and_add_all(tmp_pathplus: PathPlus, source: str, members: List[st
 				pytest.param(testing_source_l, [], 0, id="typing.overload"),
 				]
 		)
-def test_check_and_add_all_tuples(tmp_pathplus: PathPlus, source: str, members: List[str], ret: int):
+def test_check_and_add_all_tuples(
+		tmp_pathplus: PathPlus,
+		source: str,
+		members: List[str],
+		ret: int,
+		advanced_file_regression: AdvancedFileRegressionFixture
+		):
 	tmpfile = tmp_pathplus / "source.py"
 	tmpfile.write_text(source)
 
 	assert check_and_add_all(tmpfile, use_tuple=True) == ret
+	advanced_file_regression.check_file(tmpfile)
 
 	if members:
 		members_string = ", ".join(f'"{m}"' for m in members)

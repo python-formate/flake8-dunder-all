@@ -1,0 +1,8 @@
+
+"""a docstring"""
+import foo
+
+__all__ = ["Foo"]
+
+
+class Foo: ...
