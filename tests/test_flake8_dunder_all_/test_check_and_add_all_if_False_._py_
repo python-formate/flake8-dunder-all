@@ -1,0 +1,13 @@
+
+"""a docstring"""
+
+from foo import bar
+
+if False:
+	from x import y
+
+__all__ = ["a_function"]
+
+
+def a_function():
+	from hello import world

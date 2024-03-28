@@ -159,10 +159,10 @@ class Visitor(ast.NodeVisitor):
 		"""
 
 		if self.use_endlineno:
-			if not node.col_offset and node.end_lineno > self.last_import:  # type: ignore[union-attr]
+			if node.end_lineno > self.last_import:  # type: ignore[union-attr]
 				self.last_import = node.end_lineno  # type: ignore[union-attr]
 		else:
-			if not node.col_offset and node.lineno > self.last_import:
+			if node.lineno > self.last_import:
 				self.last_import = node.lineno
 
 	def visit_Import(self, node: ast.Import) -> None:
@@ -184,6 +184,21 @@ class Visitor(ast.NodeVisitor):
 
 		# Don't generic visit
 		self.handle_import(node)
+
+	def visit_If(self, node: ast.If) -> None:
+		"""
+		Visit an if statement and check if it's for `TYPE_CHECKING`.
+
+		:param node: The node being visited.
+		"""
+		# Check if the condition is checking for TYPE_CHECKING
+		if isinstance(node.test, ast.Name) and node.test.id == "TYPE_CHECKING":
+			# Process the body of the if statement for any import statements
+			for body_node in node.body:
+				if isinstance(body_node, (ast.Import, ast.ImportFrom)):
+					self.handle_import(body_node)
+		# Continue visiting other nodes
+		self.generic_visit(node)
 
 
 class Plugin:

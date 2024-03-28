@@ -139,9 +139,43 @@ testing_source_l = '''
 def a_function(): ...
 '''
 
+testing_source_m = '''
+"""a docstring"""
+
+from foo import bar
+
+if False:
+	from x import y
+
+def a_function():
+	from hello import world
+'''
+
+testing_source_n = '''
+"""a docstring"""
+
+import sys
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING or sys.version_info < (3, 9):
+	from x import y
+
+def a_function():
+	from hello import world
+'''
+
 mangled_source = '''
 """a docstring
 import foo
 
 asyn def a_function): ...
 '''
+
+if_type_checking_source = """
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+	from foo import bar
+
+def a_function(): ...
+"""
