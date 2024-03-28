@@ -25,10 +25,12 @@ python_versions:
    matrix_exclude:
     flake8:
      - 6
+     - 7
   '3.7':
    matrix_exclude:
     flake8:
      - 6
+     - 7
   '3.8':
   '3.9':
   '3.10':
@@ -45,10 +47,12 @@ python_versions:
    matrix_exclude:
     flake8:
      - 6
+     - 7
   pypy37:
    matrix_exclude:
     flake8:
      - 6
+     - 7
   pypy38:
   pypy39:
 
@@ -89,3 +93,4 @@ third_party_version_matrix:
   - 4
   - 5
   - 6
+  - 7
