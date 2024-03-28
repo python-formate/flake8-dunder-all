@@ -8,10 +8,7 @@ from click.testing import CliRunner, Result
 from coincidence.regressions import AdvancedFileRegressionFixture
 from consolekit.terminal_colours import Fore
 from domdf_python_tools.paths import PathPlus
-
-# this package
-from flake8_dunder_all.__main__ import main
-from tests.test_flake8_dunder_all import (
+from test_flake8_dunder_all import (
 		mangled_source,
 		testing_source_a,
 		testing_source_b,
@@ -27,6 +24,9 @@ from tests.test_flake8_dunder_all import (
 		testing_source_k,
 		testing_source_l
 		)
+
+# this package
+from flake8_dunder_all.__main__ import main
 
 
 @pytest.mark.parametrize(

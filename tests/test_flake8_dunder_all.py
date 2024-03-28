@@ -6,13 +6,7 @@ from typing import List, Set
 
 # 3rd party
 import pytest
-from consolekit.terminal_colours import Fore
-from domdf_python_tools.paths import PathPlus
-
-# this package
-from flake8_dunder_all import Visitor, check_and_add_all
-from flake8_dunder_all.utils import mark_text_ranges
-from tests.common import (
+from common import (
 		mangled_source,
 		results,
 		testing_source_a,
@@ -30,6 +24,12 @@ from tests.common import (
 		testing_source_k,
 		testing_source_l
 		)
+from consolekit.terminal_colours import Fore
+from domdf_python_tools.paths import PathPlus
+
+# this package
+from flake8_dunder_all import Visitor, check_and_add_all
+from flake8_dunder_all.utils import mark_text_ranges
 
 
 @pytest.mark.parametrize(
