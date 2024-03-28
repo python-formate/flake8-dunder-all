@@ -145,3 +145,12 @@ import foo
 
 asyn def a_function): ...
 '''
+
+if_type_checking_source = '''
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+	from foo import bar
+
+def a_function(): ...
+'''
