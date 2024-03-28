@@ -24,7 +24,9 @@ from common import (
 		testing_source_i,
 		testing_source_j,
 		testing_source_k,
-		testing_source_l
+		testing_source_l,
+		testing_source_m,
+		testing_source_n
 		)
 from consolekit.terminal_colours import Fore
 from domdf_python_tools.paths import PathPlus
@@ -84,6 +86,7 @@ def test_plugin(source: str, expects: Set[str]):
 				pytest.param(testing_source_h, [], False, 1, id="from import"),
 				pytest.param(testing_source_i, ["a_function"], False, 3, id="lots of lines"),
 				pytest.param(testing_source_j, ["a_function"], False, 2, id="multiline import"),
+				pytest.param(testing_source_m, ["a_function"], False, 7, id="if False"),
 				pytest.param(if_type_checking_source, ["a_function"], False, 5, id="if TYPE_CHECKING:"),
 				]
 		)
@@ -120,6 +123,8 @@ def test_visitor(source: str, members: List[str], found_all: bool, last_import: 
 				pytest.param(testing_source_h, [], False, 1, id="from import"),
 				pytest.param(testing_source_i, ["a_function"], False, 3, id="lots of lines"),
 				pytest.param(testing_source_j, ["a_function"], False, 14, id="multiline import"),
+				pytest.param(testing_source_m, ["a_function"], False, 7, id="if False"),
+				pytest.param(if_type_checking_source, ["a_function"], False, 5, id="if TYPE_CHECKING:"),
 				]
 		)
 def test_visitor_endlineno(source: str, members: List[str], found_all: bool, last_import: int):
@@ -153,6 +158,8 @@ def test_visitor_endlineno(source: str, members: List[str], found_all: bool, las
 				pytest.param(testing_source_i, [], 1, id="lots of lines"),
 				pytest.param(testing_source_k, [], 0, id="overload"),
 				pytest.param(testing_source_l, [], 0, id="typing.overload"),
+				pytest.param(testing_source_m, [], 1, id="if False"),
+				pytest.param(testing_source_n, [], 1, id="if TYPE_CHECKING"),
 				]
 		)
 def test_check_and_add_all(
@@ -198,6 +205,8 @@ def test_check_and_add_all(
 				pytest.param(testing_source_i, [], 1, id="lots of lines"),
 				pytest.param(testing_source_k, [], 0, id="overload"),
 				pytest.param(testing_source_l, [], 0, id="typing.overload"),
+				pytest.param(testing_source_m, [], 1, id="if False"),
+				pytest.param(testing_source_n, [], 1, id="if TYPE_CHECKING"),
 				]
 		)
 def test_check_and_add_all_tuples(
@@ -231,6 +240,8 @@ def test_check_and_add_all_tuples(
 				pytest.param(testing_source_g, ["a_function"], 1, id="async function no __all__"),
 				pytest.param(testing_source_h, [], 0, id="from import"),
 				pytest.param(testing_source_i, [], 1, id="lots of lines"),
+				pytest.param(testing_source_m, [], 1, id="if False"),
+				pytest.param(testing_source_n, [], 1, id="if TYPE_CHECKING"),
 				]
 		)
 def test_check_and_add_all_single_quotes(tmp_pathplus: PathPlus, source: str, members: List[str], ret: int):
