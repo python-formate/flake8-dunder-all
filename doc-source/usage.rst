@@ -15,7 +15,7 @@ Flake8 codes
 
 .. note::
 
-	In version ``0.3.1`` the entry point changed from ``DALL`` to ``DAL``, due to changes in flake8 itself.
+	In version ``0.4.0`` the entry point changed from ``DALL`` to ``DAL``, due to changes in flake8 itself.
 	However, the codes remain ``DALLXXX`` and should continue to work as normal.
 
 
@@ -40,7 +40,7 @@ See `pre-commit <https://github.com/pre-commit/pre-commit>`_ for instructions
 
 Sample ``.pre-commit-config.yaml``:
 
-.. pre-commit:flake8:: 0.3.1
+.. pre-commit:flake8:: 0.4.0
 
 
 Using the script as a pre-commit hook
@@ -53,4 +53,4 @@ See `pre-commit <https://github.com/pre-commit/pre-commit>`_ for instructions.
 Sample ``.pre-commit-config.yaml``:
 
 .. pre-commit::
-	:rev: v0.3.1
+	:rev: v0.4.0

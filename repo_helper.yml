@@ -4,7 +4,7 @@ modname: flake8-dunder-all
 copyright_years: "2020-2022"
 author: "Dominic Davis-Foster"
 email: "dominic@davis-foster.co.uk"
-version: "0.3.1"
+version: "0.4.0"
 username: "python-formate"
 assignee: "domdfcoding"
 license: 'MIT'
