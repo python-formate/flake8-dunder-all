@@ -13,6 +13,7 @@ from domdf_python_tools.paths import PathPlus
 from flake8_dunder_all import Visitor, check_and_add_all
 from flake8_dunder_all.utils import mark_text_ranges
 from tests.common import (
+		if_type_checking_source,
 		mangled_source,
 		results,
 		testing_source_a,
@@ -82,6 +83,7 @@ def test_plugin(source: str, expects: Set[str]):
 				pytest.param(testing_source_h, [], False, 1, id="from import"),
 				pytest.param(testing_source_i, ["a_function"], False, 3, id="lots of lines"),
 				pytest.param(testing_source_j, ["a_function"], False, 2, id="multiline import"),
+				pytest.param(if_type_checking_source, ["a_function"], False, 5, id="if TYPE_CHECKING:"),
 				]
 		)
 def test_visitor(source: str, members: List[str], found_all: bool, last_import: int):
