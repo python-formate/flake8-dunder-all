@@ -64,7 +64,7 @@ class Visitor(ast.NodeVisitor):
 	"""
 
 	found_all: bool  #: Flag to indicate a ``__all__`` declaration has been found in the AST.
-	last_import: int  #: The lineno of the last top-level import
+	last_import: int  #: The lineno of the last top-level or conditional import
 	members: Set[str]  #: List of functions and classed defined in the AST
 	use_endlineno: bool
 
