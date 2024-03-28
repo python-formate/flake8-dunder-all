@@ -159,7 +159,7 @@ class Visitor(ast.NodeVisitor):
 		"""
 
 		if self.use_endlineno:
-			if not node.col_offset and node.end_lineno > self.last_import:  # type: ignore[union-attr]
+			if node.end_lineno > self.last_import:  # type: ignore[union-attr]
 				self.last_import = node.end_lineno  # type: ignore[union-attr]
 		else:
 			if node.lineno > self.last_import:
