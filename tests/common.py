@@ -215,3 +215,13 @@ if TYPE_CHECKING:
 
 def a_function(): ...
 """
+
+not_type_checking_if_source = """
+import foo
+
+if "USE_BAR" in os.environ:
+	pass
+
+
+def a_function(): ...
+"""

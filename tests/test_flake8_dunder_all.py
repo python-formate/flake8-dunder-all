@@ -13,6 +13,7 @@ from common import (
 		if_type_checking_try_finally_source,
 		if_type_checking_try_source,
 		mangled_source,
+		not_type_checking_if_source,
 		results,
 		testing_source_a,
 		testing_source_b,
@@ -130,6 +131,7 @@ def test_visitor(source: str, members: List[str], found_all: bool, last_import: 
 				pytest.param(if_type_checking_source, ["a_function"], False, 5, id="if TYPE_CHECKING:"),
 				pytest.param(if_type_checking_else_source, ["a_function"], False, 5, id="if TYPE_CHECKING else"),
 				pytest.param(if_type_checking_try_source, ["a_function"], False, 8, id="if TYPE_CHECKING try"),
+				pytest.param(not_type_checking_if_source, ["a_function"], False, 2, id="not TYPE_CHECKING if"),
 				pytest.param(
 						if_type_checking_try_finally_source, ["a_function"],
 						False,
@@ -174,6 +176,7 @@ def test_visitor_endlineno(source: str, members: List[str], found_all: bool, las
 				pytest.param(if_type_checking_else_source, [], 1, id="if TYPE_CHECKING else"),
 				pytest.param(if_type_checking_try_source, [], 1, id="if TYPE_CHECKING try"),
 				pytest.param(if_type_checking_try_finally_source, [], 1, id="if TYPE_CHECKING try finally"),
+				pytest.param(not_type_checking_if_source, [], 1, id="not TYPE_CHECKING if"),
 				]
 		)
 def test_check_and_add_all(
