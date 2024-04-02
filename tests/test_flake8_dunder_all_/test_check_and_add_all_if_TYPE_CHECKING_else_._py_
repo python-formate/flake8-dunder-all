@@ -1,0 +1,10 @@
+
+if False or sys.version_info < (3, 7):
+    import foo
+else:
+    import bar
+
+__all__ = ["a_function"]
+
+
+def a_function(): ...
