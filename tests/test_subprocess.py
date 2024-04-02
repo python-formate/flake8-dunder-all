@@ -1,5 +1,4 @@
 # stdlib
-import os
 import subprocess
 import sys
 
