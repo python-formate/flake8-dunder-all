@@ -32,7 +32,7 @@ A Flake8 plugin and pre-commit hook which checks to ensure modules have defined 
 # stdlib
 import ast
 import sys
-from typing import Any, Generator, List, Set, Tuple, Type, Union
+from typing import Any, Generator, Iterator, List, Set, Tuple, Type, Union
 
 # 3rd party
 from consolekit.terminal_colours import Fore
@@ -189,14 +189,58 @@ class Visitor(ast.NodeVisitor):
 
 		:param node: The node being visited.
 		"""
-		# Check if the condition is checking for TYPE_CHECKING
-		if isinstance(node.test, ast.Name) and node.test.id == "TYPE_CHECKING":
-			# Process the body of the if statement for any import statements
-			for body_node in node.body:
-				if isinstance(body_node, (ast.Import, ast.ImportFrom)):
-					self.handle_import(body_node)
-		# Continue visiting other nodes
+
+		if _is_type_checking(node.test):
+			if self.use_endlineno and node.end_lineno is not None:
+				self.last_import = max(self.last_import, node.end_lineno)
+			else:
+				self.last_import = max(self.last_import, max(_descend_node(node)))
+
 		self.generic_visit(node)
+
+	def visit_Try(self, node: ast.Try) -> None:
+		"""
+		Visit a Try statement.
+
+		:param node: The node being visited.
+		"""
+
+		if any(isinstance(n, (ast.Import, ast.ImportFrom)) for n in node.body):
+			if self.use_endlineno and node.end_lineno is not None and sys.implementation.name != "pypy":  # pragma: no cover (pypy)
+				self.last_import = max(self.last_import, node.end_lineno)
+			else:  # pragma: no cover (!pypy)
+				end_lineno = max(
+						*_descend_node(node),
+						*_descend_node(node, "handlers"),
+						*_descend_node(node, "orelse"),
+						*_descend_node(node, "finalbody"),
+						)
+				self.last_import = max(self.last_import, end_lineno)
+
+		self.generic_visit(node)
+
+
+def _descend_node(node: ast.AST, attr: str = "body") -> Iterator[int]:
+	for child in getattr(node, attr, []):
+		yield child.lineno
+		yield from _descend_node(child)
+
+
+_nameconstant = ast.Constant if sys.version_info >= (3, 8) else ast.NameConstant
+
+
+def _is_type_checking(node: ast.AST) -> bool:
+	"""
+	Does the given ``if`` node indicate a `TYPE_CHECKING` block?
+	"""  # noqa: D400
+
+	if isinstance(node, ast.Name) and node.id == "TYPE_CHECKING":
+		return True
+	elif isinstance(node, _nameconstant) and node.value is False:
+		return True
+	elif isinstance(node, ast.BoolOp):
+		return any(_is_type_checking(value) for value in node.values)
+	return False
 
 
 class Plugin:

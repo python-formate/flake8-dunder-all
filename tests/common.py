@@ -179,3 +179,49 @@ if TYPE_CHECKING:
 
 def a_function(): ...
 """
+
+if_type_checking_else_source = """
+if False or sys.version_info < (3, 7):
+    import foo
+else:
+    import bar
+
+def a_function(): ...
+"""
+
+if_type_checking_try_source = """
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+	try:
+		from x import y
+	except ImportError:
+		pass
+
+def a_function(): ...
+"""
+
+if_type_checking_try_finally_source = """
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+	try:
+		from x import y
+	except ImportError:
+		pass
+	finally:
+		pass
+
+
+def a_function(): ...
+"""
+
+not_type_checking_if_source = """
+import foo
+
+if "USE_BAR" in os.environ:
+	pass
+
+
+def a_function(): ...
+"""

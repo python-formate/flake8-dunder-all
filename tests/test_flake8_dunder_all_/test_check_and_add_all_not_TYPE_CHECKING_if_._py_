@@ -1,0 +1,11 @@
+
+import foo
+
+__all__ = ["a_function"]
+
+
+if "USE_BAR" in os.environ:
+	pass
+
+
+def a_function(): ...

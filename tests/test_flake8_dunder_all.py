@@ -8,8 +8,12 @@ from typing import List, Set
 import pytest
 from coincidence.regressions import AdvancedFileRegressionFixture
 from common import (
+		if_type_checking_else_source,
 		if_type_checking_source,
+		if_type_checking_try_finally_source,
+		if_type_checking_try_source,
 		mangled_source,
+		not_type_checking_if_source,
 		results,
 		testing_source_a,
 		testing_source_b,
@@ -125,6 +129,15 @@ def test_visitor(source: str, members: List[str], found_all: bool, last_import: 
 				pytest.param(testing_source_j, ["a_function"], False, 14, id="multiline import"),
 				pytest.param(testing_source_m, ["a_function"], False, 7, id="if False"),
 				pytest.param(if_type_checking_source, ["a_function"], False, 5, id="if TYPE_CHECKING:"),
+				pytest.param(if_type_checking_else_source, ["a_function"], False, 5, id="if TYPE_CHECKING else"),
+				pytest.param(if_type_checking_try_source, ["a_function"], False, 8, id="if TYPE_CHECKING try"),
+				pytest.param(not_type_checking_if_source, ["a_function"], False, 2, id="not TYPE_CHECKING if"),
+				pytest.param(
+						if_type_checking_try_finally_source, ["a_function"],
+						False,
+						10,
+						id="if TYPE_CHECKING try finally"
+						),
 				]
 		)
 def test_visitor_endlineno(source: str, members: List[str], found_all: bool, last_import: int):
@@ -160,6 +173,10 @@ def test_visitor_endlineno(source: str, members: List[str], found_all: bool, las
 				pytest.param(testing_source_l, [], 0, id="typing.overload"),
 				pytest.param(testing_source_m, [], 1, id="if False"),
 				pytest.param(testing_source_n, [], 1, id="if TYPE_CHECKING"),
+				pytest.param(if_type_checking_else_source, [], 1, id="if TYPE_CHECKING else"),
+				pytest.param(if_type_checking_try_source, [], 1, id="if TYPE_CHECKING try"),
+				pytest.param(if_type_checking_try_finally_source, [], 1, id="if TYPE_CHECKING try finally"),
+				pytest.param(not_type_checking_if_source, [], 1, id="not TYPE_CHECKING if"),
 				]
 		)
 def test_check_and_add_all(

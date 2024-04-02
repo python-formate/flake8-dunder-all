@@ -1,0 +1,13 @@
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+	try:
+		from x import y
+	except ImportError:
+		pass
+
+__all__ = ["a_function"]
+
+
+def a_function(): ...
