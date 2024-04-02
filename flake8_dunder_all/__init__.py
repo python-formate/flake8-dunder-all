@@ -158,12 +158,10 @@ class Visitor(ast.NodeVisitor):
 		:param node: The node being visited
 		"""
 
-		if self.use_endlineno:
-			if node.end_lineno > self.last_import:  # type: ignore[union-attr]
-				self.last_import = node.end_lineno  # type: ignore[union-attr]
+		if self.use_endlineno and node.end_lineno is not None:
+			self.last_import = max(self.last_import, node.end_lineno)
 		else:
-			if node.lineno > self.last_import:
-				self.last_import = node.lineno
+			self.last_import = max(self.last_import, node.lineno)
 
 	def visit_Import(self, node: ast.Import) -> None:
 		"""

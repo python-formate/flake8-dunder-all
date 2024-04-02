@@ -14,7 +14,6 @@ primary_conda_channel: "domdfcoding"
 conda_channels:
  - conda-forge
 
-python_deploy_version: 3.6
 use_whey: True
 sphinx_html_theme: furo
 min_coverage: 100
