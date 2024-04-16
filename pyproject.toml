@@ -14,7 +14,6 @@ dynamic = [ "requires-python", "classifiers", "dependencies",]
 name = "Dominic Davis-Foster"
 email = "dominic@davis-foster.co.uk"
 
-
 [project.license]
 file = "LICENSE"
 
@@ -27,6 +26,9 @@ Documentation = "https://flake8-dunder-all.readthedocs.io/en/latest"
 [project.scripts]
 ensure_dunder_all = "flake8_dunder_all.__main__:main"
 ensure-dunder-all = "flake8_dunder_all.__main__:main"
+
+[project.entry-points."flake8.extension"]
+DAL = "flake8_dunder_all:Plugin"
 
 [tool.whey]
 base-classifiers = [
@@ -135,12 +137,19 @@ show_error_codes = true
 [tool.snippet-fmt]
 directives = [ "code-block",]
 
+[tool.snippet-fmt.languages.python]
+reformat = true
+
+[tool.snippet-fmt.languages.TOML]
+reformat = true
+
+[tool.snippet-fmt.languages.ini]
+
+[tool.snippet-fmt.languages.json]
+
 [tool.mkrecipe]
 conda-channels = [ "conda-forge", "domdfcoding",]
 extras = "all"
-
-[project.entry-points."flake8.extension"]
-DAL = "flake8_dunder_all:Plugin"
 
 [tool.dependency-dash."requirements.txt"]
 order = 10
@@ -152,13 +161,3 @@ include = false
 [tool.dependency-dash."doc-source/requirements.txt"]
 order = 30
 include = false
-
-[tool.snippet-fmt.languages.python]
-reformat = true
-
-[tool.snippet-fmt.languages.TOML]
-reformat = true
-
-[tool.snippet-fmt.languages.ini]
-
-[tool.snippet-fmt.languages.json]
