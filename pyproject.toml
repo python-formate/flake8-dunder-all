@@ -10,12 +10,12 @@ readme = "README.rst"
 keywords = [ "flake8",]
 dynamic = [ "requires-python", "classifiers", "dependencies",]
 
+[project.license]
+file = "LICENSE"
+
 [[project.authors]]
 name = "Dominic Davis-Foster"
 email = "dominic@davis-foster.co.uk"
-
-[project.license]
-file = "LICENSE"
 
 [project.urls]
 Homepage = "https://github.com/python-formate/flake8-dunder-all"
