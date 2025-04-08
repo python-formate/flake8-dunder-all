@@ -20,11 +20,6 @@ min_coverage: 100
 
 # Versions to run tests for
 python_versions:
-  '3.6':
-   matrix_exclude:
-    flake8:
-     - 6
-     - 7
   '3.7':
    matrix_exclude:
     flake8:
@@ -42,11 +37,6 @@ python_versions:
    matrix_exclude:
     flake8:
      - 4
-  pypy36:
-   matrix_exclude:
-    flake8:
-     - 6
-     - 7
   pypy37:
    matrix_exclude:
     flake8:
