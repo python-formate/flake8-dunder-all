@@ -32,16 +32,23 @@ A Flake8 plugin and pre-commit hook which checks to ensure modules have defined 
 # stdlib
 import ast
 import sys
-from typing import Any, Generator, Iterator, List, Set, Tuple, Type, Union
+from enum import Enum
+from typing import TYPE_CHECKING, Any, Generator, Iterator, List, Optional, Sequence, Set, Tuple, Type, Union, cast
 
 # 3rd party
+import natsort
 from consolekit.terminal_colours import Fore
 from domdf_python_tools.paths import PathPlus
 from domdf_python_tools.typing import PathLike
 from domdf_python_tools.utils import stderr_writer
+from flake8.options.manager import OptionManager  # type: ignore[import]
 
 # this package
 from flake8_dunder_all.utils import find_noqa, get_docstring_lineno, mark_text_ranges
+
+if TYPE_CHECKING:
+	# stdlib
+	from argparse import Namespace
 
 __author__: str = "Dominic Davis-Foster"
 __copyright__: str = "2020 Dominic Davis-Foster"
@@ -49,9 +56,32 @@ __license__: str = "MIT"
 __version__: str = "0.4.1"
 __email__: str = "dominic@davis-foster.co.uk"
 
-__all__ = ("Visitor", "Plugin", "check_and_add_all", "DALL000")
+__all__ = (
+		"check_and_add_all",
+		"AlphabeticalOptions",
+		"DALL000",
+		"DALL001",
+		"DALL002",
+		"Plugin",
+		"Visitor",
+		)
 
 DALL000 = "DALL000 Module lacks __all__."
+DALL001 = "DALL001 __all__ not sorted alphabetically"
+DALL002 = "DALL002 __all__ not a list or tuple of strings."
+
+
+class AlphabeticalOptions(Enum):
+	"""
+	Enum of possible values for the ``--dunder-all-alphabetical`` option.
+
+	.. versionadded:: 0.5.0
+	"""
+
+	UPPER = "upper"
+	LOWER = "lower"
+	IGNORE = "ignore"
+	NONE = "none"
 
 
 class Visitor(ast.NodeVisitor):
@@ -61,30 +91,56 @@ class Visitor(ast.NodeVisitor):
 	:param use_endlineno: Flag to indicate whether the end_lineno functionality is available.
 		This functionality is available on Python 3.8 and above, or when the tree has been passed through
 		:func:`flake8_dunder_all.utils.mark_text_ranges``.
+
+	.. versionchanged:: 0.5.0
+
+		Added the ``sorted_upper_first``, ``sorted_lower_first`` and ``all_lineno`` attributes.
 	"""
 
 	found_all: bool  #: Flag to indicate a ``__all__`` declaration has been found in the AST.
 	last_import: int  #: The lineno of the last top-level or conditional import
 	members: Set[str]  #: List of functions and classed defined in the AST
 	use_endlineno: bool
+	all_members: Optional[Sequence[str]]  #: The value of ``__all__``.
+	all_lineno: int  #: The line number where ``__all__`` is defined.
 
 	def __init__(self, use_endlineno: bool = False) -> None:
 		self.found_all = False
 		self.members = set()
 		self.last_import = 0
 		self.use_endlineno = use_endlineno
+		self.all_members = None
+		self.all_lineno = -1
 
-	def visit_Name(self, node: ast.Name) -> None:
-		"""
-		Visit a variable.
+	def visit_Assign(self, node: ast.Assign) -> None:  # noqa: D102
+		targets = []
+		for t in node.targets:
+			if isinstance(t, ast.Name):
+				targets.append(t.id)
 
-		:param node: The node being visited.
-		"""
-
-		if node.id == "__all__":
+		if "__all__" in targets:
 			self.found_all = True
-		else:
-			self.generic_visit(node)
+			self.all_lineno = node.lineno
+			self.all_members = self._parse_all(cast(ast.List, node.value))
+
+	def visit_AnnAssign(self, node: ast.AnnAssign) -> None:  # noqa: D102
+		if isinstance(node.target, ast.Name):
+			if node.target.id == "__all__":
+				self.all_lineno = node.lineno
+				self.found_all = True
+				self.all_members = self._parse_all(cast(ast.List, node.value))
+
+	@staticmethod
+	def _parse_all(all_node: ast.List) -> Optional[Sequence[str]]:
+		try:
+			all_ = ast.literal_eval(all_node)
+		except ValueError:
+			return None
+
+		if not isinstance(all_, Sequence):
+			return None
+
+		return all_
 
 	def handle_def(self, node: Union[ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef]) -> None:
 		"""
@@ -252,6 +308,7 @@ class Plugin:
 
 	name: str = __name__
 	version: str = __version__  #: The plugin version
+	dunder_all_alphabetical: AlphabeticalOptions = AlphabeticalOptions.NONE
 
 	def __init__(self, tree: ast.AST):
 		self._tree = tree
@@ -272,11 +329,49 @@ class Plugin:
 		visitor.visit(self._tree)
 
 		if visitor.found_all:
-			return
+			if visitor.all_members is None:
+				yield visitor.all_lineno, 0, DALL002, type(self)
+
+			elif self.dunder_all_alphabetical == AlphabeticalOptions.IGNORE:
+				# Alphabetical, upper or lower don't matter
+				sorted_alphabetical = natsort.natsorted(visitor.all_members, key=str.lower)
+				if list(visitor.all_members) != sorted_alphabetical:
+					yield visitor.all_lineno, 0, f"{DALL001}.", type(self)
+			elif self.dunder_all_alphabetical == AlphabeticalOptions.UPPER:
+				# Alphabetical, uppercase grouped first
+				sorted_alphabetical = natsort.natsorted(visitor.all_members)
+				if list(visitor.all_members) != sorted_alphabetical:
+					yield visitor.all_lineno, 0, f"{DALL001} (uppercase first).", type(self)
+			elif self.dunder_all_alphabetical == AlphabeticalOptions.LOWER:
+				# Alphabetical, lowercase grouped first
+				sorted_alphabetical = natsort.natsorted(visitor.all_members, alg=natsort.ns.LOWERCASEFIRST)
+				if list(visitor.all_members) != sorted_alphabetical:
+					yield visitor.all_lineno, 0, f"{DALL001} (lowercase first).", type(self)
+
 		elif not visitor.members:
 			return
+
 		else:
 			yield 1, 0, DALL000, type(self)
+
+	@classmethod
+	def add_options(cls, option_manager: OptionManager) -> None:  # noqa: D102  # pragma: no cover
+
+		option_manager.add_option(
+				"--dunder-all-alphabetical",
+				choices=[member.value for member in AlphabeticalOptions],
+				parse_from_config=True,
+				default=AlphabeticalOptions.NONE.value,
+				help=(
+						"Require entries in '__all__' to be alphabetical ([upper] or [lower]case first)."
+						"(Default: %(default)s)"
+						),
+				)
+
+	@classmethod
+	def parse_options(cls, options: "Namespace") -> None:  # noqa: D102  # pragma: no cover
+		# note: this sets the option on the class and not the instance
+		cls.dunder_all_alphabetical = AlphabeticalOptions(options.dunder_all_alphabetical)
 
 
 def check_and_add_all(filename: PathLike, quote_type: str = '"', use_tuple: bool = False) -> int:
