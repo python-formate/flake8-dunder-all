@@ -64,7 +64,7 @@ __all__ = (
 
 DALL000 = "DALL000 Module lacks __all__."
 DALL001 = "DALL001 __all__ not sorted alphabetically"
-DALL002 = "DALL002 __all__ not a list of strings."
+DALL002 = "DALL002 __all__ not a list or tuple of strings."
 
 
 class AlphabeticalOptions(Enum):
@@ -331,17 +331,17 @@ class Plugin:
 			elif self.dunder_all_alphabetical == AlphabeticalOptions.IGNORE:
 				# Alphabetical, upper or lower don't matter
 				sorted_alphabetical = natsort.natsorted(visitor.all_members, key=str.lower)
-				if visitor.all_members != sorted_alphabetical:
+				if list(visitor.all_members) != sorted_alphabetical:
 					yield visitor.all_lineno, 0, f"{DALL001}.", type(self)
 			elif self.dunder_all_alphabetical == AlphabeticalOptions.UPPER:
 				# Alphabetical, uppercase grouped first
 				sorted_alphabetical = natsort.natsorted(visitor.all_members)
-				if visitor.all_members != sorted_alphabetical:
+				if list(visitor.all_members) != sorted_alphabetical:
 					yield visitor.all_lineno, 0, f"{DALL001} (uppercase first).", type(self)
 			elif self.dunder_all_alphabetical == AlphabeticalOptions.LOWER:
 				# Alphabetical, lowercase grouped first
 				sorted_alphabetical = natsort.natsorted(visitor.all_members, alg=natsort.ns.LOWERCASEFIRST)
-				if visitor.all_members != sorted_alphabetical:
+				if list(visitor.all_members) != sorted_alphabetical:
 					yield visitor.all_lineno, 0, f"{DALL001} (lowercase first).", type(self)
 
 		elif not visitor.members:

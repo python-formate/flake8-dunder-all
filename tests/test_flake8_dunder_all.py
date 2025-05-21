@@ -231,7 +231,14 @@ def test_plugin_alphabetical_ann_assign(
 def test_plugin_alphabetical_not_list(source: str, dunder_all_alphabetical: AlphabeticalOptions):
 	plugin = Plugin(ast.parse(source))
 	plugin.dunder_all_alphabetical = dunder_all_alphabetical
-	assert {"{}:{}: {}".format(*r) for r in plugin.run()} == {"1:0: DALL002 __all__ not a list of strings."}
+	msg = "1:0: DALL002 __all__ not a list or tuple of strings."
+	assert {"{}:{}: {}".format(*r) for r in plugin.run()} == {msg}
+
+
+def test_plugin_alphabetical_tuple():
+	plugin = Plugin(ast.parse("__all__ = ('bar',\n'foo')"))
+	plugin.dunder_all_alphabetical = AlphabeticalOptions.IGNORE
+	assert {"{}:{}: {}".format(*r) for r in plugin.run()} == set()
 
 
 @pytest.mark.parametrize(
