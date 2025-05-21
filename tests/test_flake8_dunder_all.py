@@ -7,12 +7,6 @@ from typing import List, Set
 # 3rd party
 import pytest
 from coincidence.regressions import AdvancedFileRegressionFixture
-from common import (
-		if_type_checking_else_source,
-		if_type_checking_source,
-		if_type_checking_try_finally_source,
-		if_type_checking_try_source
-		)
 from consolekit.terminal_colours import Fore
 from domdf_python_tools.paths import PathPlus
 
@@ -20,6 +14,10 @@ from domdf_python_tools.paths import PathPlus
 from flake8_dunder_all import AlphabeticalOptions, Plugin, Visitor, check_and_add_all
 from flake8_dunder_all.utils import mark_text_ranges
 from tests.common import (
+		if_type_checking_else_source,
+		if_type_checking_source,
+		if_type_checking_try_finally_source,
+		if_type_checking_try_source,
 		mangled_source,
 		not_type_checking_if_source,
 		results,

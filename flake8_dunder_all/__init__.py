@@ -33,7 +33,7 @@ A Flake8 plugin and pre-commit hook which checks to ensure modules have defined 
 import ast
 import sys
 from enum import Enum
-from typing import Any, Generator, Iterator, List, Optional, Sequence, Set, Tuple, Type, Union, cast
+from typing import TYPE_CHECKING, Any, Generator, Iterator, List, Optional, Sequence, Set, Tuple, Type, Union, cast
 
 # 3rd party
 import natsort
@@ -41,10 +41,14 @@ from consolekit.terminal_colours import Fore
 from domdf_python_tools.paths import PathPlus
 from domdf_python_tools.typing import PathLike
 from domdf_python_tools.utils import stderr_writer
-from flake8.options.manager import OptionManager  # type: ignore
+from flake8.options.manager import OptionManager  # type: ignore[import]
 
 # this package
 from flake8_dunder_all.utils import find_noqa, get_docstring_lineno, mark_text_ranges
+
+if TYPE_CHECKING:
+	# stdlib
+	from argparse import Namespace
 
 __author__: str = "Dominic Davis-Foster"
 __copyright__: str = "2020 Dominic Davis-Foster"
@@ -365,7 +369,7 @@ class Plugin:
 				)
 
 	@classmethod
-	def parse_options(cls, options):  # noqa: D102  # pragma: no cover
+	def parse_options(cls, options: "Namespace") -> None:  # noqa: D102  # pragma: no cover
 		# note: this sets the option on the class and not the instance
 		cls.dunder_all_alphabetical = AlphabeticalOptions(options.dunder_all_alphabetical)
 
