@@ -4,9 +4,9 @@ from typing import List
 
 # 3rd party
 import pytest
-from click.testing import CliRunner, Result
 from coincidence.regressions import AdvancedFileRegressionFixture
 from consolekit.terminal_colours import Fore
+from consolekit.testing import CliRunner, Result
 from domdf_python_tools.paths import PathPlus
 from test_flake8_dunder_all import (
 		mangled_source,
