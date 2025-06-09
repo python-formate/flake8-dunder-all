@@ -41,7 +41,7 @@ from consolekit.terminal_colours import Fore
 from domdf_python_tools.paths import PathPlus
 from domdf_python_tools.typing import PathLike
 from domdf_python_tools.utils import stderr_writer
-from flake8.options.manager import OptionManager  # type: ignore[import]
+from flake8.options.manager import OptionManager  # type: ignore[import-untyped]
 
 # this package
 from flake8_dunder_all.utils import find_noqa, get_docstring_lineno, mark_text_ranges

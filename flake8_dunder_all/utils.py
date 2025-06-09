@@ -48,7 +48,7 @@ from typing import Match, Optional, Union
 
 # 3rd party
 from astatine import mark_text_ranges
-from flake8 import defaults  # type: ignore[import]
+from flake8 import defaults  # type: ignore[import-untyped]
 
 __all__ = ("get_docstring_lineno", "tidy_docstring", "mark_text_ranges")
 
