@@ -40,9 +40,10 @@ from tests.test_flake8_dunder_all import (
 				pytest.param(testing_source_d, ["Foo", "a_function"], 1, id="function and class no __all__"),
 				pytest.param(testing_source_e, ["Foo", "a_function"], 0, id="function and class with __all__"),
 				pytest.param(
-						testing_source_f, ["Foo", "a_function"],
+						testing_source_f,
+						["Foo", "a_function"],
 						0,
-						id="function and class with __all__ and extra variable"
+						id="function and class with __all__ and extra variable",
 						),
 				pytest.param(testing_source_g, ["a_function"], 1, id="async function no __all__"),
 				pytest.param(testing_source_h, [], 0, id="from import"),
@@ -116,9 +117,10 @@ def test_main_single_quotes(capsys, tmp_pathplus: PathPlus, source: str, members
 						id="function and class with __all__",
 						),
 				pytest.param(
-						testing_source_f_tuple, ["Foo", "a_function"],
+						testing_source_f_tuple,
+						["Foo", "a_function"],
 						0,
-						id="function and class with __all__ and extra variable"
+						id="function and class with __all__ and extra variable",
 						),
 				pytest.param(testing_source_g, ["a_function"], 1, id="async function no __all__"),
 				pytest.param(testing_source_h, [], 0, id="from import"),

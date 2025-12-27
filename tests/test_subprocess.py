@@ -17,8 +17,7 @@ def test_subprocess(tmp_pathplus: PathPlus, monkeypatch):
 	with in_directory(tmp_pathplus):
 		result = subprocess.run(
 				[sys.executable, "-m", "flake8", "demo.py"],
-				stdout=subprocess.PIPE,
-				stderr=subprocess.PIPE,
+				capture_output=True,
 				)
 
 	assert result.returncode == 1
@@ -36,8 +35,7 @@ demo.py:5:2: W292 no newline at end of file
 	with in_directory(tmp_pathplus):
 		result = subprocess.run(
 				[sys.executable, "-m", "flake8", "demo.py", "--select", "DALL000"],
-				stdout=subprocess.PIPE,
-				stderr=subprocess.PIPE,
+				capture_output=True,
 				)
 
 	assert result.returncode == 1
@@ -53,8 +51,7 @@ select = DALL000
 	with in_directory(tmp_pathplus):
 		result = subprocess.run(
 				[sys.executable, "-m", "flake8", "demo.py"],
-				stdout=subprocess.PIPE,
-				stderr=subprocess.PIPE,
+				capture_output=True,
 				)
 
 	assert result.returncode == 1
@@ -73,8 +70,7 @@ per-file-ignores =
 	with in_directory(tmp_pathplus):
 		result = subprocess.run(
 				[sys.executable, "-m", "flake8", "demo.py"],
-				stdout=subprocess.PIPE,
-				stderr=subprocess.PIPE,
+				capture_output=True,
 				)
 
 	assert result.returncode == 0
@@ -93,8 +89,7 @@ def test_subprocess_noqa(tmp_pathplus: PathPlus, monkeypatch):
 	with in_directory(tmp_pathplus):
 		result = subprocess.run(
 				[sys.executable, "-m", "flake8", "demo.py"],
-				stdout=subprocess.PIPE,
-				stderr=subprocess.PIPE,
+				capture_output=True,
 				)
 
 	assert result.returncode == 1
@@ -111,8 +106,7 @@ demo.py:6:2: W292 no newline at end of file
 	with in_directory(tmp_pathplus):
 		result = subprocess.run(
 				[sys.executable, "-m", "flake8", "demo.py", "--select", "DALL000"],
-				stdout=subprocess.PIPE,
-				stderr=subprocess.PIPE,
+				capture_output=True,
 				)
 
 	assert result.returncode == 0
@@ -128,8 +122,7 @@ select = DALL000
 	with in_directory(tmp_pathplus):
 		result = subprocess.run(
 				[sys.executable, "-m", "flake8", "demo.py"],
-				stdout=subprocess.PIPE,
-				stderr=subprocess.PIPE,
+				capture_output=True,
 				)
 
 	assert result.returncode == 0
@@ -148,8 +141,7 @@ per-file-ignores =
 	with in_directory(tmp_pathplus):
 		result = subprocess.run(
 				[sys.executable, "-m", "flake8", "demo.py"],
-				stdout=subprocess.PIPE,
-				stderr=subprocess.PIPE,
+				capture_output=True,
 				)
 
 	assert result.returncode == 0

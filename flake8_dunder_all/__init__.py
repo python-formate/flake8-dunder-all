@@ -288,6 +288,8 @@ _nameconstant = ast.Constant if sys.version_info >= (3, 8) else ast.NameConstant
 def _is_type_checking(node: ast.AST) -> bool:
 	"""
 	Does the given ``if`` node indicate a `TYPE_CHECKING` block?
+
+	:param node:
 	"""  # noqa: D400
 
 	if isinstance(node, ast.Name) and node.id == "TYPE_CHECKING":

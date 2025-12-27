@@ -206,7 +206,9 @@ def test_plugin_alphabetical(source: str, expects: Set[str], dunder_all_alphabet
 				]
 		)
 def test_plugin_alphabetical_ann_assign(
-		source: str, expects: Set[str], dunder_all_alphabetical: AlphabeticalOptions
+		source: str,
+		expects: Set[str],
+		dunder_all_alphabetical: AlphabeticalOptions,
 		):
 	plugin = Plugin(ast.parse(source))
 	plugin.dunder_all_alphabetical = dunder_all_alphabetical
@@ -248,16 +250,25 @@ def test_plugin_alphabetical_tuple():
 				pytest.param(testing_source_b, ["a_function"], False, 3, id="function no __all__"),
 				pytest.param(testing_source_c, ["Foo"], False, 3, id="class no __all__"),
 				pytest.param(
-						testing_source_d, ["Foo", "a_function"], False, 3, id="function and class no __all__"
+						testing_source_d,
+						["Foo", "a_function"],
+						False,
+						3,
+						id="function and class no __all__",
 						),
 				pytest.param(
-						testing_source_e, ["Foo", "a_function"], True, 3, id="function and class with __all__"
-						),
-				pytest.param(
-						testing_source_f, ["Foo", "a_function"],
+						testing_source_e,
+						["Foo", "a_function"],
 						True,
 						3,
-						id="function and class with __all__ and extra variable"
+						id="function and class with __all__",
+						),
+				pytest.param(
+						testing_source_f,
+						["Foo", "a_function"],
+						True,
+						3,
+						id="function and class with __all__ and extra variable",
 						),
 				pytest.param(testing_source_g, ["a_function"], False, 3, id="async function no __all__"),
 				pytest.param(testing_source_h, [], False, 1, id="from import"),
@@ -285,16 +296,25 @@ def test_visitor(source: str, members: List[str], found_all: bool, last_import: 
 				pytest.param(testing_source_b, ["a_function"], False, 3, id="function no __all__"),
 				pytest.param(testing_source_c, ["Foo"], False, 3, id="class no __all__"),
 				pytest.param(
-						testing_source_d, ["Foo", "a_function"], False, 3, id="function and class no __all__"
+						testing_source_d,
+						["Foo", "a_function"],
+						False,
+						3,
+						id="function and class no __all__",
 						),
 				pytest.param(
-						testing_source_e, ["Foo", "a_function"], True, 3, id="function and class with __all__"
-						),
-				pytest.param(
-						testing_source_f, ["Foo", "a_function"],
+						testing_source_e,
+						["Foo", "a_function"],
 						True,
 						3,
-						id="function and class with __all__ and extra variable"
+						id="function and class with __all__",
+						),
+				pytest.param(
+						testing_source_f,
+						["Foo", "a_function"],
+						True,
+						3,
+						id="function and class with __all__ and extra variable",
 						),
 				pytest.param(testing_source_g, ["a_function"], False, 3, id="async function no __all__"),
 				pytest.param(testing_source_h, [], False, 1, id="from import"),
@@ -306,10 +326,11 @@ def test_visitor(source: str, members: List[str], found_all: bool, last_import: 
 				pytest.param(if_type_checking_try_source, ["a_function"], False, 8, id="if TYPE_CHECKING try"),
 				pytest.param(not_type_checking_if_source, ["a_function"], False, 2, id="not TYPE_CHECKING if"),
 				pytest.param(
-						if_type_checking_try_finally_source, ["a_function"],
+						if_type_checking_try_finally_source,
+						["a_function"],
 						False,
 						10,
-						id="if TYPE_CHECKING try finally"
+						id="if TYPE_CHECKING try finally",
 						),
 				]
 		)
@@ -335,9 +356,10 @@ def test_visitor_endlineno(source: str, members: List[str], found_all: bool, las
 				pytest.param(testing_source_d, ["Foo", "a_function"], 1, id="function and class no __all__"),
 				pytest.param(testing_source_e, ["Foo", "a_function"], 0, id="function and class with __all__"),
 				pytest.param(
-						testing_source_f, ["Foo", "a_function"],
+						testing_source_f,
+						["Foo", "a_function"],
 						0,
-						id="function and class with __all__ and extra variable"
+						id="function and class with __all__ and extra variable",
 						),
 				pytest.param(testing_source_g, ["a_function"], 1, id="async function no __all__"),
 				pytest.param(testing_source_h, [], 0, id="from import"),
@@ -357,7 +379,7 @@ def test_check_and_add_all(
 		source: str,
 		members: List[str],
 		ret: int,
-		advanced_file_regression: AdvancedFileRegressionFixture
+		advanced_file_regression: AdvancedFileRegressionFixture,
 		):
 	tmpfile = tmp_pathplus / "source.py"
 	tmpfile.write_text(source)
@@ -386,9 +408,10 @@ def test_check_and_add_all(
 						id="function and class with __all__",
 						),
 				pytest.param(
-						testing_source_f_tuple, ["Foo", "a_function"],
+						testing_source_f_tuple,
+						["Foo", "a_function"],
 						0,
-						id="function and class with __all__ and extra variable"
+						id="function and class with __all__ and extra variable",
 						),
 				pytest.param(testing_source_g, ["a_function"], 1, id="async function no __all__"),
 				pytest.param(testing_source_h, [], 0, id="from import"),
@@ -404,7 +427,7 @@ def test_check_and_add_all_tuples(
 		source: str,
 		members: List[str],
 		ret: int,
-		advanced_file_regression: AdvancedFileRegressionFixture
+		advanced_file_regression: AdvancedFileRegressionFixture,
 		):
 	tmpfile = tmp_pathplus / "source.py"
 	tmpfile.write_text(source)

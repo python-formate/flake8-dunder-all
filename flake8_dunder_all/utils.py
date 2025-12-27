@@ -81,6 +81,8 @@ def get_docstring_lineno(node: Union[ast.FunctionDef, ast.ClassDef, ast.Module])
 def tidy_docstring(docstring: Optional[str]) -> str:
 	"""
 	Tidy up the docstring for use as help text.
+
+	:param docstring:
 	"""
 
 	if docstring is None:
