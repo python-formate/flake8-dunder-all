@@ -7,7 +7,7 @@ from flake8_dunder_all import Plugin
 
 
 def results(s: str) -> Set[str]:
-	return {"{}:{}: {}".format(*r) for r in Plugin(ast.parse(s)).run()}
+	return {"{}:{}: {}".format(*r) for r in Plugin(ast.parse(s), "mod.py").run() if "DALL0" in r[2]}
 
 
 testing_source_a = '''

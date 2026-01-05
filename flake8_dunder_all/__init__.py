@@ -69,6 +69,8 @@ __all__ = (
 DALL000 = "DALL000 Module lacks __all__."
 DALL001 = "DALL001 __all__ not sorted alphabetically"
 DALL002 = "DALL002 __all__ not a list or tuple of strings."
+DALL100 = "DALL100 Top-level __dir__ function definition is required."
+DALL101 = "DALL101 Top-level __dir__ function definition is required in __init__.py."
 
 
 class AlphabeticalOptions(Enum):
@@ -106,6 +108,8 @@ class Visitor(ast.NodeVisitor):
 
 	def __init__(self, use_endlineno: bool = False) -> None:
 		self.found_all = False
+		self.found_lineno = -1
+		self.found_dir = False
 		self.members = set()
 		self.last_import = 0
 		self.use_endlineno = use_endlineno
@@ -176,6 +180,10 @@ class Visitor(ast.NodeVisitor):
 
 		if not node.name.startswith('_') and "overload" not in decorators:
 			self.members.add(node.name)
+
+		if node.name == "__dir__":
+			self.found_dir = True
+			self.found_lineno = node.lineno
 
 	def visit_FunctionDef(self, node: ast.FunctionDef) -> None:
 		"""
@@ -306,14 +314,16 @@ class Plugin:
 	A Flake8 plugin which checks to ensure modules have defined ``__all__``.
 
 	:param tree: The abstract syntax tree (AST) to check.
+	:param filename: The filename being checked.
 	"""
 
 	name: str = __name__
 	version: str = __version__  #: The plugin version
 	dunder_all_alphabetical: AlphabeticalOptions = AlphabeticalOptions.NONE
 
-	def __init__(self, tree: ast.AST):
+	def __init__(self, tree: ast.AST, filename: str):
 		self._tree = tree
+		self._filename = filename
 
 	def run(self) -> Generator[Tuple[int, int, str, Type[Any]], None, None]:
 		"""
@@ -351,10 +361,18 @@ class Plugin:
 					yield visitor.all_lineno, 0, f"{DALL001} (lowercase first).", type(self)
 
 		elif not visitor.members:
-			return
+			pass
 
 		else:
 			yield 1, 0, DALL000, type(self)
+
+		# Require top-level __dir__ function
+		if not visitor.found_dir:
+			if self._filename.endswith("__init__.py"):
+				if visitor.members:
+					yield 1, 0, DALL101, type(self)
+			else:
+				yield 1, 0, DALL100, type(self)
 
 	@classmethod
 	def add_options(cls, option_manager: OptionManager) -> None:  # noqa: D102  # pragma: no cover
