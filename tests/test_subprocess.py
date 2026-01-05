@@ -24,6 +24,7 @@ def test_subprocess(tmp_pathplus: PathPlus, monkeypatch):
 	assert result.stderr == b''
 	assert result.stdout == b"""\
 demo.py:1:1: DALL000 Module lacks __all__.
+demo.py:1:1: DALL100 Top-level __dir__ function definition is required.
 demo.py:2:1: W191 indentation contains tabs
 demo.py:2:1: W293 blank line contains whitespace
 demo.py:4:1: W191 indentation contains tabs
@@ -84,7 +85,7 @@ def test_subprocess_noqa(tmp_pathplus: PathPlus, monkeypatch):
 	monkeypatch.delenv("COV_CORE_DATAFILE", raising=False)
 	monkeypatch.setenv("PYTHONWARNINGS", "ignore")
 
-	(tmp_pathplus / "demo.py").write_text("# noq" + "a: DALL000\n\n\t\ndef foo():\n\tpass\n\t")
+	(tmp_pathplus / "demo.py").write_text("  # noqa: DALL000,DALL100  \n\n\t\ndef foo():\n\tpass\n\t")
 
 	with in_directory(tmp_pathplus):
 		result = subprocess.run(
