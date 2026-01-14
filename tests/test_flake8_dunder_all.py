@@ -63,7 +63,7 @@ from tests.common import (
 				pytest.param(testing_source_h, set(), id="from import"),
 				pytest.param(testing_source_i, {"1:0: DALL000 Module lacks __all__."}, id="lots of lines"),
 				pytest.param(testing_source_j, {"1:0: DALL000 Module lacks __all__."}, id="multiline import"),
-				]
+				],
 		)
 def test_plugin(source: str, expects: Set[str]):
 	assert results(source) == expects
@@ -132,7 +132,7 @@ def test_plugin(source: str, expects: Set[str]):
 						set(),
 						id="UPPER_right_order_2",
 						),
-				]
+				],
 		)
 def test_plugin_alphabetical(source: str, expects: Set[str], dunder_all_alphabetical: AlphabeticalOptions):
 	plugin = Plugin(ast.parse(source))
@@ -203,7 +203,7 @@ def test_plugin_alphabetical(source: str, expects: Set[str], dunder_all_alphabet
 						set(),
 						id="UPPER_right_order_2",
 						),
-				]
+				],
 		)
 def test_plugin_alphabetical_ann_assign(
 		source: str,
@@ -226,7 +226,7 @@ def test_plugin_alphabetical_ann_assign(
 				pytest.param("__all__ = abc", AlphabeticalOptions.LOWER, id="LOWER_abc"),
 				pytest.param("__all__ = abc", AlphabeticalOptions.NONE, id="NONE_abc"),
 				pytest.param("__all__ = abc", AlphabeticalOptions.UPPER, id="UPPER_abc"),
-				]
+				],
 		)
 def test_plugin_alphabetical_not_list(source: str, dunder_all_alphabetical: AlphabeticalOptions):
 	plugin = Plugin(ast.parse(source))
@@ -276,7 +276,7 @@ def test_plugin_alphabetical_tuple():
 				pytest.param(testing_source_j, ["a_function"], False, 2, id="multiline import"),
 				pytest.param(testing_source_m, ["a_function"], False, 7, id="if False"),
 				pytest.param(if_type_checking_source, ["a_function"], False, 5, id="if TYPE_CHECKING:"),
-				]
+				],
 		)
 def test_visitor(source: str, members: List[str], found_all: bool, last_import: int):
 	visitor = Visitor()
@@ -332,7 +332,7 @@ def test_visitor(source: str, members: List[str], found_all: bool, last_import: 
 						10,
 						id="if TYPE_CHECKING try finally",
 						),
-				]
+				],
 		)
 def test_visitor_endlineno(source: str, members: List[str], found_all: bool, last_import: int):
 	visitor = Visitor(True)
@@ -372,7 +372,7 @@ def test_visitor_endlineno(source: str, members: List[str], found_all: bool, las
 				pytest.param(if_type_checking_try_source, [], 1, id="if TYPE_CHECKING try"),
 				pytest.param(if_type_checking_try_finally_source, [], 1, id="if TYPE_CHECKING try finally"),
 				pytest.param(not_type_checking_if_source, [], 1, id="not TYPE_CHECKING if"),
-				]
+				],
 		)
 def test_check_and_add_all(
 		tmp_pathplus: PathPlus,
@@ -420,7 +420,7 @@ def test_check_and_add_all(
 				pytest.param(testing_source_l, [], 0, id="typing.overload"),
 				pytest.param(testing_source_m, [], 1, id="if False"),
 				pytest.param(testing_source_n, [], 1, id="if TYPE_CHECKING"),
-				]
+				],
 		)
 def test_check_and_add_all_tuples(
 		tmp_pathplus: PathPlus,
@@ -455,7 +455,7 @@ def test_check_and_add_all_tuples(
 				pytest.param(testing_source_i, [], 1, id="lots of lines"),
 				pytest.param(testing_source_m, [], 1, id="if False"),
 				pytest.param(testing_source_n, [], 1, id="if TYPE_CHECKING"),
-				]
+				],
 		)
 def test_check_and_add_all_single_quotes(tmp_pathplus: PathPlus, source: str, members: List[str], ret: int):
 	tmpfile = tmp_pathplus / "source.py"
@@ -468,9 +468,12 @@ def test_check_and_add_all_single_quotes(tmp_pathplus: PathPlus, source: str, me
 		assert f"__all__ = [{members_string}]" in tmpfile.read_text()
 
 
-@pytest.mark.parametrize("source, members", [
-		pytest.param(mangled_source, [], id="mangled"),
-		])
+@pytest.mark.parametrize(
+		"source, members",
+		[
+				pytest.param(mangled_source, [], id="mangled"),
+				],
+		)
 def test_check_and_add_all_mangled(tmp_pathplus: PathPlus, capsys, source: str, members: List[str]):
 	tmpfile = tmp_pathplus / "source.py"
 	tmpfile.write_text(source)

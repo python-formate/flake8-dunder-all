@@ -55,7 +55,7 @@ from tests.test_flake8_dunder_all import (
 						id="async function no __all__ and noqa",
 						),
 				pytest.param(f"  # noqa  \n{testing_source_g}", ["a_function"], 1, id="async function no __all__"),
-				]
+				],
 		)
 def test_main(tmp_pathplus: PathPlus, source: str, members: List[str], ret: int):
 	tmpfile = tmp_pathplus / "source.py"
@@ -84,7 +84,7 @@ def test_main(tmp_pathplus: PathPlus, source: str, members: List[str], ret: int)
 				pytest.param(testing_source_i, [], 1, id="lots of lines"),
 				pytest.param(testing_source_k, [], 0, id="overload"),
 				pytest.param(testing_source_l, [], 0, id="typing.overload"),
-				]
+				],
 		)
 def test_main_single_quotes(capsys, tmp_pathplus: PathPlus, source: str, members: List[str], ret: int):
 	tmpfile = tmp_pathplus / "source.py"
@@ -127,7 +127,7 @@ def test_main_single_quotes(capsys, tmp_pathplus: PathPlus, source: str, members
 				pytest.param(testing_source_i, [], 1, id="lots of lines"),
 				pytest.param(testing_source_k, [], 0, id="overload"),
 				pytest.param(testing_source_l, [], 0, id="typing.overload"),
-				]
+				],
 		)
 def test_main_tuples(tmp_pathplus: PathPlus, source: str, members: List[str], ret: int):
 	tmpfile = tmp_pathplus / "source.py"
@@ -144,9 +144,10 @@ def test_main_tuples(tmp_pathplus: PathPlus, source: str, members: List[str], re
 	assert result.stdout == f"Checking {tmpfile}\n"
 
 
-@pytest.mark.parametrize("source, members", [
-		pytest.param(mangled_source, [], id="mangled"),
-		])
+@pytest.mark.parametrize(
+		"source, members",
+		[pytest.param(mangled_source, [], id="mangled")],
+		)
 def test_main_mangled(tmp_pathplus: PathPlus, capsys, source: str, members: List[str]):
 	tmpfile = tmp_pathplus / "source.py"
 	tmpfile.write_text(source)
