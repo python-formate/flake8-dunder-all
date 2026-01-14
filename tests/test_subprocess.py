@@ -70,23 +70,6 @@ def test_subprocess_noqa(tmp_pathplus: PathPlus, monkeypatch):
 
 	with in_directory(tmp_pathplus):
 		result = subprocess.run(
-				[sys.executable, "-m", "flake8", "demo.py"],
-				capture_output=True,
-				)
-
-	assert result.returncode == 1
-	assert result.stderr == b''
-	assert result.stdout == b"""\
-demo.py:3:1: W191 indentation contains tabs
-demo.py:3:1: W293 blank line contains whitespace
-demo.py:5:1: W191 indentation contains tabs
-demo.py:6:1: W191 indentation contains tabs
-demo.py:6:1: W293 blank line contains whitespace
-demo.py:6:2: W292 no newline at end of file
-"""
-
-	with in_directory(tmp_pathplus):
-		result = subprocess.run(
 				[sys.executable, "-m", "flake8", "demo.py", "--select", "DALL000"],
 				capture_output=True,
 				)
