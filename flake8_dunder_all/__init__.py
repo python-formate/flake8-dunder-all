@@ -181,10 +181,6 @@ class Visitor(ast.NodeVisitor):
 		if not node.name.startswith('_') and "overload" not in decorators:
 			self.members.add(node.name)
 
-		if node.name == "__dir__":
-			self.found_dir = True
-			self.found_lineno = node.lineno
-
 	def visit_FunctionDef(self, node: ast.FunctionDef) -> None:
 		"""
 		Visit ``def foo(): ...``.
@@ -194,6 +190,10 @@ class Visitor(ast.NodeVisitor):
 
 		# Don't generic visit
 		self.handle_def(node)
+
+		if node.name == "__dir__":
+			self.found_dir = True
+			self.found_lineno = node.lineno
 
 	def visit_AsyncFunctionDef(self, node: ast.AsyncFunctionDef) -> None:
 		"""

@@ -51,3 +51,26 @@ def test_dir_required_init_with_dir():
 	source_with_dir = """\ndef __dir__():\n	return []\n"""
 	results = from_source(source_with_dir, "__init__.py")
 	assert not any("DALL101" in r[2] for r in results)
+
+
+def test_dir_required_async_def_does_not_satisfy():
+	# ``async def __dir__`` can't be used by ``dir(module)``, so DALL100 still applies
+	source = """
+	import foo
+
+	async def __dir__():
+		return []
+	"""
+	results = from_source(source, "module.py")
+	assert any("DALL100" in r[2] for r in results)
+
+
+def test_dir_required_class_does_not_satisfy():
+	# ``class __dir__`` can't be used by ``dir(module)``, so DALL100 still applies
+	source = """
+	import foo
+
+	class __dir__: ...
+	"""
+	results = from_source(source, "module.py")
+	assert any("DALL100" in r[2] for r in results)
