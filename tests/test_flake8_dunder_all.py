@@ -137,7 +137,7 @@ def test_plugin(source: str, expects: Set[str]):
 def test_plugin_alphabetical(source: str, expects: Set[str], dunder_all_alphabetical: AlphabeticalOptions):
 	plugin = Plugin(ast.parse(source), "mod.py")
 	plugin.dunder_all_alphabetical = dunder_all_alphabetical
-	assert {"{}:{}: {}".format(*r) for r in plugin.run() if "DALL0" in r[2]} == expects
+	assert {"{}:{}: {}".format(*r) for r in plugin.run() if r[2].startswith("DALL0")} == expects
 
 
 @pytest.mark.parametrize(
@@ -212,7 +212,7 @@ def test_plugin_alphabetical_ann_assign(
 		):
 	plugin = Plugin(ast.parse(source), "mod.py")
 	plugin.dunder_all_alphabetical = dunder_all_alphabetical
-	assert {"{}:{}: {}".format(*r) for r in plugin.run() if "DALL0" in r[2]} == expects
+	assert {"{}:{}: {}".format(*r) for r in plugin.run() if r[2].startswith("DALL0")} == expects
 
 
 @pytest.mark.parametrize(
@@ -232,13 +232,13 @@ def test_plugin_alphabetical_not_list(source: str, dunder_all_alphabetical: Alph
 	plugin = Plugin(ast.parse(source), "mod.py")
 	plugin.dunder_all_alphabetical = dunder_all_alphabetical
 	msg = "1:0: DALL002 __all__ not a list or tuple of strings."
-	assert {"{}:{}: {}".format(*r) for r in plugin.run() if "DALL0" in r[2]} == {msg}
+	assert {"{}:{}: {}".format(*r) for r in plugin.run() if r[2].startswith("DALL0")} == {msg}
 
 
 def test_plugin_alphabetical_tuple():
 	plugin = Plugin(ast.parse("__all__ = ('bar',\n'foo')"), "mod.py")
 	plugin.dunder_all_alphabetical = AlphabeticalOptions.IGNORE
-	assert {"{}:{}: {}".format(*r) for r in plugin.run() if "DALL0" in r[2]} == set()
+	assert {"{}:{}: {}".format(*r) for r in plugin.run() if r[2].startswith("DALL0")} == set()
 
 
 @pytest.mark.parametrize(

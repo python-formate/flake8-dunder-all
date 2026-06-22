@@ -100,6 +100,7 @@ class Visitor(ast.NodeVisitor):
 	"""
 
 	found_all: bool  #: Flag to indicate a ``__all__`` declaration has been found in the AST.
+	found_dir: bool  #: Flag to indicate a top-level ``__dir__`` function has been found in the AST.
 	last_import: int  #: The lineno of the last top-level or conditional import
 	members: Set[str]  #: List of functions and classed defined in the AST
 	use_endlineno: bool
@@ -108,7 +109,6 @@ class Visitor(ast.NodeVisitor):
 
 	def __init__(self, use_endlineno: bool = False) -> None:
 		self.found_all = False
-		self.found_lineno = -1
 		self.found_dir = False
 		self.members = set()
 		self.last_import = 0
@@ -193,7 +193,6 @@ class Visitor(ast.NodeVisitor):
 
 		if node.name == "__dir__":
 			self.found_dir = True
-			self.found_lineno = node.lineno
 
 	def visit_AsyncFunctionDef(self, node: ast.AsyncFunctionDef) -> None:
 		"""
@@ -360,17 +359,13 @@ class Plugin:
 				if list(visitor.all_members) != sorted_alphabetical:
 					yield visitor.all_lineno, 0, f"{DALL001} (lowercase first).", type(self)
 
-		elif not visitor.members:
-			pass
-
-		else:
+		elif visitor.members:
 			yield 1, 0, DALL000, type(self)
 
-		# Require top-level __dir__ function
-		if not visitor.found_dir:
+		# Require a top-level __dir__, but only when the module defines public members
+		if visitor.members and not visitor.found_dir:
 			if self._filename.endswith("__init__.py"):
-				if visitor.members:
-					yield 1, 0, DALL101, type(self)
+				yield 1, 0, DALL101, type(self)
 			else:
 				yield 1, 0, DALL100, type(self)
 
