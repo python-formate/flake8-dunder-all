@@ -14,6 +14,8 @@ Flake8 codes
 	DALL000
 	DALL001
 	DALL002
+	DALL100
+	DALL101
 
 
 For the ``DALL001`` option there exists a configuration option (``dunder-all-alphabetical``)
@@ -27,6 +29,7 @@ The options are:
 If the ``dunder-all-alphabetical`` option is omitted the ``DALL001`` check is disabled.
 
 .. versionchanged:: 0.5.0  Added the ``DALL001`` and ``DALL002`` checks.
+.. versionchanged:: 0.6.0  Added the ``DALL100`` and ``DALL101`` checks.
 
 .. note::
 

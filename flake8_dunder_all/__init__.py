@@ -97,6 +97,8 @@ class Visitor(ast.NodeVisitor):
 	.. versionchanged:: 0.5.0
 
 		Added the ``sorted_upper_first``, ``sorted_lower_first`` and ``all_lineno`` attributes.
+
+	.. versionchanged:: 0.6.0  Added the ``found_dir`` attribute.
 	"""
 
 	found_all: bool  #: Flag to indicate a ``__all__`` declaration has been found in the AST.
@@ -314,6 +316,8 @@ class Plugin:
 
 	:param tree: The abstract syntax tree (AST) to check.
 	:param filename: The filename being checked.
+
+	.. versionchanged:: 0.6.0  Added ``filename`` argument.
 	"""
 
 	name: str = __name__
