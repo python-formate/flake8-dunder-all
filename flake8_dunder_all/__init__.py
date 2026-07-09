@@ -69,6 +69,8 @@ __all__ = (
 DALL000 = "DALL000 Module lacks __all__."
 DALL001 = "DALL001 __all__ not sorted alphabetically"
 DALL002 = "DALL002 __all__ not a list or tuple of strings."
+DALL100 = "DALL100 Top-level __dir__ function definition is required."
+DALL101 = "DALL101 Top-level __dir__ function definition is required in __init__.py."
 
 
 class AlphabeticalOptions(Enum):
@@ -95,9 +97,12 @@ class Visitor(ast.NodeVisitor):
 	.. versionchanged:: 0.5.0
 
 		Added the ``sorted_upper_first``, ``sorted_lower_first`` and ``all_lineno`` attributes.
+
+	.. versionchanged:: 0.6.0  Added the ``found_dir`` attribute.
 	"""
 
 	found_all: bool  #: Flag to indicate a ``__all__`` declaration has been found in the AST.
+	found_dir: bool  #: Flag to indicate a top-level ``__dir__`` function has been found in the AST.
 	last_import: int  #: The lineno of the last top-level or conditional import
 	members: Set[str]  #: List of functions and classed defined in the AST
 	use_endlineno: bool
@@ -106,6 +111,7 @@ class Visitor(ast.NodeVisitor):
 
 	def __init__(self, use_endlineno: bool = False) -> None:
 		self.found_all = False
+		self.found_dir = False
 		self.members = set()
 		self.last_import = 0
 		self.use_endlineno = use_endlineno
@@ -186,6 +192,9 @@ class Visitor(ast.NodeVisitor):
 
 		# Don't generic visit
 		self.handle_def(node)
+
+		if node.name == "__dir__":
+			self.found_dir = True
 
 	def visit_AsyncFunctionDef(self, node: ast.AsyncFunctionDef) -> None:
 		"""
@@ -306,14 +315,18 @@ class Plugin:
 	A Flake8 plugin which checks to ensure modules have defined ``__all__``.
 
 	:param tree: The abstract syntax tree (AST) to check.
+	:param filename: The filename being checked.
+
+	.. versionchanged:: 0.6.0  Added ``filename`` argument.
 	"""
 
 	name: str = __name__
 	version: str = __version__  #: The plugin version
 	dunder_all_alphabetical: AlphabeticalOptions = AlphabeticalOptions.NONE
 
-	def __init__(self, tree: ast.AST):
+	def __init__(self, tree: ast.AST, filename: str):
 		self._tree = tree
+		self._filename = filename
 
 	def run(self) -> Generator[Tuple[int, int, str, Type[Any]], None, None]:
 		"""
@@ -350,11 +363,15 @@ class Plugin:
 				if list(visitor.all_members) != sorted_alphabetical:
 					yield visitor.all_lineno, 0, f"{DALL001} (lowercase first).", type(self)
 
-		elif not visitor.members:
-			return
-
-		else:
+		elif visitor.members:
 			yield 1, 0, DALL000, type(self)
+
+		# Require a top-level __dir__, but only when the module defines public members
+		if visitor.members and not visitor.found_dir:
+			if self._filename.endswith("__init__.py"):
+				yield 1, 0, DALL101, type(self)
+			else:
+				yield 1, 0, DALL100, type(self)
 
 	@classmethod
 	def add_options(cls, option_manager: OptionManager) -> None:  # noqa: D102  # pragma: no cover

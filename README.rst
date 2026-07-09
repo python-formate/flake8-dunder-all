@@ -153,13 +153,15 @@ To install with ``conda``:
 flake8 codes
 --------------
 
-============== =======================================
+============== ===============================================================
 Code           Description
-============== =======================================
+============== ===============================================================
 DALL000        Module lacks __all__.
 DALL001        __all__ not sorted alphabetically
 DALL002        __all__ not a list or tuple of strings.
-============== =======================================
+DALL100        Top-level __dir__ function definition is required.
+DALL101        Top-level __dir__ function definition is required in __init__.py.
+============== ===============================================================
 
 
 Use as a pre-commit hook
