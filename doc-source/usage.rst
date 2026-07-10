@@ -28,12 +28,12 @@ The options are:
 
 If the ``dunder-all-alphabetical`` option is omitted the ``DALL001`` check is disabled.
 
-.. versionchanged:: 0.5.0  Added the ``DALL001`` and ``DALL002`` checks.
+.. versionchanged:: 0.6.0  Added the ``DALL001`` and ``DALL002`` checks.
 .. versionchanged:: 0.6.0  Added the ``DALL100`` and ``DALL101`` checks.
 
 .. note::
 
-	In version ``0.5.0`` the entry point changed from ``DALL`` to ``DAL``, due to changes in flake8 itself.
+	In version ``0.6.0`` the entry point changed from ``DALL`` to ``DAL``, due to changes in flake8 itself.
 	However, the codes remain ``DALLXXX`` and should continue to work as normal.
 
 
@@ -58,7 +58,7 @@ See `pre-commit <https://github.com/pre-commit/pre-commit>`_ for instructions
 
 Sample ``.pre-commit-config.yaml``:
 
-.. pre-commit:flake8:: 0.5.0
+.. pre-commit:flake8:: 0.6.0
 
 
 Using the script as a pre-commit hook
@@ -71,4 +71,4 @@ See `pre-commit <https://github.com/pre-commit/pre-commit>`_ for instructions.
 Sample ``.pre-commit-config.yaml``:
 
 .. pre-commit::
-	:rev: v0.5.0
+	:rev: v0.6.0
